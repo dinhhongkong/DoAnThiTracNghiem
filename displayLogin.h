@@ -1,0 +1,35 @@
+// const int w  = 1600;
+// const int h  = 900;
+
+void displayLogin()
+{
+    dangnhap.ButtonEffect();
+    if(GetAsyncKeyState(VK_LBUTTON)){
+
+		if(dangnhap.isMouseHover()){
+			if (taiKhoan.ToString() == "GV" && matKhau.content == "GV") {
+                curMenu = DISPLAY_GIAOVIEN;
+                drawGV();
+            }
+            else if ( taiKhoan.ToString() == "SV" && matKhau.content == "SV") {
+                curMenu = DISPLAY_HOCSINH;
+                drawHocSinh();
+            }
+            else {
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Tai khoan hoac Mat khau khong chinh xac", "Thong bao", MB_OK);
+            }
+        }
+
+        if (taiKhoan.isMouseHover()) {
+            Edit = &taiKhoan;
+            matKhau.isChoose = false;
+            matKhau.draw();
+        }
+        if (matKhau.isMouseHover()) {
+            Edit = &matKhau;
+            taiKhoan.isChoose = false;
+            taiKhoan.draw();
+        }
+    }           
+}
