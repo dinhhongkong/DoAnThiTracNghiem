@@ -10,10 +10,16 @@ void displayLogin()
 			if (taiKhoan.ToString() == "GV" && matKhau.content == "GV") {
                 curMenu = DISPLAY_GIAOVIEN;
                 drawGV();
+                Edit = nullptr;
+                // de nguoi dung nha chuot ra
+                Sleep(500);
             }
             else if ( taiKhoan.ToString() == "SV" && matKhau.content == "SV") {
                 curMenu = DISPLAY_HOCSINH;
                 drawHocSinh();
+                Edit = nullptr;
+                // de nguoi dung nha chuot ra
+                Sleep(500);
             }
             else {
                 AllocConsole();
@@ -21,12 +27,12 @@ void displayLogin()
             }
         }
 
-        if (taiKhoan.isMouseHover()) {
+        else if (taiKhoan.isMouseHover()) {
             Edit = &taiKhoan;
             matKhau.isChoose = false;
             matKhau.draw();
         }
-        if (matKhau.isMouseHover()) {
+        else if (matKhau.isMouseHover()) {
             Edit = &matKhau;
             taiKhoan.isChoose = false;
             taiKhoan.draw();

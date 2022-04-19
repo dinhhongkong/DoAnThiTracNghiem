@@ -1,23 +1,23 @@
-struct sinhVien{
-	string mssv;
-	string HO;
-	string TEN;
-	string gioiTinh;
-	string password;
-	// con tro tro den cac mon da thi trac nghiem
-	//dsdiemThi diem;
-};
+// struct sinhVien{
+// 	string mssv;
+// 	string HO;
+// 	string TEN;
+// 	string gioiTinh;
+// 	string password;
+// 	// con tro tro den cac mon da thi trac nghiem
+// 	//dsdiemThi diem;
+// };
 
-struct nodeSV{
-	sinhVien info;
-	nodeSV *pNext = nullptr;
-};
+// struct nodeSV{
+// 	sinhVien info;
+// 	nodeSV *pNext = nullptr;
+// };
 
-struct listSV
-{
-	nodeSV *First = nullptr;	
-	nodeSV *Last = nullptr;
-};
+// struct listSV
+// {
+// 	nodeSV *First = nullptr;	
+// 	nodeSV *Last = nullptr;
+// };
 
 nodeSV *CreateNodeSV(sinhVien sv) {
 	nodeSV *a = new nodeSV;

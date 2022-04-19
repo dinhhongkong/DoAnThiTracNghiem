@@ -1,28 +1,9 @@
-
-struct lop
-{
-    string MALOP;
-    string TENLOP;
-    // dssv *danhsachSinhVien;
-};
-
-#define MAXLOP 100
-#define MAXMONHOC 100
-#define STACKSIZE 1000
-
-struct dslop
-{
-    int solop = 0;
-    lop *arrLop[MAXLOP]; // danh sach tuyen tinh
-};
-
-// kiem tra ma lop hay ten lop co bi trung khong
 bool CheckMaLopTenLop(dslop ds, string maLop, string tenlop)
 {
     for (int i = 0; i < ds.solop; i++)
     {
 
-        if (ds.arrLop[i]->MALOP == maLop || ds.arrLop[i]->TENLOP == tenlop)
+        if (ds.arrLop[i].MALOP == maLop || ds.arrLop[i].TENLOP == tenlop)
         {
             return false;
         }
@@ -30,35 +11,30 @@ bool CheckMaLopTenLop(dslop ds, string maLop, string tenlop)
     return true;
 }
 
-string ThemVaoDanhSach(dslop &ds, string maLop, string tenLop)
+bool ThemVaoDanhSach(dslop &ds, string maLop, string tenLop)
 {
-
-    if (maLop == "" ) {
-        return "Ma lop khong duoc de trong";
-    }
-
-    if ( tenLop == "" ) {
-        return "Ten lop khong duoc de trong";
-    }
 
     if (!CheckMaLopTenLop(ds, maLop, tenLop))
     {
-        return "MA LOP hoac TEN LOP da ton tai";
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "MA LOP hoac TEN LOP bi trung", "Thong bao",MB_ICONASTERISK | MB_OK);
+        return false;
     }
 
     if (ds.solop == MAXLOP)
     {
-        return "Danh sach lop da day";
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Danh sach lop day", "Thong bao",MB_ICONASTERISK | MB_OK);
+        return false;
     }
 
-    ds.arrLop[ds.solop] = new lop;
     int i = 0;
 
-    if (ds.solop == 0 || tenLop < ds.arrLop[0]->TENLOP)
+    if (ds.solop == 0 || maLop < ds.arrLop[0].MALOP)
     {
         i = 0;
     }
-    else if (tenLop > ds.arrLop[ds.solop - 1]->TENLOP)
+    else if (maLop > ds.arrLop[ds.solop - 1].MALOP)
     {
         i = ds.solop;
     }
@@ -66,7 +42,7 @@ string ThemVaoDanhSach(dslop &ds, string maLop, string tenLop)
     {
         for (i = 0; i < ds.solop - 1; i++)
         {
-            if (ds.arrLop[i]->TENLOP > tenLop)
+            if (ds.arrLop[i].MALOP > maLop)
             {
                 break;
             }
@@ -74,14 +50,59 @@ string ThemVaoDanhSach(dslop &ds, string maLop, string tenLop)
     }
     for (int j = ds.solop; j > i; j--)
     {
-        ds.arrLop[j]->MALOP = ds.arrLop[j - 1]->MALOP;
-        ds.arrLop[j]->TENLOP = ds.arrLop[j - 1]->TENLOP;
+        ds.arrLop[j].MALOP = ds.arrLop[j - 1].MALOP;
+        ds.arrLop[j].TENLOP = ds.arrLop[j - 1].TENLOP;
     }
-    ds.arrLop[i]->TENLOP = tenLop;
-    ds.arrLop[i]->MALOP = maLop;
+    ds.arrLop[i].TENLOP = tenLop;
+    ds.arrLop[i].MALOP = maLop;
     ds.solop++;
-    return "Nhap thanh cong";
+    AllocConsole();
+    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"),"THEM VAO DANH SACH THANH CONG", "Thong bao", MB_OK);
+    return true;
 }
 
+void chinhSuaLop(lop &LOP, string maLop, string tenLop) {
+    LOP.MALOP = maLop;
+    LOP.TENLOP = tenLop;
+}
+
+
+void docFileDsLop(dslop &DanhSachLop) {
+    ifstream fileIn;
+	fileIn.open("DATA\\FileDSLop.txt", ios_base:: in );
+    
+	fileIn >> DanhSachLop.solop;
+	fileIn.ignore();
+	for(int i = 0; i < DanhSachLop.solop; i++)
+	{
+		// DanhSachLop.arrLop[i] = new lop;
+		getline(fileIn,DanhSachLop.arrLop[i].TENLOP,'\n');
+		getline(fileIn,DanhSachLop.arrLop[i].MALOP,'\n');
+		// DocFileLop(dsl.l[i],dsl.l[i].MALOP+".txt");
+		// DocFileDiem1Lop(dsl.l[i]);
+	}
+	fileIn.close();
+}
+
+void ghiFileDSlop(dslop DanhSachLop)
+{
+	ofstream fileOut;
+	fileOut.open("DATA\\FileDSLop.txt", ios_base::out);
+	if (!fileOut.is_open()) 
+	{
+		cout << "Failed to open FileDSLop.txt file!" << endl;
+		return;
+	}
+
+	fileOut << DanhSachLop.solop << endl;
+	for (int i = 0; i < DanhSachLop.solop; i++) 
+	{
+		fileOut << DanhSachLop.arrLop[i].TENLOP << '\n'<< DanhSachLop.arrLop[i].MALOP << '\n';
+		// GhiFileLop(dsl.l[i], dsl.l[i].MALOP + ".txt");
+		// GhiFileDiem(dsl.l[i],"DiemThi"+dsl.l[i].MALOP+".txt",dsch);
+	}
+
+    fileOut.close();
+}
 
 

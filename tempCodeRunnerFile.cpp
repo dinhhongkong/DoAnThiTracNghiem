@@ -1,1 +1,1 @@
-cout << "helo" << endl;
+h

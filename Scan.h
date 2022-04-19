@@ -2,6 +2,8 @@ void ScanNumber(editText *&txt, char c);
 void ScanTextOnly(editText *&txt, char c);
 void ScanTextSpace(editText *&txt, char c);
 void ScanTextNumber(editText *&txt, char c);
+void ScanTextNumberNoSpace(editText *&txt, char c);
+void ScanMaLop(editText *&txt, char c);
 
 void Scan(editText *&txt, int maxn, ScanType type)
 {
@@ -35,22 +37,30 @@ void Scan(editText *&txt, int maxn, ScanType type)
 		}
 		else if (c == ENTER)
 		{
-			txt->draw();
-			txt = nullptr;
-			return;
-		}
-		else if ( c == KEY_DOWN) {
-			txt->isChoose =false;
+			txt->isChoose = false;
 			txt->draw();
 			txt = txt->next;
 			return;
 		}
-		else if ( c == KEY_UP) {
-			txt->isChoose =false;
-			txt->draw();
-			txt = txt->pre;
-			return;
-		} 
+		else if (c == NULL) // bat phim mui ten
+		{
+			c = getch();
+			if (c == KEY_DOWN)
+			{
+				
+				txt->isChoose = false;
+				txt->draw();
+				txt = txt->next;
+				return;
+			}
+			else if (c == KEY_UP)
+			{
+				txt->isChoose = false;
+				txt->draw();
+				txt = txt->pre;
+				return;
+			}
+		}
 		else if (txt->content.size() < maxn)
 		{
 			if (type == ONLY_NUMBER)
@@ -82,7 +92,13 @@ void Scan(editText *&txt, int maxn, ScanType type)
 				// 	ScanMaSach(txt, n, c);
 				// }
 			}
-		
+			else if (type == TEXT_NUMBER_NO_SPACE)
+			{
+				ScanTextNumberNoSpace(txt, c);
+			}
+			else if (type == SCAN_MALOP) {
+				ScanMaLop(txt, c);
+			}
 		}
 	}
 }
@@ -129,6 +145,30 @@ void ScanTextNumber(editText *&txt, char c)
 		txt->content += toupper(c);
 	}
 	else if (c >= '0' && c <= '9')
+	{
+		txt->content += c;
+	}
+}
+
+void ScanTextNumberNoSpace(editText *&txt, char c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	{
+		txt->content += toupper(c);
+	}
+	else if (c >= '0' && c <= '9')
+	{
+		txt->content += c;
+	}
+}
+
+void ScanMaLop(editText *&txt, char c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	{
+		txt->content += toupper(c);
+	}
+	else if (c >= '0' && c <= '9' || c == '-')
 	{
 		txt->content += c;
 	}

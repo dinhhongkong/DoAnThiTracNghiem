@@ -1,7 +1,16 @@
 int curMenu = 0;
 int curGV = 0;
+bool drawList = true;
 
 editText *Edit = nullptr;
+
+class listview
+{
+public:
+    int size = 0;
+    int idItem[10];
+};
+
 
 // ma hinh dang nhap
 editText taiKhoan(0, 500, 300, 600, 50, "TAI KHOAN: ", "Nhap ma so sinh vien", 100);
@@ -9,21 +18,42 @@ editText matKhau(0, 500, 400, 600, 50, "MAT KHAU: ", "Toi da 20 ki tu", 20, 1);
 button dangnhap(0, 700, 500, 200, 70, "DANG NHAP");
 
 // man hinh giao vien
-button btnMonHoc(100,700,200,250,50,"DANH SACH MON HOC");
-button btnDsLop(100,700,300,250,50,"DANH SACH LOP");
-button btnDiemThi(100,700 ,400,250, 50,"DIEM THI");
-button btnCauHoiThi(100,700, 500,250,50,"CAU HOI THI");
-button btnThiThu(100,700,600,250,50,"THI THU");
-button btnDangXuat(100,750,700,150,50,"DANG XUAT");
+button btnMonHoc(100,700,200,250,50,"QUAN LY MON HOC");
+button btnDsLop(101,700,300,250,50,"QUAN LY LOP");
+button btnDiemThi(102,700 ,400,250, 50,"DIEM THI");
+button btnCauHoiThi(103,700, 500,250,50,"CAU HOI THI");
+button btnThiThu(104,700,600,250,50,"THI THU");
+button btnDangXuat(0,750,700,150,50,"DANG XUAT");
+
+listview listviewDS;
+button btnLui(200,70, 820, 100,50,"PRE");
+button btnTien(200, 800, 820, 100,50,"NEXT");
+button btnThem(200,1250, 625,100,50,"THEM");
+// button btnHieuChinh(200,1100, 625,400,50,"HIEU CHINH");
+// button btnXoaVinhVien(200,1200, 710,200,50,"XOA VINH VIEN");
+button btnHieuChinh(200,1075, 625,200,50,"HIEU CHINH");
+button btnXoaVinhVien(200,1325, 625,200,50,"XOA VINH VIEN");
+button btnThoat(200, 1050,20,220,50,"< THOAT CHUC NANG");
 
 // nut chuc nang mon hoc tai man hinh gv
-int xDsMon[3] = {70,170,370};
-int yDsMon[3] = {210,210,210};
+int xDsMon[3] = {50,300,950};
+int yDsMon[2] = {250,760};
 button btnQuaylai(200,20,20,100,50,"< BACK");
 editText timKiemMon(0,100,100,600,50,"TIM KIEM: ","Nhap ten mon hoc muon tim",100);
-button btnThemMon(200, 1200,20,200,50,"THEM MON HOC");
-button btnLui(200,70, 820, 100,50,"<-");
-button btnTien(200, 800, 820, 100,50,"->");
+button btnMenuThemMon(200, 1175,20,250,50,"MENU THEM MON HOC");
+editText themMaMon(200,1075,350,450,50,"MA MON:","Toi da 10 ki tu",10);
+editText themTenMon(200,1075,475,450,50,"TEN MON:","Toi da 35 ki tu",35);
+
+
+// nut chuc nang quan ly lop
+int xDsLop[3] = {50, 350, 950};
+int yDsLop[2] = {250,750};
+button btnMenuThemLop(300, 1175,20,250,50,"MENU THEM LOP HOC");
+editText themMaLop(300,1075,350,450,50,"MA LOP HOC:","Toi da 15 ki tu",15);
+editText themTenLop(300,1075,475,450,50,"TEN LOP HOC:","Toi da 35 ki tu",35);
+editText timKiemLop(0,100,100,600,50,"TIM KIEM: ","Nhap MA hoac Ten lop muon tim",100);
+
+
 
 
 // man hinh hoc sinh
@@ -40,6 +70,7 @@ void drawLogin() {
     taiKhoan.content = "";
     matKhau.content = "";
     settextstyle(BOLD_FONT, 0, 7);
+    setcolor(YELLOW);
     string nameApp = "PHAN MEM THI TRAC NGHIEM";
     outtextxy((w - textwidth(&nameApp[0])) / 2, 150, &nameApp[0]);
     taiKhoan.draw();
@@ -47,37 +78,18 @@ void drawLogin() {
     dangnhap.draw();
     taiKhoan.setNext(&matKhau);
     matKhau.setPre(&taiKhoan);
+    taiKhoan.setPre(&matKhau);
+    matKhau.setNext(&taiKhoan);
 }
 
-
-// void drawKhungMonHoc() {
-//     setlinestyle(0,0,2);
-//     // ve cai khung
-//     line(50,100, 50, 750);
-//     line(50,100, 900 , 100);
-//     line(50,750, 900 , 750);
-//     line(900,750, 900 , 100);
-
-//     // ve stt
-//     line(150,100, 150, 750);
-//     // ve ma mon
-//     line(300,100, 300, 750);
-//     // ve gach ngang
-//     line(50,150,900,150);
-
-//     outtextxy(xDsMon[0],110,"STT");
-//     outtextxy(xDsMon[1],110,"MA MON");
-//     outtextxy(xDsMon[2],110,"TEN MON HOC");
-
-// }
 
 
 // ve man hinh chuc nang giao vien
 void drawGV() {
     cleardevice();
     settextstyle(BOLD_FONT, 0, 7);
-    string nameApp = "QUAN TRI VIEN HE THONG THI";
-    outtextxy((w - textwidth(&nameApp[0])) / 2, 100, &nameApp[0]);
+    setcolor(YELLOW);
+    outtextxy((w - textwidth("QUAN TRI VIEN HE THONG THI")) / 2, 100, "QUAN TRI VIEN HE THONG THI");
     btnMonHoc.draw();
     btnDsLop.draw();
     btnDiemThi.draw();
@@ -86,36 +98,6 @@ void drawGV() {
     btnDangXuat.draw();
 }
 
-// ve man hinh mon hoc ơ chuc nang GV
-void drawMonHoc() {
-    cleardevice();
-    settextstyle(BOLD_FONT, 0, 7);
-    string nameApp = "DANH SACH MON HOC";
-    outtextxy( 200, 20, &nameApp[0]);
-    btnQuaylai.draw();
-    timKiemMon.draw();
-    btnThemMon.draw();
-    btnLui.draw();
-    btnTien.draw();
-    line(1000,0,1000,900);
-
-    rectangle(50,200,950,800);
-    // ve stt
-    line(150,200, 150, 800);
-    // ve ma mon
-    line(350,200, 350, 800);
-    // ve gach ngang
-    line(50,250,950,250);
-    outtextxy(xDsMon[0], yDsMon[0],"STT");
-    outtextxy(xDsMon[1] + 20,yDsMon[1],"MA MON");
-    outtextxy(600,yDsMon[2],"TEN MON HOC");
-    char c = '1';
-    for ( int i =  1 ; i * yDsMon[0] < 800; i++ ) {
-        outtextxy(xDsMon[0], yDsMon[0] * i, &c);
-        c+= 1;
-    }
-
-}
 
 void KbEvent()
 {
@@ -129,14 +111,37 @@ void KbEvent()
         Edit->isChoose = true;
 		Edit->draw();
         if ( curMenu == DISPLAY_LOGIN) {
+            
             if ( Edit == &taiKhoan) {
-                Scan(Edit,100,TEXT_NUMBER);
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
 
-            if ( Edit == &matKhau) {
-                Scan(Edit,10,TEXT_NUMBER);
+            else if ( Edit == &matKhau) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }
+
+        else if ( curMenu == btnMenuThemMon.id) {
+            if ( Edit == &themMaMon) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER_NO_SPACE);
+            }
+            if ( Edit == &themTenMon) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+            }
+        }
+        else if ( curMenu = btnDsLop.id) {
+            if ( Edit == &themMaLop) {
+                Scan(Edit,Edit->textSize,SCAN_MALOP);
+            }
+            else if (Edit == &themTenLop) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+            }
+            else if (Edit == &timKiemLop) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+            }
+        }
+
+        
     }
     else {
         ClearStream();

@@ -57,8 +57,11 @@ public:
 		if (textwidth(&content[i]) >= width - 170 - textwidth("_"))
 		{
 			i++;
-			if (textwidth(&content[i]) >= width - 170 - textwidth("_"))
-			{
+			// if (textwidth(&content[i]) >= width - 170 - textwidth("_"))
+			// {
+			// 	i++;
+			// }
+			while (textwidth(&content[i]) >= width - 170 - textwidth("_")) {
 				i++;
 			}
 		}
