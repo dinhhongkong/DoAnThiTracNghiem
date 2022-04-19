@@ -546,67 +546,67 @@ int ClickItemLop(dslop &DanhSachLop)
         setcolor(WHITE);
         line(350, 200, 350, 760);
 
-        if (GetAsyncKeyState(VK_RBUTTON) && LuaChon < listviewDS.size)
-        {
-            Sleep(20);
-            themMaLop.content = DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].MALOP;
-            themTenLop.content = DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].TENLOP;
-            drawHieuChinhLop();
-            while (true)
-            {
-                KbEvent();
-                btnHieuChinh.ButtonEffect();
-                btnXoaVinhVien.ButtonEffect();
-                btnThoat.ButtonEffect();
-                btnQuaylai.ButtonEffect();
-                GetAsyncKeyState(VK_RBUTTON); // xoa bo nho dem chuot trai
-                if (GetAsyncKeyState(VK_LBUTTON))
-                {
-                    if (btnXoaVinhVien.isMouseHover())
-                    {
-                    }
-                    else if (btnQuaylai.isMouseHover())
-                    {
-                        curMenu = DISPLAY_GIAOVIEN;
-                        btnMenuThemLop.click = false;
-                        drawGV();
-                        Edit = nullptr;
-                        themMaLop.content = "";
-                        themTenLop.content = "";
-                        timKiemLop.content = "";
-                        soTrangLop = 1;
-                        break;
-                    }
-                    else if (btnHieuChinh.isMouseHover())
-                    {
-                        // chua bat truong hop
-                        chinhSuaLop((DanhSachLop.arrLop[listviewDS.idItem[LuaChon]]), themMaLop.ToString(), themTenLop.ToString());
-                        drawDSLop(DanhSachLop);
-                    }
-                    else if (btnThoat.isMouseHover())
-                    {
-                        btnMenuThemLop.click = true;
-                        setfillstyle(1, BLACK);
-                        bar(1005, 0, 1600, 765);
-                        themMaLop.content = "";
-                        themTenLop.content = "";
-                        btnMenuThemLop.draw();
-                        Sleep(100);
-                        drawThemLop();
-                        break;
-                    }
-                    else if (themMaLop.isMouseHover())
-                    {
-                        Edit = &themMaLop;
-                    }
-                    else if (themTenLop.isMouseHover())
-                    {
-                        Edit = &themTenLop;
-                    }
-                }
-                Sleep(75);
-            }
-        }
+        // if (GetAsyncKeyState(VK_RBUTTON) && LuaChon < listviewDS.size)
+        // {
+        //     Sleep(20);
+        //     themMaLop.content = DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].MALOP;
+        //     themTenLop.content = DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].TENLOP;
+        //     drawHieuChinhLop();
+        //     while (true)
+        //     {
+        //         KbEvent();
+        //         btnHieuChinh.ButtonEffect();
+        //         btnXoaVinhVien.ButtonEffect();
+        //         btnThoat.ButtonEffect();
+        //         btnQuaylai.ButtonEffect();
+        //         GetAsyncKeyState(VK_RBUTTON); // xoa bo nho dem chuot trai
+        //         if (GetAsyncKeyState(VK_LBUTTON))
+        //         {
+        //             if (btnXoaVinhVien.isMouseHover())
+        //             {
+        //             }
+        //             else if (btnQuaylai.isMouseHover())
+        //             {
+        //                 curMenu = DISPLAY_GIAOVIEN;
+        //                 btnMenuThemLop.click = false;
+        //                 drawGV();
+        //                 Edit = nullptr;
+        //                 themMaLop.content = "";
+        //                 themTenLop.content = "";
+        //                 timKiemLop.content = "";
+        //                 soTrangLop = 1;
+        //                 break;
+        //             }
+        //             else if (btnHieuChinh.isMouseHover())
+        //             {
+        //                 // chua bat truong hop
+        //                 chinhSuaLop((DanhSachLop.arrLop[listviewDS.idItem[LuaChon]]), themMaLop.ToString(), themTenLop.ToString());
+        //                 drawDSLop(DanhSachLop);
+        //             }
+        //             else if (btnThoat.isMouseHover())
+        //             {
+        //                 btnMenuThemLop.click = true;
+        //                 setfillstyle(1, BLACK);
+        //                 bar(1005, 0, 1600, 765);
+        //                 themMaLop.content = "";
+        //                 themTenLop.content = "";
+        //                 btnMenuThemLop.draw();
+        //                 Sleep(100);
+        //                 drawThemLop();
+        //                 break;
+        //             }
+        //             else if (themMaLop.isMouseHover())
+        //             {
+        //                 Edit = &themMaLop;
+        //             }
+        //             else if (themTenLop.isMouseHover())
+        //             {
+        //                 Edit = &themTenLop;
+        //             }
+        //         }
+        //         Sleep(75);
+        //     }
+        // }
     }
     else
     {
