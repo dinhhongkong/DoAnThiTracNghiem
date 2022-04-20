@@ -13,6 +13,16 @@ private:
 public:
 	bool click;
 	int id ;
+
+	button(int x, int y, int width, int height, string title)
+	{
+		this->x = x;
+		this->y = y;
+		this->width = width;
+		this->height = height;
+		this->title = title;
+	}
+
 	button(int id, int x, int y, int width, int height, string title)
 	{
 		this->id = id;

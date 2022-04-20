@@ -55,8 +55,15 @@ editText timKiemLop(0,100,100,600,50,"TIM KIEM: ","Nhap MA hoac Ten lop muon tim
 
 // danh sach hoc sinh trong 1 lop
 int xDsSV[6] = {50,200,500,650,  950};
-button btnMenuThemSV(300, 1175,20,250,50,"MENU THEM SINH VIEN");
-editText timKiemSV(0,100,100,600,50,"TIM KIEM: ","Nhap MA hoac Ten SV muon tim",100);
+button btnMenuThemSV(1175,20,250,50,"MENU THEM SINH VIEN");
+editText edtimKiemSV(100,100,600,50,"TIM KIEM: ","Nhap MA hoac Ten SV muon tim",100);
+editText edMSSV(1075,325,450,50,"MSSV:","Toi da 10 ki tu",10);
+editText edHoSV(1075,400,450,50,"Ho va ten dem","nhap ho vs ten lot",40);
+editText edTenSV(1075,475,450,50,"Ten:","Toi da 7 ki tu",7);
+button btnNam(1225, 540, 100,40,"NAM");
+// button btnNu(1375, 540, 100,40,"NU");
+button btnNu(1350, 540, 100,40,"NU");
+
 
 
 

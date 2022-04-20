@@ -18,6 +18,20 @@ public:
 	editText *next = nullptr;
 	editText *pre = nullptr;
 
+	editText(int x, int y, int width, int heigh, string title, string hint, int textSize)
+	{
+		this->x = x;
+		this->y = y;
+		this->width = width;
+		this->height = heigh;
+		this->title = title;
+		this->hint = hint;
+		isHover = false;
+		this->textSize = textSize;
+		this->next = nullptr;
+		this->pre = nullptr;
+	}
+
 	editText(int id, int x, int y, int width, int heigh, string title, string hint, int textSize)
 	{
 		this->id = id;
@@ -49,6 +63,7 @@ public:
 		this->next = nullptr;
 		this->pre = nullptr;
 	}
+	
 
 	void draw()
 	{

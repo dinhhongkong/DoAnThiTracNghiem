@@ -488,33 +488,6 @@ void drawDSLop(dslop DanhSachLop)
     }
 }
 
-void drawSinhVien() {
-    setbkcolor(BLACK);
-    cleardevice();
-    settextstyle(BOLD_FONT, 0, 7);
-    setcolor(YELLOW);
-    outtextxy(250, 20, "DANH SACH SV");
-    btnQuaylai.draw();
-    timKiemSV.draw();
-    btnMenuThemSV.draw();
-    btnLui.draw();
-    btnTien.draw();
-    line(1000, 0, 1000, 900);
-    rectangle(50, 200, 950, 760);
-    // ve ma sv
-    line(200, 200, 200, 760);
-    // ve ho sv
-    line(500, 200, 500, 760);
-    // ve ten sv
-    line(650, 200, 650, 760);
-    // ve gach ngang
-    line(50, 250, 950, 250);
-    outtextxy(xDsSV[0] + 50, 215, "MSSV");
-    outtextxy(xDsSV[1] + 130, 215, "HO");
-    outtextxy(xDsSV[2] + 55, 215, "TEN");
-
-
-}
 
 void drawHieuChinhLop()
 {
@@ -534,6 +507,64 @@ void drawHieuChinhLop()
     btnXoaVinhVien.draw();
     btnThoat.draw();
 }
+
+void drawSinhVien() {
+    setbkcolor(BLACK);
+    cleardevice();
+    settextstyle(BOLD_FONT, 0, 7);
+    setcolor(YELLOW);
+    outtextxy(250, 20, "DANH SACH SV");
+    btnQuaylai.draw();
+    edtimKiemSV.draw();
+    btnMenuThemSV.draw();
+    btnLui.draw();
+    btnTien.draw();
+    line(1000, 0, 1000, 900);
+    rectangle(50, 200, 950, 760);
+    // ve ma sv
+    line(200, 200, 200, 760);
+    // ve ho sv
+    line(500, 200, 500, 760);
+    // ve ten sv
+    line(650, 200, 650, 760);
+    // ve gach ngang
+    line(50, 250, 950, 250);
+    outtextxy(xDsSV[0] + 50, 215, "MSSV");
+    outtextxy(xDsSV[1] + 130, 215, "HO");
+    outtextxy(xDsSV[2] + 55, 215, "TEN");
+}
+
+void drawThemSinhVien() {
+    setfillstyle(1, BLACK);
+    bar(1005, 75, 1600, 765);
+    setfillstyle(LTSLASH_FILL, CYAN);
+    bar(1050, 200, 1550, 300);
+    setcolor(YELLOW);
+    rectangle(1050, 200, 1550, 700);
+    settextstyle(0, 0, 3);
+
+    outtextxy(1170, 230, "THEM SINH VIEN");
+    line(1050, 300, 1550, 300);
+    line(1050, 600, 1550, 600);
+    btnThem.draw();
+    edMSSV.draw();
+    edHoSV.draw();
+    edTenSV.draw();
+    setcolor(13);
+    outtextxy(1075,550,"Gioi tinh:");
+    btnNam.draw();
+    btnNu.draw();
+
+    edMSSV.setNext(&edHoSV);
+    edMSSV.setPre(&edTenSV);
+
+    edHoSV.setNext(&edTenSV);
+    edHoSV.setPre(&edMSSV);
+
+    edTenSV.setNext(&edMSSV);
+    edTenSV.setPre(&edHoSV);
+}
+
 
 int ClickItemLop(dslop &DanhSachLop)
 {
@@ -649,6 +680,9 @@ int ClickItemLop(dslop &DanhSachLop)
                         drawList = true;
                         break;
                     }
+                    else if ( btnMenuThemSV.isMouseHover()) {
+                        drawThemSinhVien();
+                    }
                 }
             }
             
@@ -705,6 +739,7 @@ void DisplayLop(dslop &DanhSachLop)
         drawList = true;
     }
 
+    // Bat su kien khi click item trong cai listView
     ClickItemLop(DanhSachLop);
 
     setfillstyle(1, LIGHTGRAY);
