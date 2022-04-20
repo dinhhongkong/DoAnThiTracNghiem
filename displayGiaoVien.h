@@ -38,7 +38,7 @@ void displayGV()
 //------------------------------------------------CHUC NANG QUAN LI MON HOC----------------------------------------
 void DrawThemMonHoc()
 {
-    setfillstyle(LTSLASH_FILL, CYAN);
+    setfillstyle(WIDE_DOT_FILL, CYAN);
     bar(1050, 200, 1550, 300);
     setcolor(YELLOW);
     rectangle(1050, 200, 1550, 700);
@@ -399,7 +399,7 @@ void drawThemLop()
 {
     setfillstyle(1, BLACK);
     bar(1005, 75, 1600, 765);
-    setfillstyle(LTSLASH_FILL, CYAN);
+    setfillstyle(WIDE_DOT_FILL, CYAN);
     bar(1050, 200, 1550, 300);
     setcolor(YELLOW);
     rectangle(1050, 200, 1550, 700);
@@ -493,7 +493,7 @@ void drawHieuChinhLop()
 {
     setfillstyle(1, BLACK);
     bar(1005, 0, 1600, 765); // 75 tai y neu thay menu
-    setfillstyle(LTSLASH_FILL, CYAN);
+    setfillstyle(WIDE_DOT_FILL, CYAN);
     bar(1050, 200, 1550, 300);
     setcolor(YELLOW);
     rectangle(1050, 200, 1550, 700);
