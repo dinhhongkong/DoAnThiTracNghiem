@@ -70,10 +70,10 @@ struct TreeCauHoi
 struct sinhVien{
 	string mssv;
     string Pass;
-	string HO;
-	string TEN;
+	string Ho;
+	string Ten;
 	int gioiTinh;
-	string password;
+	// string password;
 	// con tro tro den cac mon da thi trac nghiem
 	//dsdiemThi diem;
 };

@@ -1,7 +1,6 @@
 class editText
 {
 private:
-	int id;
 	int x, y;
 	int width, height;
 	string title, hint;
@@ -32,25 +31,9 @@ public:
 		this->pre = nullptr;
 	}
 
-	editText(int id, int x, int y, int width, int heigh, string title, string hint, int textSize)
-	{
-		this->id = id;
-		this->x = x;
-		this->y = y;
-		this->width = width;
-		this->height = heigh;
-		this->title = title;
-		this->hint = hint;
-		isHover = false;
-		this->textSize = textSize;
-		this->next = nullptr;
-		this->pre = nullptr;
-	}
-
 	// them nhap tuy chon nhap mat khau o cuoi (true la nhap mk)
-	editText(int id, int x, int y, int width, int heigh, string title, string hint, int textSize, bool inputPass)
+	editText(int x, int y, int width, int heigh, string title, string hint, int textSize, bool inputPass)
 	{
-		this->id = id;
 		this->x = x;
 		this->y = y;
 		this->width = width;
@@ -63,12 +46,45 @@ public:
 		this->next = nullptr;
 		this->pre = nullptr;
 	}
+
+	/*xoa bo chuc nang id */
+
+	// editText(int id, int x, int y, int width, int heigh, string title, string hint, int textSize)
+	// {
+	// 	this->id = id;
+	// 	this->x = x;
+	// 	this->y = y;
+	// 	this->width = width;
+	// 	this->height = heigh;
+	// 	this->title = title;
+	// 	this->hint = hint;
+	// 	isHover = false;
+	// 	this->textSize = textSize;
+	// 	this->next = nullptr;
+	// 	this->pre = nullptr;
+	// }
+
+	// them nhap tuy chon nhap mat khau o cuoi (true la nhap mk)
+	// editText(int id, int x, int y, int width, int heigh, string title, string hint, int textSize, bool inputPass)
+	// {
+	// 	this->id = id;
+	// 	this->x = x;
+	// 	this->y = y;
+	// 	this->width = width;
+	// 	this->height = heigh;
+	// 	this->title = title;
+	// 	this->hint = hint;
+	// 	isHover = false;
+	// 	this->textSize = textSize;
+	// 	this->inputPass = inputPass;
+	// 	this->next = nullptr;
+	// 	this->pre = nullptr;
+	// }
 	
 
 	void draw()
 	{
 		// vuot qua do dai text box thi tien len
-
 		if (textwidth(&content[i]) >= width - 170 - textwidth("_"))
 		{
 			i++;
@@ -166,7 +182,6 @@ public:
 	int toInt(){
 		int x = 0;
 		for(int i=0; i < content.size(); i++){
-			if(i > 0 && content[i] == '_') break;
 			if(content[i] >= '0' && content[i] <= '9') x = x*10 + (content[i]-'0');
 			else return -1;
 		}

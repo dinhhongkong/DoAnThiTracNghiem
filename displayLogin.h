@@ -29,13 +29,13 @@ void displayLogin()
 
         else if (taiKhoan.isMouseHover()) {
             Edit = &taiKhoan;
-            matKhau.isChoose = false;
-            matKhau.draw();
+            // matKhau.isChoose = false;
+            // matKhau.draw();
         }
         else if (matKhau.isMouseHover()) {
             Edit = &matKhau;
-            taiKhoan.isChoose = false;
-            taiKhoan.draw();
+            // taiKhoan.isChoose = false;
+            // taiKhoan.draw();
         }
     }           
 }

@@ -12,7 +12,7 @@ private:
 	*/
 public:
 	bool click;
-	int id ;
+	// int id ;
 
 	button(int x, int y, int width, int height, string title)
 	{
@@ -23,15 +23,15 @@ public:
 		this->title = title;
 	}
 
-	button(int id, int x, int y, int width, int height, string title)
-	{
-		this->id = id;
-		this->x = x;
-		this->y = y;
-		this->width = width;
-		this->height = height;
-		this->title = title;
-	}
+	// button(int id, int x, int y, int width, int height, string title)
+	// {
+	// 	this->id = id;
+	// 	this->x = x;
+	// 	this->y = y;
+	// 	this->width = width;
+	// 	this->height = height;
+	// 	this->title = title;
+	// }
 
 	// vẽ cái nút
 	void draw()

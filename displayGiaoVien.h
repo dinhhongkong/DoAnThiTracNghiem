@@ -4,6 +4,8 @@ void DrawThemMonHoc();
 void drawMonHoc();
 void drawLop();
 
+void displaySinhVien(listSV &danhSachSV, string maLop);
+
 void displayGV()
 {
     btnMonHoc.ButtonEffect();
@@ -22,13 +24,13 @@ void displayGV()
         }
         if (btnMonHoc.isMouseHover())
         {
-            curMenu = btnMenuThemMon.id;
+            curMenu = DISPLAY_DSMON;
             drawList = true;
             drawMonHoc();
         }
         if (btnDsLop.isMouseHover())
         {
-            curMenu = btnDsLop.id;
+            curMenu = DISPLAY_DSLOP;
             drawList = true;
             drawLop();
         }
@@ -74,6 +76,7 @@ void drawMonHoc()
     rectangle(50, 200, 950, 760);
     // ve gach ngang
     line(50, 250, 950, 250);
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
     outtextxy(xDsMon[0] + 85, 210, "MA MON");
     outtextxy(550, 210, "TEN MON HOC");
 }
@@ -488,7 +491,6 @@ void drawDSLop(dslop DanhSachLop)
     }
 }
 
-
 void drawHieuChinhLop()
 {
     setfillstyle(1, BLACK);
@@ -508,7 +510,8 @@ void drawHieuChinhLop()
     btnThoat.draw();
 }
 
-void drawSinhVien() {
+void drawSinhVien()
+{
     setbkcolor(BLACK);
     cleardevice();
     settextstyle(BOLD_FONT, 0, 7);
@@ -516,6 +519,7 @@ void drawSinhVien() {
     outtextxy(250, 20, "DANH SACH SV");
     btnQuaylai.draw();
     edtimKiemSV.draw();
+    btnMenuThemSV.click = true;
     btnMenuThemSV.draw();
     btnLui.draw();
     btnTien.draw();
@@ -529,21 +533,23 @@ void drawSinhVien() {
     line(650, 200, 650, 760);
     // ve gach ngang
     line(50, 250, 950, 250);
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
     outtextxy(xDsSV[0] + 50, 215, "MSSV");
     outtextxy(xDsSV[1] + 130, 215, "HO");
     outtextxy(xDsSV[2] + 55, 215, "TEN");
 }
 
-void drawThemSinhVien() {
+void drawThemSinhVien()
+{
     setfillstyle(1, BLACK);
     bar(1005, 75, 1600, 765);
-    setfillstyle(LTSLASH_FILL, CYAN);
+    setfillstyle(WIDE_DOT_FILL, CYAN);
     bar(1050, 200, 1550, 300);
     setcolor(YELLOW);
     rectangle(1050, 200, 1550, 700);
     settextstyle(0, 0, 3);
 
-    outtextxy(1170, 230, "THEM SINH VIEN");
+    outtextxy(1140, 230, "THEM SINH VIEN");
     line(1050, 300, 1550, 300);
     line(1050, 600, 1550, 600);
     btnThem.draw();
@@ -551,7 +557,7 @@ void drawThemSinhVien() {
     edHoSV.draw();
     edTenSV.draw();
     setcolor(13);
-    outtextxy(1075,550,"Gioi tinh:");
+    outtextxy(1075, 550, "Gioi tinh:");
     btnNam.draw();
     btnNu.draw();
 
@@ -605,6 +611,7 @@ int ClickItemLop(dslop &DanhSachLop)
         setcolor(WHITE);
         line(350, 200, 350, 760);
 
+        // bat su kien khi click vao item khi click chuot tra hoac chuot phai
         if (GetAsyncKeyState(VK_RBUTTON) && LuaChon < listviewDS.size)
         {
             Sleep(20);
@@ -666,27 +673,72 @@ int ClickItemLop(dslop &DanhSachLop)
                 Sleep(75);
             }
         }
-        else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size) {
+        else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size)
+        {
+            btnMenuThemLop.click = false;
             drawSinhVien();
+            curMenu = DISPLAY_DSSV;
+            drawThemSinhVien();
             while (true)
             {
-                btnQuaylai.ButtonEffect();
-                btnLui.ButtonEffect();
-                btnTien.ButtonEffect();
-                if (GetAsyncKeyState(VK_LBUTTON)) {
-                    if ( btnQuaylai.isMouseHover()) {
-                        drawLop();
-                        Sleep(200);
-                        drawList = true;
-                        break;
-                    }
-                    else if ( btnMenuThemSV.isMouseHover()) {
-                        drawThemSinhVien();
-                    }
+                KbEvent();
+                displaySinhVien(DanhSachLop.arrLop[LuaChon].dsSinhVien,DanhSachLop.arrLop[LuaChon].MALOP);
+                if ( btnQuaylai.click) {
+                    btnQuaylai.click = false;
+                    break;
                 }
+            // btnQuaylai.ButtonEffect();
+            // btnLui.ButtonEffect();
+            // btnTien.ButtonEffect();
+            // btnMenuThemSV.ButtonEffect();
+            // if (GetAsyncKeyState(VK_LBUTTON))
+            // {
+            //     if (btnQuaylai.isMouseHover())
+            //     {
+            //         curMenu = DISPLAY_DSLOP;
+            //         drawLop();
+            //         Sleep(200);
+            //         drawList = true;
+            //         Edit = nullptr;
+            //         edMSSV.content = "";
+            //         edHoSV.content = "";
+            //         edTenSV.content = "";
+            //         edtimKiemSV.content = "";
+            //         btnNam.click = false;
+            //         btnNu.click = false;
+            //         break;
+            //     }
+            //     else if  (edtimKiemSV.isMouseHover()) {
+            //         Edit = &edtimKiemSV;
+            //     }
+            //     // else if (btnMenuThemSV.isMouseHover())
+            //     // {
+            //     //     drawThemSinhVien();
+            //     // }
+            // }
+            // if (btnMenuThemSV.click)
+            // {
+            //     btnNam.ButtonEffect();
+            //     btnNu.ButtonEffect();
+            //     btnThem.ButtonEffect();
+            //     if (GetAsyncKeyState(VK_LBUTTON))
+            //     {
+            //         if (edMSSV.isMouseHover())
+            //         {
+            //             Edit = &edMSSV;
+            //         }
+            //         else if (edHoSV.isMouseHover())
+            //         {
+            //             Edit = &edHoSV;
+            //         }
+            //         else if (edTenSV.isMouseHover())
+            //         {
+            //             Edit = &edTenSV;
+            //         }
+            //     }
+            // }
+                Sleep(75);
             }
-            
-
         }
     }
     else
@@ -767,8 +819,8 @@ void DisplayLop(dslop &DanhSachLop)
         }
         else if (timKiemLop.isMouseHover())
         {
-            timKiemLop.isChoose = true;
-            timKiemLop.draw();
+            // timKiemLop.isChoose = true;
+            // timKiemLop.draw();
             Edit = &timKiemLop;
         }
         else if (btnTien.isMouseHover())
@@ -793,14 +845,14 @@ void DisplayLop(dslop &DanhSachLop)
             if (themMaLop.isMouseHover())
             {
                 Edit = &themMaLop;
-                themMaLop.isChoose = false;
-                themMaLop.draw();
+                // themMaLop.isChoose = false;
+                // themMaLop.draw();
             }
             else if (themTenLop.isMouseHover())
             {
                 Edit = &themTenLop;
-                themTenLop.isChoose = false;
-                themTenLop.draw();
+                // themTenLop.isChoose = false;
+                // themTenLop.draw();
             }
 
             else if (btnThem.isMouseHover())
@@ -830,6 +882,101 @@ void DisplayLop(dslop &DanhSachLop)
                     themTenLop.draw();
                     drawList = true;
                 }
+            }
+        }
+    }
+}
+
+void displaySinhVien(listSV &danhSachSV, string maLop)
+{
+    btnQuaylai.ButtonEffect();
+    btnLui.ButtonEffect();
+    btnTien.ButtonEffect();
+    btnMenuThemSV.ButtonEffect();
+    if (GetAsyncKeyState(VK_LBUTTON))
+    {
+        if (btnQuaylai.isMouseHover())
+        {
+            curMenu = DISPLAY_DSLOP;
+            drawLop();
+            Sleep(200);
+            drawList = true;
+            Edit = nullptr;
+            edMSSV.content = "";
+            edHoSV.content = "";
+            edTenSV.content = "";
+            edtimKiemSV.content = "";
+            btnNam.click = false;
+            btnNu.click = false;
+            btnQuaylai.click = true;
+        }
+        else if (edtimKiemSV.isMouseHover())
+        {
+            Edit = &edtimKiemSV;
+        }
+        // else if (btnMenuThemSV.isMouseHover())
+        // {
+        //     drawThemSinhVien();
+        // }
+    }
+    if (btnMenuThemSV.click)
+    {
+        btnNam.ButtonEffect();
+        btnNu.ButtonEffect();
+        btnThem.ButtonEffect();
+        if (GetAsyncKeyState(VK_LBUTTON))
+        {
+            if (edMSSV.isMouseHover())
+            {
+                Edit = &edMSSV;
+            }
+            else if (edHoSV.isMouseHover())
+            {
+                Edit = &edHoSV;
+            }
+            else if (edTenSV.isMouseHover())
+            {
+                Edit = &edTenSV;
+            }
+            else if ( btnNam.isMouseHover() ) {
+                btnNam.click = true;
+                btnNu.click = false;
+                btnNam.draw();
+                btnNu.draw();
+                
+            }
+            else if ( btnNu.isMouseHover()) {
+                btnNam.click = false;
+                btnNu.click = true;
+                btnNam.draw();
+                btnNu.draw();
+            }
+            else if ( btnThem.isMouseHover()) {
+                if ( edMSSV.content.size() == 0) {
+
+                }
+                else if ( edHoSV.content.size() == 0) {
+
+                }
+                else if ( edTenSV.content.size() == 0) {
+
+                }
+                else if (!btnNam.click && !btnNu.click) {
+
+                }
+                else {
+                    sinhVien sv;
+                    sv.mssv = edMSSV.ToString();
+                    sv.Ho = edHoSV.ToString();
+                    sv.Ten = edTenSV.ToString();
+                    sv.gioiTinh = (btnNam.click ? 0 : 1);
+                    // pass mac dinh la mssv;
+                    sv.Pass = sv.mssv;
+                    InsertNodeSV(danhSachSV,sv);
+                    ghiFileDsSinhVien(danhSachSV,maLop);
+                    
+                }
+
             }
         }
     }

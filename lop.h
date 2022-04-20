@@ -78,7 +78,7 @@ void docFileDsLop(dslop &DanhSachLop) {
 		// DanhSachLop.arrLop[i] = new lop;
 		getline(fileIn,DanhSachLop.arrLop[i].TENLOP,'\n');
 		getline(fileIn,DanhSachLop.arrLop[i].MALOP,'\n');
-		// DocFileLop(dsl.l[i],dsl.l[i].MALOP+".txt");
+		DocDsSinhVien(DanhSachLop.arrLop[i].dsSinhVien,DanhSachLop.arrLop[i].MALOP);
 		// DocFileDiem1Lop(dsl.l[i]);
 	}
 	fileIn.close();

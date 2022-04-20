@@ -13,9 +13,10 @@ using namespace std;
 #include "EditText.h"
 #include "Scan.h"
 #include "local.h"
-#include "lop.h"
 #include "sinhvien.h"
 #include "monhoc.h"
+#include "lop.h"
+
 
 #include "displayHocSinh.h"
 #include "displayGiaoVien.h"
@@ -49,11 +50,11 @@ int main()
         {
             displayGV();
         }
-        else if (curMenu == btnMenuThemMon.id)
+        else if (curMenu == DISPLAY_DSMON)
         {
             DisplayMonHoc(listMH);
         }
-        else if (curMenu == btnDsLop.id)
+        else if (curMenu == DISPLAY_DSLOP)
         {
             DisplayLop(DanhSachLop);
         }

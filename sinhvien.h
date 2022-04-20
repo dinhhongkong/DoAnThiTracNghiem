@@ -98,5 +98,45 @@ void InsertNodeSV(listSV &l, sinhVien sv) {
 	cout <<"khong chen dc, vi da ton tai" << endl;
 }
 
+void DocDsSinhVien(listSV &dsSinhVien, string maLop) {
+	ifstream fileIn;
+	string nameFILE ="DATA\\Ds" + maLop + ".txt";
+	fileIn.open(nameFILE, ios_base:: in );
+	if ( !fileIn.is_open()) {
+		cout << "Khong mo dc file " << maLop << endl;
+		return;
+	}
+	else {
+		cout << "doc dc file " << maLop << endl;
+	}
+
+	sinhVien sv;
+	while (!fileIn.eof()) {
+		getline(fileIn, sv.mssv, '\n');
+		getline(fileIn,sv.Ho, '\n');
+		getline(fileIn,sv.Ten,'\n');
+		fileIn >> sv.gioiTinh;
+		fileIn.ignore();
+		getline(fileIn,sv.Pass,'\n');
+		AddLast(dsSinhVien,CreateNodeSV(sv));
+	}
+	fileIn.close();
+
+}
+
+void ghiFileDsSinhVien(listSV &dsSinhVien, string maLop)
+{
+	ofstream fileOut;
+	string nameFILE ="DATA\\Ds" + maLop +".txt";
+	fileOut.open(nameFILE, ios_base::out);
+	nodeSV *temp = dsSinhVien.First;
+	while (temp!= nullptr)
+	{
+		fileOut << temp->info.mssv << '\n'<< temp->info.Ho << '\n' << temp->info.Ten << '\n' << temp->info.gioiTinh << '\n' << temp->info.Pass << '\n';
+		temp = temp->pNext;
+	}
+	cout << "ghi thanh cong sv" << endl;
+    fileOut.close();
+}
 
 
