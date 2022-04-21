@@ -9,7 +9,7 @@ void Them_Mon_Hoc(ListMonHoc& listMH, Mon_Hoc mh);
 void Xuat_Danh_Sach_Mon_Hoc(ListMonHoc listMH);
 void Xoa_Mon_Hoc(ListMonHoc& listMH, string maMH);
 void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, string maMH);
-bool Doc_File_Mon_Hoc(ListMonHoc& listMH);
+void Doc_File_Mon_Hoc(ListMonHoc& listMH);
 void Luu_File_Mon_Hoc(ListMonHoc listMH);
 
 // // ------------------------- DINH NGHIA HAM PHU ----------------------------
@@ -53,34 +53,50 @@ int Tim_Kiem_TENMH(ListMonHoc listMH, string tenMH) {
 }
 
 // ------------------------ DINH NGHIA HAM CHINH ---------------------------
-bool Doc_File_Mon_Hoc(ListMonHoc& listMH) {
+// bool Doc_File_Mon_Hoc(ListMonHoc& listMH) {
+// 	ifstream filein;
+// 	filein.open("DS_MONHOC.TXT", ios_base::in);
+// 	while (filein.eof() != true) {
+// 		Mon_Hoc mh;
+// 		getline(filein, mh.MAMH, ',');
+// 		getline(filein, mh.TENMH);
+// 		Them_Mon_Hoc(listMH, mh);
+// 	}
+// 	filein.close();
+// 	if (filein.eof() == true) {
+// 		cout << "Doc du lieu thanh cong!";
+// 		return true;
+// 	}
+// 	else {
+// 		cout << "Doc du lieu that bai!";
+// 		return false;
+// 	}
+// }
+
+void Doc_File_Mon_Hoc(ListMonHoc& listMH) {
 	ifstream filein;
-	filein.open("DS_MONHOC.TXT", ios_base::in);
-	while (filein.eof() != true) {
+	filein.open("DATA\\DANHSACHMONHOC.txt", ios_base::in);
+	if (!filein.is_open()) return;
+	int n;
+	filein >> n;
+	filein.ignore();
+	for (int i = 0; i < listMH.slmh; i++) {
 		Mon_Hoc mh;
 		getline(filein, mh.MAMH, ',');
-		getline(filein, mh.TENMH);
+		getline(filein, mh.TENMH );
 		Them_Mon_Hoc(listMH, mh);
 	}
 	filein.close();
-	if (filein.eof() == true) {
-		cout << "Doc du lieu thanh cong!";
-		return true;
-	}
-	else {
-		cout << "Doc du lieu that bai!";
-		return false;
-	}
 }
 
 void Luu_File_Mon_Hoc(ListMonHoc listMH) {
 	ofstream fileout;
-	fileout.open("DS_MONHOC.TXT", ios_base::out);
+	fileout.open("DATA\\DANHSACHMONHOC.txt", ios_base::out);
+	fileout << listMH.slmh << endl; // bo xung
 	for (int i = 0; i < listMH.slmh; i++) {
 		fileout << listMH.monHoc[i]->MAMH << "," << listMH.monHoc[i]->TENMH << endl;
 	}
 	fileout.close();
-	cout << "Luu du lieu thanh cong!";
 }
 
 void Them_Mon_Hoc(ListMonHoc& listMH, Mon_Hoc mh) {
@@ -90,7 +106,8 @@ void Them_Mon_Hoc(ListMonHoc& listMH, Mon_Hoc mh) {
 		cout << N << endl;
 	}
 	else {
-		listMH.monHoc[N] = new Mon_Hoc(); listMH.slmh++;
+		listMH.monHoc[N] = new Mon_Hoc(); // bủh, lmaoA
+		listMH.slmh++;
 		if (N == 0) {
 			*listMH.monHoc[0] = mh;
 		}

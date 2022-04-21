@@ -100,7 +100,7 @@ void InsertNodeSV(listSV &l, sinhVien sv) {
 
 void DocDsSinhVien(listSV &dsSinhVien, string maLop) {
 	ifstream fileIn;
-	string nameFILE ="DATA\\Ds" + maLop + ".txt";
+	string nameFILE ="DATA\\" + maLop + ".txt";
 	fileIn.open(nameFILE, ios_base:: in );
 	if ( !fileIn.is_open()) {
 		cout << "Khong mo dc file " << maLop << endl;
@@ -111,13 +111,13 @@ void DocDsSinhVien(listSV &dsSinhVien, string maLop) {
 	}
 
 	sinhVien sv;
-	while (!fileIn.eof()) {
-		getline(fileIn, sv.mssv, '\n');
+	while (getline(fileIn, sv.mssv, '\n')) {
 		getline(fileIn,sv.Ho, '\n');
 		getline(fileIn,sv.Ten,'\n');
 		fileIn >> sv.gioiTinh;
 		fileIn.ignore();
 		getline(fileIn,sv.Pass,'\n');
+		// cout << sv.mssv << '\n'<< sv.Ho << '\n' << sv.Ten << '\n' << sv.gioiTinh << '\n' << sv.Pass << '\n';
 		AddLast(dsSinhVien,CreateNodeSV(sv));
 	}
 	fileIn.close();
@@ -127,12 +127,13 @@ void DocDsSinhVien(listSV &dsSinhVien, string maLop) {
 void ghiFileDsSinhVien(listSV &dsSinhVien, string maLop)
 {
 	ofstream fileOut;
-	string nameFILE ="DATA\\Ds" + maLop +".txt";
+	string nameFILE ="DATA\\" + maLop +".txt";
 	fileOut.open(nameFILE, ios_base::out);
 	nodeSV *temp = dsSinhVien.First;
 	while (temp!= nullptr)
 	{
 		fileOut << temp->info.mssv << '\n'<< temp->info.Ho << '\n' << temp->info.Ten << '\n' << temp->info.gioiTinh << '\n' << temp->info.Pass << '\n';
+		//cout << temp->info.mssv << '\n'<< temp->info.Ho << '\n' << temp->info.Ten << '\n' << temp->info.gioiTinh << '\n' << temp->info.Pass << '\n';
 		temp = temp->pNext;
 	}
 	cout << "ghi thanh cong sv" << endl;

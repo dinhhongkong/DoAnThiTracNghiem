@@ -18,24 +18,21 @@ void displayLogin()
                 curMenu = DISPLAY_HOCSINH;
                 drawHocSinh();
                 Edit = nullptr;
+
                 // de nguoi dung nha chuot ra
                 Sleep(500);
             }
             else {
                 AllocConsole();
-                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Tai khoan hoac Mat khau khong chinh xac", "Thong bao", MB_OK);
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Tai khoan hoac Mat khau khong chinh xac", "Thong bao", MB_ICONASTERISK | MB_OK);
             }
         }
 
         else if (taiKhoan.isMouseHover()) {
             Edit = &taiKhoan;
-            // matKhau.isChoose = false;
-            // matKhau.draw();
         }
         else if (matKhau.isMouseHover()) {
             Edit = &matKhau;
-            // taiKhoan.isChoose = false;
-            // taiKhoan.draw();
         }
     }           
 }

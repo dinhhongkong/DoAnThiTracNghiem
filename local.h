@@ -73,41 +73,6 @@ button btndangxuat(350, 400, 200,50, "DANG XUAT");
 
 void ClearStream();
 
-// ve man hinh login
-void drawLogin() {
-    cleardevice();
-    taiKhoan.content = "";
-    matKhau.content = "";
-    settextstyle(BOLD_FONT, 0, 7);
-    setcolor(YELLOW);
-    string nameApp = "PHAN MEM THI TRAC NGHIEM";
-    outtextxy((w - textwidth(&nameApp[0])) / 2, 150, &nameApp[0]);
-    taiKhoan.draw();
-    matKhau.draw();
-    dangnhap.draw();
-    taiKhoan.setNext(&matKhau);
-    matKhau.setPre(&taiKhoan);
-    taiKhoan.setPre(&matKhau);
-    matKhau.setNext(&taiKhoan);
-}
-
-
-
-// ve man hinh chuc nang giao vien
-void drawGV() {
-    cleardevice();
-    settextstyle(BOLD_FONT, 0, 7);
-    setcolor(YELLOW);
-    outtextxy((w - textwidth("QUAN TRI VIEN HE THONG THI")) / 2, 100, "QUAN TRI VIEN HE THONG THI");
-    btnMonHoc.draw();
-    btnDsLop.draw();
-    btnDiemThi.draw();
-    btnCauHoiThi.draw();
-    btnThiThu.draw();
-    btnDangXuat.draw();
-}
-
-
 void KbEvent()
 {
     if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(VK_RIGHT))
@@ -131,7 +96,7 @@ void KbEvent()
             }
 
             else if ( Edit == &matKhau) {
-                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+                Scan(Edit,Edit->textSize,SCAN_PASS);
             }
         }
 

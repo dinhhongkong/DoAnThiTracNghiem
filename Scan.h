@@ -4,6 +4,7 @@ void ScanTextSpace(editText *&txt, char c);
 void ScanTextNumber(editText *&txt, char c);
 void ScanTextNumberNoSpace(editText *&txt, char c);
 void ScanMaLop(editText *&txt, char c);
+void ScanPass(editText *&txt, char c);
 
 void Scan(editText *&txt, int maxn, ScanType type)
 {
@@ -99,6 +100,9 @@ void Scan(editText *&txt, int maxn, ScanType type)
 			else if (type == SCAN_MALOP) {
 				ScanMaLop(txt, c);
 			}
+			else if ( type == SCAN_PASS) {
+				ScanPass(txt, c);
+			}
 		}
 	}
 }
@@ -169,6 +173,15 @@ void ScanMaLop(editText *&txt, char c)
 		txt->content += toupper(c);
 	}
 	else if (c >= '0' && c <= '9' || c == '-')
+	{
+		txt->content += c;
+	}
+}
+
+void ScanPass(editText *&txt, char c) {
+	
+	
+	if (c >= ' ' && c <= '~' ) 
 	{
 		txt->content += c;
 	}
