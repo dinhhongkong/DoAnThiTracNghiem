@@ -9,6 +9,7 @@ class listview
 public:
     int size = 0;
     int idItem[10];
+    bool click = false;
 };
 
 

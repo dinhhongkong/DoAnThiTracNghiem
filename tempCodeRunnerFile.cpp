@@ -1,1 +1,1 @@
-h
+cout << "code chay 1" << endl;

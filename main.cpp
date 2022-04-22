@@ -35,8 +35,8 @@ int main()
     docFileDsLop(DanhSachLop);
 
     ListMonHoc listMH;
-    // Doc_File_Mon_Hoc(listMH);
-    // Xuat_Danh_Sach_Mon_Hoc(listMH);
+    Doc_File_Mon_Hoc(listMH);
+    //Xuat_Danh_Sach_Mon_Hoc(listMH);
     
     drawLogin();
     while (true)

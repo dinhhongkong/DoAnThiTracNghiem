@@ -387,6 +387,8 @@ void ClickItemLop(dslop &DanhSachLop)
             drawSinhVien();
             curMenu = DISPLAY_DSSV;
             drawThemSinhVien();
+            listviewDS.click = true;
+            drawList = true;
             while (true)
             {
                 KbEvent();
@@ -614,11 +616,36 @@ void DisplayLop(dslop &DanhSachLop)
 
 void displaySinhVien(listSV &danhSachSV, string maLop)
 {
-    int static check = true;
-    if (check ) {
-        check = false;
+    static int checkTimKiem = 0;
+    if (drawList == true)
+    {
         drawDsSinhVien(danhSachSV);
+        drawList = false;
+        if (checkTimKiem < 0)
+        {
+            checkTimKiem = 0;
+        }
     }
+    if (timKiemLop.content.size() > checkTimKiem)
+    {
+        checkTimKiem++;
+        drawList = true;
+    }
+    else if (timKiemLop.content.size() == checkTimKiem)
+    {
+        drawList = false;
+    }
+    else if (timKiemLop.content.size() < checkTimKiem)
+    {
+        checkTimKiem -= 2;
+        drawList = true;
+    }
+
+    // int static check = true;
+    // if (check ) {
+    //     check = false;
+    //     drawDsSinhVien(danhSachSV);
+    // }
     btnQuaylai.ButtonEffect();
     btnLui.ButtonEffect();
     btnTien.ButtonEffect();
@@ -644,6 +671,14 @@ void displaySinhVien(listSV &danhSachSV, string maLop)
         else if (edtimKiemSV.isMouseHover())
         {
             Edit = &edtimKiemSV;
+        }
+        else if ( btnTien.isMouseHover()) {
+            drawList = true;
+            btnTien.click = true;
+        }
+        else if ( btnLui.isMouseHover()) {
+            drawList = true;
+            btnLui.click = true;
         }
     }
     if (btnMenuThemSV.click)

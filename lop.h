@@ -115,6 +115,7 @@ bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop)
         MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong chinh sua, do MA LOP vs TEN LOP nhap vao van giu nguyen", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
         return false;
     }
+
     // kiem tra no co ton tai truoc do khong
     for ( int i  = 0 ; i < ds.solop ;i++) {
         if (i == viTri ) {
@@ -143,12 +144,14 @@ bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop)
         MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thanh cong", "Thong bao", MB_OK);
         return true;;
     }
+
     else if (ds.arrLop[viTri].MALOP < ds.arrLop[viTri+1].MALOP  ) {
         lop temp;
         for ( int i = viTri; i <ds.solop -1; i++) {
             if (ds.arrLop[i].MALOP > ds.arrLop[i+1].MALOP) {
                 break;
             }
+            
             temp = ds.arrLop[i];
             ds.arrLop[i] = ds.arrLop[i+1];
             ds.arrLop[i+1] = temp;
@@ -166,7 +169,6 @@ bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop)
             ds.arrLop[i-1] = temp;
         }
     }
-    cout << "Chinh sua thanh cong lop, co sap xep" << endl;
     AllocConsole();
     MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thanh cong", "Thong bao", MB_OK);
     return true;

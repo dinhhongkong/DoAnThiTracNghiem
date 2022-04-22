@@ -1,5 +1,6 @@
 // ve man hinh login
-void drawLogin() {
+void drawLogin()
+{
     cleardevice();
     taiKhoan.content = "";
     matKhau.content = "";
@@ -16,9 +17,9 @@ void drawLogin() {
     matKhau.setNext(&taiKhoan);
 }
 
-
 // ve man hinh chuc nang giao vien
-void drawGV() {
+void drawGV()
+{
     cleardevice();
     settextstyle(BOLD_FONT, 0, 7);
     setcolor(YELLOW);
@@ -30,7 +31,6 @@ void drawGV() {
     btnThiThu.draw();
     btnDangXuat.draw();
 }
-
 
 //---------------------------------------------CHUC NANG MON HOC-------------------------------------------------------
 
@@ -147,7 +147,6 @@ void drawDSMonHoc(ListMonHoc listMH)
         }
     }
 }
-
 
 //---------------------------------------------CHUC NANG LOP-------------------------------------------------------
 
@@ -351,11 +350,105 @@ void drawThemSinhVien()
 }
 
 int soTrangSV = 1;
-void drawDsSinhVien(listSV &danhSachSV) {
+void drawDsSinhVien(listSV &danhSachSV)
+{
     setfillstyle(1, BLACK);
-    bar(xDsSV[0] + 1, yDsSV[0] + 1, xDsSV[1] - 1, 760 - 1);
-    bar(xDsSV[1] + 1, yDsSV[0] + 1, xDsSV[2] - 1, 760 - 1);
-    bar(xDsSV[2] + 1, yDsSV[0] + 1, xDsSV[3] - 1, 760 - 1);
-    bar(xDsSV[3] + 1, yDsSV[0] + 1, xDsSV[4] - 1, 760 - 1);
+    int soLuongSV = SizeListSV(danhSachSV);
 
+    static nodeSV *node = nullptr;
+
+    if (listviewDS.click)
+    {
+        node = danhSachSV.First;
+        listviewDS.click = false;
+    }
+
+    if (soLuongSV <= 10)
+    {
+        soTrangSV = 1;
+    }
+    else if (btnTien.click && soLuongSV > soTrangSV * 10 && edtimKiemSV.content.size() == 0 && node != nullptr)
+    {
+        soTrangSV++;
+    }
+    else if (btnLui.click && edtimKiemSV.content.size() == 0)
+    {
+        node = danhSachSV.First;
+        if (soTrangSV > 1)
+        {
+            for (int i = 0; i < 10 * (soTrangSV - 1); i++)
+            {
+                node = node->pNext;
+            }
+            soTrangSV--;
+        }
+    }
+    btnTien.click = false;
+    btnLui.click = false;
+
+    string textTrang = to_string(soTrangSV);
+
+    textTrang += "/" + to_string((soLuongSV % 10 == 0) ? ((soLuongSV < 10) ? 1 : soLuongSV / 10) : (soLuongSV / 10 + 1));
+    // thu nghiem xoa so trang:   setfillstyle(4, YELLOW);
+    bar(425, 825, 500, 850);
+    setcolor(WHITE);
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+    listviewDS.size = 0;
+
+    if (edtimKiemSV.content.size() == 0) 
+    {
+        outtextxy(450, 825, &textTrang[0]);
+    } 
+    if (edtimKiemSV.content.size() == 0 && node != nullptr)
+    {
+        bar(xDsSV[0] + 1, yDsSV[0] + 1, xDsSV[1] - 1, 760 - 1);
+        bar(xDsSV[1] + 1, yDsSV[0] + 1, xDsSV[2] - 1, 760 - 1);
+        bar(xDsSV[2] + 1, yDsSV[0] + 1, xDsSV[3] - 1, 760 - 1);
+        bar(xDsSV[3] + 1, yDsSV[0] + 1, xDsSV[4] - 1, 760 - 1);
+
+        for (int i = 0; i < 10; i++)
+        {
+            if (i + (soTrangSV - 1) * 10 >= soLuongSV || node == nullptr)
+            {
+                break;
+            }
+            listviewDS.size++;
+            listviewDS.idItem[i] = i + (soTrangSV - 1) * 10;
+
+            outtextxy(xDsSV[0] + 40, yDsSV[0] + 20 + i * 50, &node->info.mssv[0]);
+            outtextxy(xDsSV[1] + 45, yDsSV[0] + 20 + i * 50, &node->info.Ho[0]);
+            outtextxy(xDsSV[2] + 45, yDsSV[0] + 20 + i * 50, &node->info.Ten[0]);
+            if (node->info.gioiTinh == 0)
+            {
+                outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + i * 50, "NAM");
+            }
+            else
+            {
+                outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + i * 50, "NU");
+            }
+            node = node->pNext;
+        }
+    }
+    else
+    {
+        int j = 0;
+        // for (int i = 0; i < DanhSachLop.solop; i++)
+        while (node != nullptr)
+        {
+            // if (j >= 10)
+            // {
+            //     break;
+            // }
+
+            // if (DanhSachLop.arrLop[i].MALOP.find(timKiemLop.content) != string::npos || DanhSachLop.arrLop[i].TENLOP.find(timKiemLop.content) != string::npos)
+            // {
+            //     listviewDS.size++;
+            //     listviewDS.idItem[j] = i;
+
+            //     outtextxy(xDsLop[0] + 80, yDsLop[0] + 20 + j * 50, &DanhSachLop.arrLop[i].MALOP[0]);
+            //     outtextxy(xDsLop[1] + 80, yDsLop[0] + 20 + j * 50, &DanhSachLop.arrLop[i].TENLOP[0]);
+            //     j++;
+            // }
+        }
+    }
 }
