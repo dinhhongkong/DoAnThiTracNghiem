@@ -201,8 +201,8 @@ int soTrangLop = 1;
 void drawDSLop(dslop DanhSachLop)
 {
     setfillstyle(1, BLACK);
-    bar(xDsLop[0] + 5, yDsLop[0] + 5, xDsLop[1] - 5, 760 - 5);
-    bar(xDsLop[1] + 5, yDsLop[0] + 5, 950 - 5 - 5, 760 - 5);
+    bar(xDsLop[0] + 1, yDsLop[0] + 1, xDsLop[1] - 1, 760 - 1);
+    bar(xDsLop[1] + 1, yDsLop[0] + 1, 950 - 1, 760 - 1);
 
     if (DanhSachLop.solop <= 10)
     {
@@ -304,17 +304,18 @@ void drawSinhVien()
     line(1000, 0, 1000, 900);
     rectangle(50, 200, 950, 760);
     // ve ma sv
-    line(200, 200, 200, 760);
+    line(250, 200, 250, 760);
     // ve ho sv
-    line(500, 200, 500, 760);
+    line(600, 200, 600, 760);
     // ve ten sv
-    line(650, 200, 650, 760);
+    line(800, 200, 800, 760);
     // ve gach ngang
     line(50, 250, 950, 250);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
-    outtextxy(xDsSV[0] + 50, 215, "MSSV");
-    outtextxy(xDsSV[1] + 130, 215, "HO");
-    outtextxy(xDsSV[2] + 55, 215, "TEN");
+    outtextxy(xDsSV[0] + 75, 215, "MSSV");
+    outtextxy(xDsSV[1] + 165, 215, "HO");
+    outtextxy(xDsSV[2] + 80, 215, "TEN");
+    outtextxy(xDsSV[3] + 35, 215, "GIOI TINH");
 }
 
 void drawThemSinhVien()
@@ -347,4 +348,14 @@ void drawThemSinhVien()
 
     edTenSV.setNext(&edMSSV);
     edTenSV.setPre(&edHoSV);
+}
+
+int soTrangSV = 1;
+void drawDsSinhVien(listSV &danhSachSV) {
+    setfillstyle(1, BLACK);
+    bar(xDsSV[0] + 1, yDsSV[0] + 1, xDsSV[1] - 1, 760 - 1);
+    bar(xDsSV[1] + 1, yDsSV[0] + 1, xDsSV[2] - 1, 760 - 1);
+    bar(xDsSV[2] + 1, yDsSV[0] + 1, xDsSV[3] - 1, 760 - 1);
+    bar(xDsSV[3] + 1, yDsSV[0] + 1, xDsSV[4] - 1, 760 - 1);
+
 }

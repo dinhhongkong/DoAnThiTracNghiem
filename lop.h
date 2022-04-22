@@ -106,14 +106,71 @@ void xoaLop(dslop &ds, int viTri)
     }
 }
 
-void chinhSuaLop(dslop &ds, lop &LOP, string maLop, string tenLop)
+// Chinh sua nhung ko lam mat thu tu
+bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop)
 {
-    LOP.MALOP = maLop;
-    LOP.TENLOP = tenLop;
-    if (ds.solop == 0)
-    {
-        return;
+    // Kiem tra xem co can thiet chinh sua hay ko
+    if ( ds.arrLop[viTri].MALOP == maLop && ds.arrLop[viTri].TENLOP == tenLop) {
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong chinh sua, do MA LOP vs TEN LOP nhap vao van giu nguyen", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        return false;
     }
+    // kiem tra no co ton tai truoc do khong
+    for ( int i  = 0 ; i < ds.solop ;i++) {
+        if (i == viTri ) {
+            continue;
+        }
+
+        if (ds.arrLop[i].MALOP == maLop || ds.arrLop[i].TENLOP == tenLop)
+        {
+            AllocConsole();
+            MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ten hoac Ma lop da ton tai", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+            return false;
+        }
+
+    }
+    //rename(oldname, newname) // ham chinh sua ten file
+    string oldname = "DATA\\" + ds.arrLop[viTri].MALOP + ".txt";
+    string newname = "DATA\\" + maLop + ".txt";
+    rename(&oldname[0], &newname[0]);
+    ds.arrLop[viTri].MALOP = maLop;
+    ds.arrLop[viTri].TENLOP = tenLop;
+
+    if (ds.solop == 1 || ( viTri == 0 && ds.arrLop[0].MALOP > ds.arrLop[1].MALOP ) || ( viTri == ds.solop -1 && ds.arrLop[ds.solop -1].MALOP <  ds.arrLop[ds.solop -2].MALOP ) )
+    {
+        cout << "Chinh sua thanh cong lop, dau cuoi" << endl;
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thanh cong", "Thong bao", MB_OK);
+        return true;;
+    }
+    else if (ds.arrLop[viTri].MALOP < ds.arrLop[viTri+1].MALOP  ) {
+        lop temp;
+        for ( int i = viTri; i <ds.solop -1; i++) {
+            if (ds.arrLop[i].MALOP > ds.arrLop[i+1].MALOP) {
+                break;
+            }
+            temp = ds.arrLop[i];
+            ds.arrLop[i] = ds.arrLop[i+1];
+            ds.arrLop[i+1] = temp;
+        }
+
+    }
+    else if (ds.arrLop[viTri].MALOP > ds.arrLop[viTri -1].MALOP ) {
+        lop temp;
+        for ( int i = viTri; i > 0; i--) {
+            if (ds.arrLop[i].MALOP < ds.arrLop[i -1].MALOP) {
+                break;
+            }
+            temp = ds.arrLop[i];
+            ds.arrLop[i] = ds.arrLop[i-1];
+            ds.arrLop[i-1] = temp;
+        }
+    }
+    cout << "Chinh sua thanh cong lop, co sap xep" << endl;
+    AllocConsole();
+    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thanh cong", "Thong bao", MB_OK);
+    return true;
+
 }
 
 void docFileDsLop(dslop &DanhSachLop)
@@ -126,8 +183,8 @@ void docFileDsLop(dslop &DanhSachLop)
     for (int i = 0; i < DanhSachLop.solop; i++)
     {
         // DanhSachLop.arrLop[i] = new lop;
+        getline(fileIn, DanhSachLop.arrLop[i].MALOP, ',');
         getline(fileIn, DanhSachLop.arrLop[i].TENLOP, '\n');
-        getline(fileIn, DanhSachLop.arrLop[i].MALOP, '\n');
         DocDsSinhVien(DanhSachLop.arrLop[i].dsSinhVien, DanhSachLop.arrLop[i].MALOP);
         // DocFileDiem1Lop(dsl.l[i]);
     }
@@ -147,8 +204,7 @@ void ghiFileDSlop(dslop DanhSachLop)
     fileOut << DanhSachLop.solop << endl;
     for (int i = 0; i < DanhSachLop.solop; i++)
     {
-        fileOut << DanhSachLop.arrLop[i].TENLOP << '\n'
-                << DanhSachLop.arrLop[i].MALOP << '\n';
+        fileOut << DanhSachLop.arrLop[i].MALOP << ',' << DanhSachLop.arrLop[i].TENLOP << '\n';
         // GhiFileLop(dsl.l[i], dsl.l[i].MALOP + ".txt");
         // GhiFileDiem(dsl.l[i],"DiemThi"+dsl.l[i].MALOP+".txt",dsch);
     }

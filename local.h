@@ -29,8 +29,6 @@ listview listviewDS;
 button btnLui(70, 820, 100,50,"PRE");
 button btnTien(800, 820, 100,50,"NEXT");
 button btnThem(1250, 625,100,50,"THEM");
-// button btnHieuChinh(200,1100, 625,400,50,"HIEU CHINH");
-// button btnXoaVinhVien(200,1200, 710,200,50,"XOA VINH VIEN");
 button btnHieuChinh(1075, 625,200,50,"HIEU CHINH");
 button btnXoaVinhVien(1325, 625,200,50,"XOA VINH VIEN");
 button btnThoat(1050,20,220,50,"< THOAT CHUC NANG");
@@ -54,7 +52,8 @@ editText themTenLop(1075,475,450,50,"TEN LOP HOC:","Toi da 40 ki tu",40);
 editText timKiemLop(100,100,600,50,"TIM KIEM: ","Nhap MA hoac TEN lop muon tim",100);
 
 // danh sach hoc sinh trong 1 lop
-int xDsSV[6] = {50,200,500,650,  950};
+int xDsSV[6] = {50,250,600,800,950};
+int yDsSV[2] = {250,760};
 button btnMenuThemSV(1175,20,250,50,"MENU THEM SINH VIEN");
 editText edtimKiemSV(100,100,600,50,"TIM KIEM: ","Nhap MA hoac TEN sinh vien muon tim",100);
 editText edMSSV(1075,325,450,50,"MSSV:","Toi da 10 ki tu",10);

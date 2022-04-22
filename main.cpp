@@ -38,8 +38,6 @@ int main()
     // Doc_File_Mon_Hoc(listMH);
     // Xuat_Danh_Sach_Mon_Hoc(listMH);
     
-    cout << "l11" << endl;
-    
     drawLogin();
     while (true)
     {
