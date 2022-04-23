@@ -121,6 +121,12 @@ bool InsertNodeSV(listSV &l, sinhVien sv)
 	return false;
 }
 
+bool ChinhSuaSinhVien(nodeSV *node) {
+
+	
+
+}
+
 // dem so luong phan tu danh sach lien ket don sinh vien
 int SizeListSV(listSV l)
 {

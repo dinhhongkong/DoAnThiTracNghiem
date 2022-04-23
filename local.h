@@ -15,7 +15,7 @@ public:
 
 // ma hinh dang nhap
 editText taiKhoan(500, 300, 600, 50, "TAI KHOAN: ", "Nhap ma so sinh vien", 100);
-editText matKhau(500, 400, 600, 50, "MAT KHAU: ", "Toi da 20 ki tu", 20, 1);
+editText matKhau(500, 400, 600, 50, "MAT KHAU: ", "Nhan chu, so, ki tu dac biet (chu y CapsLock)", 20, 1);
 button dangnhap(700, 500, 200, 70, "DANG NHAP");
 
 // man hinh giao vien
@@ -36,7 +36,7 @@ button btnThoat(1050,20,220,50,"< THOAT CHUC NANG");
 
 // nut chuc nang mon hoc tai man hinh gv
 int xDsMon[3] = {50,300,950};
-int yDsMon[2] = {250,760};
+int yDsMon[2] = {250,750};
 button btnQuaylai(20,20,100,50,"< BACK");
 editText timKiemMon(100,100,600,50,"TIM KIEM: ","Nhap ten mon hoc muon tim",100);
 button btnMenuThemMon(1175,20,250,50,"MENU THEM MON HOC");

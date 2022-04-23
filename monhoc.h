@@ -88,6 +88,7 @@ void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {
 	*listMH.monHoc[index] = mh;
 	if (listMH.slmh == 1) return;
 
+	
 	if (index == 0) {
 		for (int i = 1; i < listMH.slmh; i++) {
 			if (mh.MAMH < listMH.monHoc[i]->MAMH) break;
@@ -95,6 +96,22 @@ void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {
 			index = i;
 		}
 	}
+	else if (index > 0 && mh.MAMH < listMH.monHoc[index - 1]->MAMH) {
+		for (int i = index - 1; i >= 0; i--) {
+			if (mh.MAMH > listMH.monHoc[i]->MAMH) break;
+			swap(*listMH.monHoc[index], *listMH.monHoc[i]);
+			index = i;
+		}
+	}
+	else if (index < listMH.slmh - 1 && mh.MAMH > listMH.monHoc[index + 1]->MAMH) {
+		for (int i = index + 1; i < listMH.slmh; i++) {
+			if (mh.MAMH < listMH.monHoc[i]->MAMH) break;
+			swap(*listMH.monHoc[index], *listMH.monHoc[i]);
+			index = i;
+		}
+	}
+
+	/*
 	else if (index == listMH.slmh - 1) {
 		for (int i = listMH.slmh - 1; i >= 0; i--) {
 			if (mh.MAMH > listMH.monHoc[i]->MAMH) break;
@@ -118,6 +135,7 @@ void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {
 			}
 		}
 	}
+	*/
 }
 
 // void Xuat_Danh_Sach_Mon_Hoc(ListMonHoc listMH) {

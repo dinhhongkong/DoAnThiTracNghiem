@@ -116,12 +116,11 @@ void drawDSMonHoc(ListMonHoc listMH)
             {
                 break;
             }
-            // CHINH SUA LAI
             listviewDS.size++;
             listviewDS.idItem[i] = i + (soTrangMon - 1) * 10;
 
-            outtextxy(xDsLop[0] + 80, yDsLop[0] + 20 + i * 50, &listMH.monHoc[i + (soTrangMon - 1) * 10]->MAMH[0]);
-            outtextxy(xDsLop[1] + 80, yDsLop[0] + 20 + i * 50, &listMH.monHoc[i + (soTrangMon - 1) * 10]->TENMH[0]);
+            outtextxy(xDsMon[0] + 80, yDsMon[0] + 20 + i * 50, &listMH.monHoc[i + (soTrangMon - 1) * 10]->MAMH[0]);
+            outtextxy(xDsMon[1] + 80, yDsMon[0] + 20 + i * 50, &listMH.monHoc[i + (soTrangMon - 1) * 10]->TENMH[0]);
         }
         outtextxy(450, 825, &textTrang[0]);
     }
@@ -148,6 +147,23 @@ void drawDSMonHoc(ListMonHoc listMH)
     }
 }
 
+void drawHieuChinhMonHoc() {
+    setfillstyle(1, BLACK);
+    bar(1005, 0, 1600, 765); // 75 tai y neu thay menu
+    setfillstyle(WIDE_DOT_FILL, CYAN);
+    bar(1050, 200, 1550, 300);
+    setcolor(YELLOW);
+    rectangle(1050, 200, 1550, 700);
+    settextstyle(0, 0, 3);
+    outtextxy(1080, 230, "HIEU CHINH MON HOC");
+    line(1050, 300, 1550, 300);
+    line(1050, 600, 1550, 600);
+    themMaMon.draw();
+    themTenMon.draw();
+    btnHieuChinh.draw();
+    btnXoaVinhVien.draw();
+    btnThoat.draw();
+}
 //---------------------------------------------CHUC NANG LOP-------------------------------------------------------
 
 void drawLop()
@@ -460,4 +476,28 @@ void drawDsSinhVien(listSV &danhSachSV)
             // }
         }
     } */
+}
+
+void drawHieuChinhSV() {
+    setfillstyle(1, BLACK);
+    bar(1005, 0, 1600, 765); // 75 tai y neu thay menu
+    setfillstyle(WIDE_DOT_FILL, CYAN);
+    bar(1050, 200, 1550, 300);
+    setcolor(YELLOW);
+    rectangle(1050, 200, 1550, 700);
+    settextstyle(0, 0, 3);
+    outtextxy(1060, 230, "HIEU CHINH SINH VIEN");
+    line(1050, 300, 1550, 300);
+    line(1050, 600, 1550, 600);
+    edMSSV.draw();
+    edHoSV.draw();
+    edTenSV.draw();
+    btnHieuChinh.draw();
+    btnXoaVinhVien.draw();
+    btnThoat.draw();
+    settextstyle(BOLD_FONT, HORIZ_DIR, 2);
+    setcolor(13);
+    outtextxy(1075, 550, "Gioi tinh:");
+    btnNam.draw();
+    btnNu.draw();
 }
