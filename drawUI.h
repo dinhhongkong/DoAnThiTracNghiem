@@ -376,11 +376,11 @@ void drawDsSinhVien(listSV &danhSachSV)
         node = danhSachSV.First;
         if (soTrangSV > 1)
         {
+            soTrangSV--;
             for (int i = 0; i < 10 * (soTrangSV - 1); i++)
             {
                 node = node->pNext;
             }
-            soTrangSV--;
         }
     }
     btnTien.click = false;
