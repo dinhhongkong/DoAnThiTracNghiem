@@ -25,7 +25,6 @@ void Doc_File_Mon_Hoc(ListMonHoc& listMH) {
 		getline(filein, mh.TENMH );
 		listMH.monHoc[i] = new Mon_Hoc;
 		*listMH.monHoc[i] = mh;
-		cout << "code chay 2" << endl;
 	}
 	filein.close();
 }

@@ -315,7 +315,8 @@ void ClickItemLop(dslop &DanhSachLop)
                     if (btnXoaVinhVien.isMouseHover())
                     {
                         AllocConsole();
-                        if ( MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ban chac chan muon XOA", "Thong bao", MB_ICONQUESTION | MB_OKCANCEL) == IDOK) {
+                        if (MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ban chac chan muon XOA", "Thong bao", MB_ICONQUESTION | MB_OKCANCEL) == IDOK)
+                        {
                             xoaLop(DanhSachLop, listviewDS.idItem[LuaChon]);
                             ghiFileDSlop(DanhSachLop);
                             drawDSLop(DanhSachLop);
@@ -344,7 +345,7 @@ void ClickItemLop(dslop &DanhSachLop)
                     }
                     else if (btnHieuChinh.isMouseHover())
                     {
-                        chinhSuaLop(DanhSachLop, listviewDS.idItem[LuaChon] , themMaLop.ToString(), themTenLop.ToString());
+                        chinhSuaLop(DanhSachLop, listviewDS.idItem[LuaChon], themMaLop.ToString(), themTenLop.ToString());
                         drawDSLop(DanhSachLop);
 
                         btnMenuThemLop.click = true;
@@ -392,8 +393,9 @@ void ClickItemLop(dslop &DanhSachLop)
             while (true)
             {
                 KbEvent();
-                displaySinhVien(DanhSachLop.arrLop[LuaChon].dsSinhVien,DanhSachLop.arrLop[LuaChon].MALOP);
-                if ( btnQuaylai.click) {
+                displaySinhVien(DanhSachLop.arrLop[LuaChon].dsSinhVien, DanhSachLop.arrLop[LuaChon].MALOP);
+                if (btnQuaylai.click)
+                {
                     btnQuaylai.click = false;
                     break;
                 }
@@ -420,7 +422,7 @@ void ClickItemLop(dslop &DanhSachLop)
         setcolor(WHITE);
         line(350, 200, 350, 760);
     }
-    return ;
+    return;
 }
 
 void DisplayLop(dslop &DanhSachLop)
@@ -539,10 +541,10 @@ void DisplayLop(dslop &DanhSachLop)
     }
 }
 
-
 //---------------------------------------------------CHUC NANG SINH VIEN--------------------------------------
 
-void ClickItemSinhVien(listSV &danhSachSV) {
+void ClickItemSinhVien(listSV &danhSachSV)
+{
     int x = -1, y = -1;
     x = mousex();
     y = mousey();
@@ -561,21 +563,29 @@ void ClickItemSinhVien(listSV &danhSachSV) {
             setcolor(WHITE);
             setfillstyle(1, BLACK);
             setbkcolor(BLACK);
-            bar(xDsSV[0] + 5, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[4] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
             node = danhSachSV.First;
-            for ( int i = 0 ; i < PreLuaChon; i++) {
+            for (int i = 0; i < PreLuaChon + (soTrangSV - 1) * 10; i++)
+            {
+                if (node == nullptr)
+                {
+                    break;
+                }
                 node = node->pNext;
             }
-            outtextxy(xDsSV[0] + 40, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.mssv[0]);
-            outtextxy(xDsSV[1] + 45, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.Ho[0]);
-            outtextxy(xDsSV[2] + 45, yDsSV[0] + 20 + + PreLuaChon * 50, &node->info.Ten[0]);
-            if (node->info.gioiTinh == 0)
+            if (node != nullptr)
             {
-                outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NAM");
-            }
-            else
-            {
-                outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NU");
+                bar(xDsSV[0] + 5, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[4] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
+                outtextxy(xDsSV[0] + 40, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.mssv[0]);
+                outtextxy(xDsSV[1] + 45, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.Ho[0]);
+                outtextxy(xDsSV[2] + 45, yDsSV[0] + 20 + +PreLuaChon * 50, &node->info.Ten[0]);
+                if (node->info.gioiTinh == 0)
+                {
+                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NAM");
+                }
+                else
+                {
+                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NU");
+                }
             }
             // outtextxy(xDsLop[0] + 80, yDsLop[0] + 20 + PreLuaChon * 50, &DanhSachLop.arrLop[listviewDS.idItem[PreLuaChon]].MALOP[0]);
             // outtextxy(xDsLop[1] + 80, yDsLop[0] + 20 + PreLuaChon * 50, &DanhSachLop.arrLop[listviewDS.idItem[PreLuaChon]].TENLOP[0]);
@@ -590,19 +600,27 @@ void ClickItemSinhVien(listSV &danhSachSV) {
             setbkcolor(RED);
             bar(xDsSV[0] + 5, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[4] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
             node = danhSachSV.First;
-            for ( int i = 0 ; i < PreLuaChon; i++) {
+            for (int i = 0; i < PreLuaChon + (soTrangSV - 1) * 10; i++)
+            {
+                if (node == nullptr)
+                {
+                    break;
+                }
                 node = node->pNext;
             }
-            outtextxy(xDsSV[0] + 40, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.mssv[0]);
-            outtextxy(xDsSV[1] + 45, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.Ho[0]);
-            outtextxy(xDsSV[2] + 45, yDsSV[0] + 20 + + PreLuaChon * 50, &node->info.Ten[0]);
-            if (node->info.gioiTinh == 0)
+            if (node != nullptr)
             {
-                outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NAM");
-            }
-            else
-            {
-                outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NU");
+                outtextxy(xDsSV[0] + 40, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.mssv[0]);
+                outtextxy(xDsSV[1] + 45, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.Ho[0]);
+                outtextxy(xDsSV[2] + 45, yDsSV[0] + 20 + +PreLuaChon * 50, &node->info.Ten[0]);
+                if (node->info.gioiTinh == 0)
+                {
+                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NAM");
+                }
+                else
+                {
+                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NU");
+                }
             }
             // outtextxy(xDsLop[0] + 80, yDsLop[0] + 20 + LuaChon * 50, &DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].MALOP[0]);
             // outtextxy(xDsLop[1] + 80, yDsLop[0] + 20 + LuaChon * 50, &DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].TENLOP[0]);
@@ -617,11 +635,9 @@ void ClickItemSinhVien(listSV &danhSachSV) {
         // bat su kien khi click vao item khi click chuot tra hoac chuot phai
         if (GetAsyncKeyState(VK_RBUTTON) && LuaChon < listviewDS.size)
         {
-            
         }
         else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size)
         {
-            
         }
     }
     else
@@ -633,21 +649,29 @@ void ClickItemSinhVien(listSV &danhSachSV) {
             setcolor(WHITE);
             setfillstyle(1, BLACK);
             setbkcolor(BLACK);
-            bar(xDsSV[0] + 5, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[4] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
             node = danhSachSV.First;
-            for ( int i = 0 ; i < PreLuaChon; i++) {
+            for (int i = 0; i < PreLuaChon + (soTrangSV - 1) * 10; i++)
+            {
+                if (node == nullptr)
+                {
+                    break;
+                }
                 node = node->pNext;
             }
-            outtextxy(xDsSV[0] + 40, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.mssv[0]);
-            outtextxy(xDsSV[1] + 45, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.Ho[0]);
-            outtextxy(xDsSV[2] + 45, yDsSV[0] + 20 + + PreLuaChon * 50, &node->info.Ten[0]);
-            if (node->info.gioiTinh == 0)
+            if (node != nullptr)
             {
-                outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NAM");
-            }
-            else
-            {
-                outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NU");
+                bar(xDsSV[0] + 5, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[4] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
+                outtextxy(xDsSV[0] + 40, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.mssv[0]);
+                outtextxy(xDsSV[1] + 45, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.Ho[0]);
+                outtextxy(xDsSV[2] + 45, yDsSV[0] + 20 + +PreLuaChon * 50, &node->info.Ten[0]);
+                if (node->info.gioiTinh == 0)
+                {
+                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NAM");
+                }
+                else
+                {
+                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NU");
+                }
             }
         }
         LuaChon = -1;
@@ -661,16 +685,14 @@ void ClickItemSinhVien(listSV &danhSachSV) {
         // ve ten sv
         line(800, 200, 800, 760);
     }
-
 }
-
-
 
 void displaySinhVien(listSV &danhSachSV, string maLop)
 {
     static int checkTimKiem = 0;
     if (drawList == true)
     {
+        //listviewDS.size = 0;
         drawDsSinhVien(danhSachSV);
         drawList = false;
         if (checkTimKiem < 0)
@@ -720,11 +742,13 @@ void displaySinhVien(listSV &danhSachSV, string maLop)
         {
             Edit = &edtimKiemSV;
         }
-        else if ( btnTien.isMouseHover()) {
+        else if (btnTien.isMouseHover())
+        {
             drawList = true;
             btnTien.click = true;
         }
-        else if ( btnLui.isMouseHover()) {
+        else if (btnLui.isMouseHover())
+        {
             drawList = true;
             btnLui.click = true;
         }
@@ -748,40 +772,44 @@ void displaySinhVien(listSV &danhSachSV, string maLop)
             {
                 Edit = &edTenSV;
             }
-            else if ( btnNam.isMouseHover() ) {
+            else if (btnNam.isMouseHover())
+            {
                 btnNam.click = true;
                 btnNu.click = false;
                 btnNam.draw();
                 btnNu.draw();
-                
             }
-            else if ( btnNu.isMouseHover()) {
+            else if (btnNu.isMouseHover())
+            {
                 btnNam.click = false;
                 btnNu.click = true;
                 btnNam.draw();
                 btnNu.draw();
             }
-            else if ( btnThem.isMouseHover()) {
-                if ( edMSSV.content.size() == 0) {
+            else if (btnThem.isMouseHover())
+            {
+                if (edMSSV.content.size() == 0)
+                {
                     AllocConsole();
-			        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien MSSV", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien MSSV", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
                 }
-                else if ( edHoSV.content.size() == 0) {
+                else if (edHoSV.content.size() == 0)
+                {
                     AllocConsole();
-			        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien Ho vs Ten dem", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien Ho vs Ten dem", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
                 }
-                else if ( edTenSV.content.size() == 0) {
+                else if (edTenSV.content.size() == 0)
+                {
                     AllocConsole();
-			        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien Ten", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien Ten", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
                 }
-                else if (!btnNam.click && !btnNu.click) {
+                else if (!btnNam.click && !btnNu.click)
+                {
                     AllocConsole();
-			        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long lua chon gioi tinh", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long lua chon gioi tinh", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
                 }
-                else {
+                else
+                {
                     sinhVien sv;
                     sv.mssv = edMSSV.ToString();
                     sv.Ho = edHoSV.ToString();
@@ -790,13 +818,16 @@ void displaySinhVien(listSV &danhSachSV, string maLop)
                     // pass mac dinh la mssv;
                     // sv.Pass = sv.mssv;
                     sv.Pass = "mk";
-                    if (InsertNodeSV(danhSachSV,sv)) {
-                        ghiFileDsSinhVien(danhSachSV,maLop);
+                    if (InsertNodeSV(danhSachSV, sv))
+                    {
+                        ghiFileDsSinhVien(danhSachSV, maLop);
                         edMSSV.content = "";
                         edHoSV.content = "";
                         edTenSV.content = "";
                         btnNam.click = false;
                         btnNu.click = false;
+                        btnThem.click = true;
+                        drawDsSinhVien(danhSachSV);
                         drawThemSinhVien();
                         Sleep(100);
                     }

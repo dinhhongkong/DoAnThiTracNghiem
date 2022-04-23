@@ -361,6 +361,7 @@ void drawDsSinhVien(listSV &danhSachSV)
     {
         node = danhSachSV.First;
         listviewDS.click = false;
+        listviewDS.size = 0;
     }
 
     if (soLuongSV <= 10)
@@ -383,6 +384,12 @@ void drawDsSinhVien(listSV &danhSachSV)
             }
         }
     }
+
+    if (btnThem.click == true) {
+        btnThem.click = false;
+        node = danhSachSV.First;
+        soTrangSV =1;
+    }
     btnTien.click = false;
     btnLui.click = false;
 
@@ -393,25 +400,26 @@ void drawDsSinhVien(listSV &danhSachSV)
     bar(425, 825, 500, 850);
     setcolor(WHITE);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
-    listviewDS.size = 0;
 
-    if (edtimKiemSV.content.size() == 0) 
+    if (edtimKiemSV.content.size() == 0)
     {
         outtextxy(450, 825, &textTrang[0]);
-    } 
+    }
+
     if (edtimKiemSV.content.size() == 0 && node != nullptr)
     {
         bar(xDsSV[0] + 1, yDsSV[0] + 1, xDsSV[1] - 1, 760 - 1);
         bar(xDsSV[1] + 1, yDsSV[0] + 1, xDsSV[2] - 1, 760 - 1);
         bar(xDsSV[2] + 1, yDsSV[0] + 1, xDsSV[3] - 1, 760 - 1);
         bar(xDsSV[3] + 1, yDsSV[0] + 1, xDsSV[4] - 1, 760 - 1);
-
+        listviewDS.size = 0;
         for (int i = 0; i < 10; i++)
         {
             if (i + (soTrangSV - 1) * 10 >= soLuongSV || node == nullptr)
             {
                 break;
             }
+
             listviewDS.size++;
             listviewDS.idItem[i] = i + (soTrangSV - 1) * 10;
 
@@ -429,8 +437,9 @@ void drawDsSinhVien(listSV &danhSachSV)
             node = node->pNext;
         }
     }
-    else
+    /*else if (edtimKiemSV.content.size() )
     {
+        listviewDS.size = 0;
         int j = 0;
         // for (int i = 0; i < DanhSachLop.solop; i++)
         while (node != nullptr)
@@ -450,5 +459,5 @@ void drawDsSinhVien(listSV &danhSachSV)
             //     j++;
             // }
         }
-    }
+    } */
 }
