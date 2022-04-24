@@ -1,24 +1,3 @@
-// struct sinhVien{
-// 	string mssv;
-// 	string HO;
-// 	string TEN;
-// 	string gioiTinh;
-// 	string password;
-// 	// con tro tro den cac mon da thi trac nghiem
-// 	//dsdiemThi diem;
-// };
-
-// struct nodeSV{
-// 	sinhVien info;
-// 	nodeSV *pNext = nullptr;
-// };
-
-// struct listSV
-// {
-// 	nodeSV *First = nullptr;
-// 	nodeSV *Last = nullptr;
-// };
-
 nodeSV *CreateNodeSV(sinhVien sv)
 {
 	nodeSV *a = new nodeSV;
@@ -46,8 +25,6 @@ void AddLast(listSV &l, nodeSV *sv)
 		l.Last = sv;
 	}
 }
-
-
 
 void AddFirst(listSV &l, nodeSV *sv)
 {
@@ -121,9 +98,115 @@ bool InsertNodeSV(listSV &l, sinhVien sv)
 	return false;
 }
 
-bool ChinhSuaSinhVien(nodeSV *node) {
+// chinh sua ko lam thay doi thu tu
+bool ChinhSuaSinhVien(listSV &DsSinhVien, nodeSV *&nodeHieuChinh, string Mssv, string Ho, string Ten, int GioiTinh)
+{
+	nodeSV *node = DsSinhVien.First;
+	if (Mssv != nodeHieuChinh->info.mssv)
+	{
+		while (node != nullptr)
+		{
+			cout << "chay dc ko" << endl;
+			if (node == nodeHieuChinh)
+			{
 
-	
+				node = nodeHieuChinh->pNext;
+				continue;
+			}
+
+			if (node->info.mssv == Mssv)
+			{
+				AllocConsole();
+				MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong the chinh sua, Ma so sinh vien da ton tai", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+				return false;
+			}
+			node = node->pNext;
+		}
+	}
+	nodeSV *PreNodeHieuChinh = nullptr;
+	if (nodeHieuChinh != DsSinhVien.First)
+	{
+		PreNodeHieuChinh = DsSinhVien.First;
+		while (PreNodeHieuChinh->pNext != nodeHieuChinh)
+		{
+			PreNodeHieuChinh = PreNodeHieuChinh->pNext;
+		}
+	}
+
+	// neu ko thay doi mssv khoi sap sep lai
+	if (nodeHieuChinh->info.mssv == Mssv)
+	{
+		nodeHieuChinh->info.mssv = Mssv;
+		nodeHieuChinh->info.Ho = Ho;
+		nodeHieuChinh->info.Ten = Ten;
+		nodeHieuChinh->info.gioiTinh = GioiTinh;
+	}
+	// neu mssv dau tien lon hon mssv hieu chinh
+	else if (DsSinhVien.First->info.mssv > Mssv || ( nodeHieuChinh == DsSinhVien.First && Mssv < nodeHieuChinh->pNext->info.mssv) )
+	{
+		if ( nodeHieuChinh == DsSinhVien.Last) {
+			nodeHieuChinh->pNext = DsSinhVien.First;
+			DsSinhVien.First = DsSinhVien.First->pNext;
+			DsSinhVien.Last = PreNodeHieuChinh;
+			PreNodeHieuChinh->pNext = nullptr;
+			DsSinhVien.First = nodeHieuChinh;
+		}
+		else if ( PreNodeHieuChinh != nullptr) {
+			PreNodeHieuChinh->pNext = nodeHieuChinh->pNext;
+			nodeHieuChinh->pNext = DsSinhVien.First;
+			DsSinhVien.First = nodeHieuChinh;
+		}
+		nodeHieuChinh->info.mssv = Mssv;
+		nodeHieuChinh->info.Ho = Ho;
+		nodeHieuChinh->info.Ten = Ten;
+		nodeHieuChinh->info.gioiTinh = GioiTinh;
+	}
+	// neu mssv cuoi lon hon mssv hieu chinh
+	else if (DsSinhVien.Last->info.mssv < Mssv || ( nodeHieuChinh == DsSinhVien.Last && Mssv > PreNodeHieuChinh->info.mssv) )
+	{
+		if ( nodeHieuChinh == DsSinhVien.First) {
+			DsSinhVien.First = DsSinhVien.First->pNext;
+			DsSinhVien.Last->pNext = nodeHieuChinh;
+			DsSinhVien.Last = nodeHieuChinh;
+		}
+		else if ( PreNodeHieuChinh->pNext != DsSinhVien.Last) {
+			PreNodeHieuChinh->pNext = nodeHieuChinh->pNext;
+			DsSinhVien.Last->pNext = nodeHieuChinh;
+			DsSinhVien.Last = nodeHieuChinh;
+		}
+		nodeHieuChinh->info.mssv = Mssv;
+		nodeHieuChinh->info.Ho = Ho;
+		nodeHieuChinh->info.Ten = Ten;
+		nodeHieuChinh->info.gioiTinh = GioiTinh;
+		nodeHieuChinh->pNext = nullptr;
+	}
+	else
+	{
+		node = DsSinhVien.First;
+		nodeSV *preNode = nullptr;
+		while (node != nullptr)
+		{
+			if (node->info.mssv > Mssv)
+			{
+				PreNodeHieuChinh->pNext = nodeHieuChinh->pNext;
+				nodeHieuChinh->pNext = preNode->pNext;
+				preNode->pNext = nodeHieuChinh;
+				nodeHieuChinh->info.mssv = Mssv;
+				nodeHieuChinh->info.Ho = Ho;
+				nodeHieuChinh->info.Ten = Ten;
+				nodeHieuChinh->info.gioiTinh = GioiTinh;
+				break;
+			}
+			preNode = node;
+			node = node->pNext;
+		}
+	}
+	AllocConsole();
+	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thong tin sinh vien thanh cong", "Thong bao", MB_OK);
+	return true;
+}
+
+bool xoaSinhVien( nodeSV *&sv) {
 
 }
 
@@ -131,7 +214,7 @@ bool ChinhSuaSinhVien(nodeSV *node) {
 int SizeListSV(listSV l)
 {
 	int count = 0;
-	nodeSV* node = l.First;
+	nodeSV *node = l.First;
 	while (node != NULL)
 	{
 		count++;

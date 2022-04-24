@@ -7,7 +7,7 @@ void displayLogin()
     if(GetAsyncKeyState(VK_LBUTTON)){
 
 		if(dangnhap.isMouseHover()){
-			if (taiKhoan.ToString() == "GV" && matKhau.content == "GV") {
+			if (taiKhoan.ToString() == "GV" || matKhau.content == "GV") {
                 curMenu = DISPLAY_GIAOVIEN;
                 drawGV();
                 Edit = nullptr;

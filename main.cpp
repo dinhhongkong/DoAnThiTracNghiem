@@ -23,6 +23,7 @@ using namespace std;
 #include "displayGiaoVien.h"
 #include "displayLogin.h"
 
+//MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thong tin sinh vien thanh cong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
 
 int main()
 {
@@ -36,7 +37,6 @@ int main()
 
     ListMonHoc listMH;
     Doc_File_Mon_Hoc(listMH);
-    //Xuat_Danh_Sach_Mon_Hoc(listMH);
     
     drawLogin();
     while (true)

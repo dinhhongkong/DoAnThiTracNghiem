@@ -373,12 +373,21 @@ void drawDsSinhVien(listSV &danhSachSV)
 
     static nodeSV *node = nullptr;
 
-    if (listviewDS.click)
+    if (listviewDS.click || btnThem.click || btnHieuChinh.click || btnXoaVinhVien.click)
     {
         node = danhSachSV.First;
         listviewDS.click = false;
         listviewDS.size = 0;
+        btnHieuChinh.click = false;
+        btnXoaVinhVien.click = false;
+        btnThem.click = false;
+        soTrangSV =1;
     }
+    // if (btnThem.click == true) {
+    //     btnThem.click = false;
+    //     node = danhSachSV.First;
+    //     soTrangSV =1;
+    // }
 
     if (soLuongSV <= 10)
     {
@@ -401,11 +410,6 @@ void drawDsSinhVien(listSV &danhSachSV)
         }
     }
 
-    if (btnThem.click == true) {
-        btnThem.click = false;
-        node = danhSachSV.First;
-        soTrangSV =1;
-    }
     btnTien.click = false;
     btnLui.click = false;
 

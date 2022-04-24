@@ -76,8 +76,8 @@ void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {
 	Mon_Hoc mh;
 	// --------------------------------------
 	// NHẬP LIỆU
-	getline(cin, mh.MAMH);
-	getline(cin, mh.TENMH);
+	cout << "Nhap ma mon hoc: "; getline(cin, mh.MAMH);
+	cout << "Nhap ten mon hoc: "; getline(cin, mh.TENMH);
 	// --------------------------------------
 	for (int i = 0; i < listMH.slmh; i++) {
 		if (mh.MAMH == listMH.monHoc[i]->MAMH || mh.TENMH == listMH.monHoc[i]->TENMH) {
@@ -88,15 +88,7 @@ void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {
 	*listMH.monHoc[index] = mh;
 	if (listMH.slmh == 1) return;
 
-	
-	if (index == 0) {
-		for (int i = 1; i < listMH.slmh; i++) {
-			if (mh.MAMH < listMH.monHoc[i]->MAMH) break;
-			swap(*listMH.monHoc[index], *listMH.monHoc[i]);
-			index = i;
-		}
-	}
-	else if (index > 0 && mh.MAMH < listMH.monHoc[index - 1]->MAMH) {
+	if (index > 0 && mh.MAMH < listMH.monHoc[index - 1]->MAMH) {
 		for (int i = index - 1; i >= 0; i--) {
 			if (mh.MAMH > listMH.monHoc[i]->MAMH) break;
 			swap(*listMH.monHoc[index], *listMH.monHoc[i]);
@@ -110,6 +102,25 @@ void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {
 			index = i;
 		}
 	}
+}
+
+/* void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {
+	Mon_Hoc mh;
+	// --------------------------------------
+	// NHẬP LIỆU
+	getline(cin, mh.MAMH);
+	getline(cin, mh.TENMH);
+	// --------------------------------------
+	for (int i = 0; i < listMH.slmh; i++) {
+		if (mh.MAMH == listMH.monHoc[i]->MAMH || mh.TENMH == listMH.monHoc[i]->TENMH) {
+			// BÁO LỖI
+			return;
+		}
+	}
+	*listMH.monHoc[index] = mh;
+	if (listMH.slmh == 1) return;
+
+	
 
 	/*
 	else if (index == listMH.slmh - 1) {
@@ -135,8 +146,9 @@ void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {
 			}
 		}
 	}
-	*/
+	
 }
+*/
 
 // void Xuat_Danh_Sach_Mon_Hoc(ListMonHoc listMH) {
 // 	cout << listMH.slmh << endl;
