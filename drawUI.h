@@ -36,6 +36,8 @@ void drawGV()
 
 void DrawThemMonHoc()
 {
+    setfillstyle(1, BLACK);
+    bar(1005, 0, 1600, 765); // 75 tai y neu thay menu
     setfillstyle(WIDE_DOT_FILL, CYAN);
     bar(1050, 200, 1550, 300);
     setcolor(YELLOW);

@@ -22,9 +22,8 @@ using namespace std;
 #include "displayHocSinh.h"
 #include "displayGiaoVien.h"
 #include "displayLogin.h"
-
+//AllocConsole();
 //MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thong tin sinh vien thanh cong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-
 int main()
 {
     // 1600 * 900 la do phan giai man hinh 14 inch (ti le 16/9)

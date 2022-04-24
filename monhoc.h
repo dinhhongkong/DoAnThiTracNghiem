@@ -72,21 +72,27 @@ void Them_Mon_Hoc(ListMonHoc& listMH, Mon_Hoc mh) {
     MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Them mon hoc thanh cong", "Thong bao", MB_OK);
 }
 
-void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {
+bool Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index, string maMon, string tenMon) {
+	// if (maMon == listMH.monHoc[index]->MAMH || tenMon == listMH.monHoc[index]->TENMH) { 
+
+	// 	return false;
+	// }
+
 	Mon_Hoc mh;
-	// --------------------------------------
-	// NHẬP LIỆU
-	cout << "Nhap ma mon hoc: "; getline(cin, mh.MAMH);
-	cout << "Nhap ten mon hoc: "; getline(cin, mh.TENMH);
+	mh.MAMH = maMon;
+	mh.TENMH = tenMon;
 	// --------------------------------------
 	for (int i = 0; i < listMH.slmh; i++) {
+		if ( i == index) {
+			continue;
+		}
 		if (mh.MAMH == listMH.monHoc[i]->MAMH || mh.TENMH == listMH.monHoc[i]->TENMH) {
 			// BÁO LỖI
-			return;
+			return false;
 		}
 	}
 	*listMH.monHoc[index] = mh;
-	if (listMH.slmh == 1) return;
+	if (listMH.slmh == 1) return true;
 
 	if (index > 0 && mh.MAMH < listMH.monHoc[index - 1]->MAMH) {
 		for (int i = index - 1; i >= 0; i--) {
@@ -102,6 +108,7 @@ void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {
 			index = i;
 		}
 	}
+	return true;
 }
 
 /* void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {

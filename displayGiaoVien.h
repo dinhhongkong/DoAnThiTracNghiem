@@ -84,7 +84,6 @@ int ClickItemMonHoc(ListMonHoc &listMH)
             themMaMon.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH;
             themTenMon.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH;
             drawHieuChinhMonHoc();
-            cout << "ma hinh hien tai: " << curMenu << endl;
             while (true)
             {
                 KbEvent();
@@ -97,9 +96,24 @@ int ClickItemMonHoc(ListMonHoc &listMH)
                 {
                     if (btnXoaVinhVien.isMouseHover())
                     {
+                        
                     }
                     else if (btnHieuChinh.isMouseHover())
                     {
+                        if (Hieu_Chinh_Mon_Hoc(listMH,listviewDS.idItem[LuaChon],themMaMon.ToString(), themTenMon.ToString()) ) {
+                            AllocConsole();
+                            MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua mon hoc thanh cong", "Thong bao", MB_OK);
+                            drawDSMonHoc(listMH);
+                            themMaMon.content = "";
+                            themTenMon.content ="";
+                            btnMenuThemMon.click = true;
+                            DrawThemMonHoc();
+                            break;
+                        }
+                        else {
+                            AllocConsole();
+                            MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ma mon hoc hoac Ten mon hoc da ton tai", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                        }
                     }
                     else if (btnThoat.isMouseHover())
                     {
