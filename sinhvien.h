@@ -133,8 +133,15 @@ bool ChinhSuaSinhVien(listSV &DsSinhVien, nodeSV *&nodeHieuChinh, string Mssv, s
 		}
 	}
 
+	// neu chi co 1 phan tu duy nhat
+	if (nodeHieuChinh == DsSinhVien.First && nodeHieuChinh == DsSinhVien.Last) {
+		nodeHieuChinh->info.mssv = Mssv;
+		nodeHieuChinh->info.Ho = Ho;
+		nodeHieuChinh->info.Ten = Ten;
+		nodeHieuChinh->info.gioiTinh = GioiTinh;
+	}
 	// neu ko thay doi mssv khoi sap sep lai
-	if (nodeHieuChinh->info.mssv == Mssv)
+	else if (nodeHieuChinh->info.mssv == Mssv)
 	{
 		nodeHieuChinh->info.mssv = Mssv;
 		nodeHieuChinh->info.Ho = Ho;

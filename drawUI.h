@@ -95,7 +95,7 @@ void drawDSMonHoc(ListMonHoc listMH)
         soTrangMon++;
         btnTien.click = false;
     }
-    else if (btnLui.click && soTrangMon > 1 && timKiemLop.content.size() == 0)
+    else if (btnLui.click && soTrangMon > 1 && timKiemMon.content.size() == 0)
     {
         soTrangMon--;
     }
@@ -136,20 +136,21 @@ void drawDSMonHoc(ListMonHoc listMH)
                 break;
             }
 
-            // if (DanhSachLop.arrLop[i].MALOP.find(timKiemLop.content) != string::npos || DanhSachLop.arrLop[i].TENLOP.find(timKiemLop.content) != string::npos)
-            // {
-            //     listviewDS.size++;
-            //     listviewDS.idItem[j] = i;
+            if (listMH.monHoc[i]->MAMH.find(timKiemMon.ToSearch()) != string::npos || listMH.monHoc[i]->TENMH.find(timKiemMon.ToSearch()) != string::npos)
+            {
+                listviewDS.size++;
+                listviewDS.idItem[j] = i;
 
-            //     outtextxy(xDsLop[0] + 80, yDsLop[0] + 20 + j * 50, &DanhSachLop.arrLop[i].MALOP[0]);
-            //     outtextxy(xDsLop[1] + 80, yDsLop[0] + 20 + j * 50, &DanhSachLop.arrLop[i].TENLOP[0]);
-            //     j++;
-            // }
+                outtextxy(xDsMon[0] + 80, yDsMon[0] + 20 + j * 50, &listMH.monHoc[i]->MAMH[0]);
+                outtextxy(xDsMon[1] + 80, yDsMon[0] + 20 + j * 50, &listMH.monHoc[i]->TENMH[0]);
+                j++;
+            }
         }
     }
 }
 
-void drawHieuChinhMonHoc() {
+void drawHieuChinhMonHoc()
+{
     setfillstyle(1, BLACK);
     bar(1005, 0, 1600, 765); // 75 tai y neu thay menu
     setfillstyle(WIDE_DOT_FILL, CYAN);
@@ -271,7 +272,7 @@ void drawDSLop(dslop DanhSachLop)
                 break;
             }
 
-            if (DanhSachLop.arrLop[i].MALOP.find(timKiemLop.content) != string::npos || DanhSachLop.arrLop[i].TENLOP.find(timKiemLop.content) != string::npos)
+            if (DanhSachLop.arrLop[i].MALOP.find(timKiemLop.ToSearch()) != string::npos || DanhSachLop.arrLop[i].TENLOP.find(timKiemLop.ToSearch()) != string::npos)
             {
                 listviewDS.size++;
                 listviewDS.idItem[j] = i;
@@ -373,9 +374,10 @@ void drawDsSinhVien(listSV &danhSachSV)
     setfillstyle(1, BLACK);
     int soLuongSV = SizeListSV(danhSachSV);
 
-    static nodeSV *node = nullptr;
+    //static nodeSV *node = nullptr;
+    nodeSV *node = nullptr;
 
-    if (listviewDS.click || btnThem.click || btnHieuChinh.click || btnXoaVinhVien.click)
+    if (listviewDS.click || btnThem.click || btnHieuChinh.click || btnXoaVinhVien.click || edtimKiemSV.isChoose == false || (edtimKiemSV.isChoose == true && edtimKiemSV.content.size() == 0))
     {
         node = danhSachSV.First;
         listviewDS.click = false;
@@ -383,13 +385,14 @@ void drawDsSinhVien(listSV &danhSachSV)
         btnHieuChinh.click = false;
         btnXoaVinhVien.click = false;
         btnThem.click = false;
-        soTrangSV =1;
+        soTrangSV = 1;
     }
     // if (btnThem.click == true) {
     //     btnThem.click = false;
     //     node = danhSachSV.First;
     //     soTrangSV =1;
     // }
+    setbkcolor(BLACK);
 
     if (soLuongSV <= 10)
     {
@@ -430,6 +433,15 @@ void drawDsSinhVien(listSV &danhSachSV)
 
     if (edtimKiemSV.content.size() == 0 && node != nullptr)
     {
+        cout << "ve cai 1" << endl;
+        cout << node->info.mssv << endl;
+        if (soTrangSV > 1)
+        {
+            for (int i = 0; i < (soTrangSV - 1) * 10; i++)
+            {
+                node = node->pNext;
+            }
+        }
         bar(xDsSV[0] + 1, yDsSV[0] + 1, xDsSV[1] - 1, 760 - 1);
         bar(xDsSV[1] + 1, yDsSV[0] + 1, xDsSV[2] - 1, 760 - 1);
         bar(xDsSV[2] + 1, yDsSV[0] + 1, xDsSV[3] - 1, 760 - 1);
@@ -459,32 +471,49 @@ void drawDsSinhVien(listSV &danhSachSV)
             node = node->pNext;
         }
     }
-    /*else if (edtimKiemSV.content.size() )
+    else if (edtimKiemSV.ToSearch().size())
     {
         listviewDS.size = 0;
-        int j = 0;
-        // for (int i = 0; i < DanhSachLop.solop; i++)
+        int j = 0, i = 0;
+        node = danhSachSV.First;
+        bar(xDsSV[0] + 1, yDsSV[0] + 1, xDsSV[1] - 1, 760 - 1);
+        bar(xDsSV[1] + 1, yDsLop[0] + 1, xDsSV[2] - 1, 760 - 1);
+        bar(xDsSV[2] + 1, yDsLop[0] + 1, xDsSV[3] - 1, 760 - 1);
+        bar(xDsSV[3] + 1, yDsLop[0] + 1, xDsSV[4] - 1, 760 - 1);
         while (node != nullptr)
         {
-            // if (j >= 10)
-            // {
-            //     break;
-            // }
 
-            // if (DanhSachLop.arrLop[i].MALOP.find(timKiemLop.content) != string::npos || DanhSachLop.arrLop[i].TENLOP.find(timKiemLop.content) != string::npos)
-            // {
-            //     listviewDS.size++;
-            //     listviewDS.idItem[j] = i;
+            if (j >= 10)
+            {
+                break;
+            }
+            string HoTen = node->info.Ho + " " + node->info.Ten;
+            if (node->info.mssv.find(edtimKiemSV.ToSearch()) != string::npos || /* node->info.Ho.find(edtimKiemSV.ToSearch()) != string::npos || node->info.Ten.find(edtimKiemSV.ToSearch()) != string::npos || */ HoTen.find(edtimKiemSV.ToSearch()) != string::npos)
+            {
+                listviewDS.size++;
+                listviewDS.idItem[j] = i;
 
-            //     outtextxy(xDsLop[0] + 80, yDsLop[0] + 20 + j * 50, &DanhSachLop.arrLop[i].MALOP[0]);
-            //     outtextxy(xDsLop[1] + 80, yDsLop[0] + 20 + j * 50, &DanhSachLop.arrLop[i].TENLOP[0]);
-            //     j++;
-            // }
+                outtextxy(xDsSV[0] + 40, yDsSV[0] + 20 + j * 50, &node->info.mssv[0]);
+                outtextxy(xDsSV[1] + 45, yDsSV[0] + 20 + j * 50, &node->info.Ho[0]);
+                outtextxy(xDsSV[2] + 45, yDsSV[0] + 20 + j * 50, &node->info.Ten[0]);
+                if (node->info.gioiTinh == 0)
+                {
+                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + j * 50, "NAM");
+                }
+                else
+                {
+                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + j * 50, "NU");
+                }
+                j++;
+            }
+            i++;
+            node = node->pNext;
         }
-    } */
+    }
 }
 
-void drawHieuChinhSV() {
+void drawHieuChinhSV()
+{
     setfillstyle(1, BLACK);
     bar(1005, 0, 1600, 765); // 75 tai y neu thay menu
     setfillstyle(WIDE_DOT_FILL, CYAN);

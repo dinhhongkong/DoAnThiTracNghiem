@@ -38,7 +38,7 @@ button btnThoat(1050,20,220,50,"< THOAT CHUC NANG");
 int xDsMon[3] = {50,300,950};
 int yDsMon[2] = {250,750};
 button btnQuaylai(20,20,100,50,"< BACK");
-editText timKiemMon(100,100,600,50,"TIM KIEM: ","Nhap ten mon hoc muon tim",100);
+editText timKiemMon(100,100,600,50,"TIM KIEM: ","Nhap MA hoac TEN mon hoc muon tim",100);
 button btnMenuThemMon(1175,20,250,50,"MENU THEM MON HOC");
 editText themMaMon(1075,350,450,50,"MA MON:","Toi da 10 ki tu",10);
 editText themTenMon(1075,475,450,50,"TEN MON:","Toi da 35 ki tu",35);
@@ -104,7 +104,10 @@ void KbEvent()
             if ( Edit == &themMaMon) {
                 Scan(Edit,Edit->textSize,TEXT_NUMBER_NO_SPACE);
             }
-            if ( Edit == &themTenMon) {
+            else if ( Edit == &themTenMon) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+            }
+            else if ( Edit == &timKiemMon) {
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }

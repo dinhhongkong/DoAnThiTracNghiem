@@ -42,7 +42,7 @@ int main()
     {
         GetAsyncKeyState(VK_RBUTTON);
         KbEvent();
-        if (curMenu == DISPLAY_LOGIN)
+        if (curMenu == DISPLAY_LOGIN)   
         {
             displayLogin();
         }

@@ -195,6 +195,14 @@ public:
 		return content;
 	}
 
+	string ToSearch() {
+		string s = content;
+		if ( s[s.size() - 1] == ' ') {
+			s.pop_back();
+		} 
+		return s;
+	}
+
 	void setNext(editText *a) {
 		this->next = a;
 	}
