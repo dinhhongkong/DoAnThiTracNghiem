@@ -217,6 +217,10 @@ bool xoaSinhVien( nodeSV *&sv) {
 
 }
 
+void thayDoiMK(nodeSV *&sv, string matKhauMoi) {
+	sv->info.Pass = matKhauMoi;
+}
+
 // dem so luong phan tu danh sach lien ket don sinh vien
 int SizeListSV(listSV l)
 {

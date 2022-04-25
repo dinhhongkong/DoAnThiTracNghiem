@@ -62,6 +62,7 @@ editText edHoSV(1075,400,450,50,"Ho va ten dem:","nhap ho vs ten lot",40);
 editText edTenSV(1075,475,450,50,"Ten:","Toi da 7 ki tu",7);
 button btnNam(1225, 540, 100,40,"NAM");
 button btnNu(1350, 540, 100,40,"NU");
+button btnResetMK(1150, 710, 300,50,"RESET MAT KHAU MAC DINH");
 
 
 

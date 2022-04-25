@@ -1,7 +1,25 @@
 // const int w  = 1600;
 // const int h  = 900;
 
-void displayLogin()
+bool CheckTkMk(dslop DanhSachLop, string TaiKhoan, string MatKhau) {
+    nodeSV *node = nullptr;
+    for ( int i = 0 ; i < DanhSachLop.solop; i++) {
+        node = DanhSachLop.arrLop[i].dsSinhVien.First;
+        while (node != nullptr)
+        {
+            if ( TaiKhoan == node->info.mssv && MatKhau == node->info.Pass) {
+                return true;
+            }
+            else if ( TaiKhoan == node->info.mssv && MatKhau != node->info.Pass) {
+                return false;
+            }
+            node = node->pNext;
+        }   
+    }
+    return false;
+}
+
+void displayLogin(dslop DanhSachLop)
 {
     dangnhap.ButtonEffect();
     if(GetAsyncKeyState(VK_LBUTTON)){
@@ -14,7 +32,7 @@ void displayLogin()
                 // de nguoi dung nha chuot ra
                 Sleep(500);
             }
-            else if ( taiKhoan.ToString() == "SV" && matKhau.content == "SV") {
+            else if ( CheckTkMk(DanhSachLop, taiKhoan.ToString(), matKhau.content)) {
                 curMenu = DISPLAY_HOCSINH;
                 drawHocSinh();
                 Edit = nullptr;

@@ -535,4 +535,5 @@ void drawHieuChinhSV()
     outtextxy(1075, 550, "Gioi tinh:");
     btnNam.draw();
     btnNu.draw();
+    btnResetMK.draw();
 }

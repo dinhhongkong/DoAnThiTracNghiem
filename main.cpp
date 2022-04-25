@@ -44,7 +44,7 @@ int main()
         KbEvent();
         if (curMenu == DISPLAY_LOGIN)   
         {
-            displayLogin();
+            displayLogin(DanhSachLop);
         }
         else if (curMenu == DISPLAY_HOCSINH)
         {

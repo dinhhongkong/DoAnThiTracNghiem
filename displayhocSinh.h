@@ -21,6 +21,10 @@ void displayHocSinh()
             drawLogin();
             curMenu = DISPLAY_LOGIN;
         }
+        else if ( btnDoiMK.isMouseHover()) {
+            
+        }
+
     }
 
     

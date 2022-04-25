@@ -53,7 +53,6 @@ int ClickItemMonHoc(ListMonHoc &listMH)
     {
         // khoi phuc item
         settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
-        //                                                              can chinh sua|
         if (PreLuaChon != -1 && PreLuaChon != LuaChon && PreLuaChon < listviewDS.size)
         {
             setcolor(WHITE);
@@ -101,6 +100,7 @@ int ClickItemMonHoc(ListMonHoc &listMH)
                     {
                         if (Hieu_Chinh_Mon_Hoc(listMH, listviewDS.idItem[LuaChon], themMaMon.ToString(), themTenMon.ToString()))
                         {
+                            Luu_File_Mon_Hoc(listMH);
                             AllocConsole();
                             MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua mon hoc thanh cong", "Thong bao", MB_OK);
                             drawDSMonHoc(listMH);
@@ -373,18 +373,20 @@ void ClickItemLop(dslop &DanhSachLop)
                     }
                     else if (btnHieuChinh.isMouseHover())
                     {
-                        chinhSuaLop(DanhSachLop, listviewDS.idItem[LuaChon], themMaLop.ToString(), themTenLop.ToString());
-                        drawDSLop(DanhSachLop);
-
-                        btnMenuThemLop.click = true;
-                        setfillstyle(1, BLACK);
-                        bar(1005, 0, 1600, 765);
-                        themMaLop.content = "";
-                        themTenLop.content = "";
-                        btnMenuThemLop.draw();
-                        Sleep(100);
-                        drawThemLop();
-                        break;
+                        if (chinhSuaLop(DanhSachLop, listviewDS.idItem[LuaChon], themMaLop.ToString(), themTenLop.ToString()))
+                        {
+                            ghiFileDSlop(DanhSachLop);
+                            drawDSLop(DanhSachLop);
+                            btnMenuThemLop.click = true;
+                            setfillstyle(1, BLACK);
+                            bar(1005, 0, 1600, 765);
+                            themMaLop.content = "";
+                            themTenLop.content = "";
+                            btnMenuThemLop.draw();
+                            Sleep(100);
+                            drawThemLop();
+                            break;
+                        }
                     }
                     else if (btnThoat.isMouseHover())
                     {
@@ -421,7 +423,7 @@ void ClickItemLop(dslop &DanhSachLop)
             while (true)
             {
                 KbEvent();
-                displaySinhVien(DanhSachLop.arrLop[LuaChon].dsSinhVien, DanhSachLop.arrLop[LuaChon].MALOP);
+                displaySinhVien(DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].dsSinhVien, DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].MALOP);
                 if (btnQuaylai.click)
                 {
                     btnQuaylai.click = false;
@@ -571,7 +573,7 @@ void DisplayLop(dslop &DanhSachLop)
 
 //---------------------------------------------------CHUC NANG SINH VIEN--------------------------------------
 
-void ClickItemSinhVien(listSV &danhSachSV)
+void ClickItemSinhVien(listSV &danhSachSV, string maLop)
 {
     int x = -1, y = -1;
     x = mousex();
@@ -693,9 +695,10 @@ void ClickItemSinhVien(listSV &danhSachSV)
                 btnHieuChinh.ButtonEffect();
                 btnXoaVinhVien.ButtonEffect();
                 btnThoat.ButtonEffect();
-                //btnQuaylai.ButtonEffect();
-                btnNam.isMouseHover();
-                btnNu.isMouseHover();
+                // btnQuaylai.ButtonEffect();
+                btnNam.ButtonEffect();
+                btnNu.ButtonEffect();
+                btnResetMK.ButtonEffect();
                 GetAsyncKeyState(VK_RBUTTON); // xoa bo nho dem chuot trai
                 if (GetAsyncKeyState(VK_LBUTTON))
                 {
@@ -725,9 +728,9 @@ void ClickItemSinhVien(listSV &danhSachSV)
                     {
                         if (ChinhSuaSinhVien(danhSachSV, node, edMSSV.ToString(), edHoSV.ToString(), edTenSV.ToString(), btnNam.click ? 0 : 1))
                         {
+                            ghiFileDsSinhVien(danhSachSV, maLop);
                             btnHieuChinh.click = true;
                             drawDsSinhVien(danhSachSV);
-
                             btnMenuThemSV.click = true;
                             setfillstyle(1, BLACK);
                             bar(1005, 0, 1600, 765);
@@ -782,6 +785,15 @@ void ClickItemSinhVien(listSV &danhSachSV)
                         btnNu.click = true;
                         btnNam.draw();
                         btnNu.draw();
+                    }
+                    else if (btnResetMK.isMouseHover())
+                    {
+                        AllocConsole();
+                        if (MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chuc nang nay de cap lai MK mac dinh cho sinh vien. Ban muon tiep tuc?", "Thong bao", MB_ICONQUESTION | MB_OKCANCEL) == IDOK)
+                        {
+                            thayDoiMK(node, "mk");
+                            MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Reset Mat khau thanh cong", "Thong bao", MB_OK);
+                        }
                     }
                 }
                 Sleep(75);
@@ -872,7 +884,7 @@ void displaySinhVien(listSV &danhSachSV, string maLop)
     btnTien.ButtonEffect();
     btnMenuThemSV.ButtonEffect();
 
-    ClickItemSinhVien(danhSachSV);
+    ClickItemSinhVien(danhSachSV, maLop);
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         if (btnQuaylai.isMouseHover())
