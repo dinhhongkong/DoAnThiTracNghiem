@@ -28,7 +28,7 @@ void drawGV()
     btnDsLop.draw();
     btnDiemThi.draw();
     btnCauHoiThi.draw();
-    btnThiThu.draw();
+    btnCaiDatThi.draw();
     btnDangXuat.draw();
 }
 
@@ -306,13 +306,16 @@ void drawHieuChinhLop()
 
 //------------------------------------------------------CHUC NANG SINH VIEN--------------------------------------------
 
-void drawSinhVien()
+void drawSinhVien(string tenlop)
 {
     setbkcolor(BLACK);
     cleardevice();
-    settextstyle(BOLD_FONT, 0, 7);
+    settextstyle(BOLD_FONT, 0, 5);
     setcolor(YELLOW);
-    outtextxy(250, 20, "DANH SACH SV");
+    outtextxy(250, 20, "DANH SACH SINH VIEN");
+    settextstyle(BOLD_FONT, 0, 3);
+    string TenDeMuc = "Lop: " + tenlop;
+    outtextxy(250, 65, &TenDeMuc[0]);
     btnQuaylai.draw();
     edtimKiemSV.draw();
     btnMenuThemSV.click = true;
@@ -369,7 +372,7 @@ void drawThemSinhVien()
 }
 
 int soTrangSV = 1;
-void drawDsSinhVien(listSV &danhSachSV)
+void drawDsSinhVien(listSV danhSachSV)
 {
     setfillstyle(1, BLACK);
     int soLuongSV = SizeListSV(danhSachSV);
@@ -404,14 +407,14 @@ void drawDsSinhVien(listSV &danhSachSV)
     }
     else if (btnLui.click && edtimKiemSV.content.size() == 0)
     {
-        node = danhSachSV.First;
+        // node = danhSachSV.First;
         if (soTrangSV > 1)
         {
             soTrangSV--;
-            for (int i = 0; i < 10 * (soTrangSV - 1); i++)
-            {
-                node = node->pNext;
-            }
+            // for (int i = 0; i < 10 * (soTrangSV - 1); i++)
+            // {
+            //     node = node->pNext;
+            // }
         }
     }
 
@@ -433,8 +436,7 @@ void drawDsSinhVien(listSV &danhSachSV)
 
     if (edtimKiemSV.content.size() == 0 && node != nullptr)
     {
-        cout << "ve cai 1" << endl;
-        cout << node->info.mssv << endl;
+        node = danhSachSV.First;
         if (soTrangSV > 1)
         {
             for (int i = 0; i < (soTrangSV - 1) * 10; i++)
@@ -536,4 +538,47 @@ void drawHieuChinhSV()
     btnNam.draw();
     btnNu.draw();
     btnResetMK.draw();
+}
+
+
+//-----------------------------------------------------CAI DAT CHUC NANG THI----------------------------------------
+
+void drawCaiDatThi() {
+    cleardevice();
+    settextstyle(BOLD_FONT, 0, 7);
+    setcolor(YELLOW);
+    string nameApp = "CAI DAT CHUC NANG THI";
+    outtextxy((w - textwidth(&nameApp[0])) / 2, 150, &nameApp[0]);
+    btnQuaylai.draw();
+    btnThietLapThi.draw();
+    btnThiThu.draw();
+
+}
+
+void drawLichThi() {
+    edNgayThi.draw();
+    edThangThi.draw();
+    edNamThi.draw();
+    edbatdauGio.draw();
+    edbatdauPhut.draw();
+    edTimeThi.draw();
+    edsoCau.draw();
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+	setcolor(TEXT_EDIITEXT_TITLE_COLOR);
+    outtextxy(1040,215, "NGAY:");
+    outtextxy(1215,215, "THANG:");
+    outtextxy(1400,215, "NAM:");
+    
+    outtextxy(1070,300,"Bat dau thi: (Thi sinh khong duoc THI khi den muon 15p)");
+    settextstyle(BOLD_FONT, HORIZ_DIR, 4);
+    setcolor(YELLOW);
+    outtextxy(1240,500,"MON THI");
+    settextstyle(BOLD_FONT, HORIZ_DIR, 3);
+    outtextxy(1070,530, "CAU TRUC DU LIEU VA GIAI THUAT");
+
+    // outtextxy(1010,363, "Bat dau:");
+    // outtextxy(1160,363, "h");
+    // outtextxy(1010,363, "Bat dau:");
+    // outtextxy(1010,363, "Bat dau:");
+    // outtextxy(1040,215, "Dong phong thi:");
 }

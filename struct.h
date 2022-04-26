@@ -104,6 +104,19 @@ struct dslop
     lop arrLop[MAXLOP]; // danh sach tuyen tinh
 };
 
+//------------------------------------struct thoi gian--------------------------------------------
+
+struct ngayThangNam {
+	int ngay = 0;
+	int thang = 0 ;
+	int nam = 0;
+};
+
+struct gioPhuGiay {
+	int gio = 0;
+	int phut = 0;
+	int giay = 0;
+};
 
 
 

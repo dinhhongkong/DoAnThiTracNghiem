@@ -23,7 +23,7 @@ button btnMonHoc(700,200,250,50,"QUAN LY MON HOC");
 button btnDsLop(700,300,250,50,"QUAN LY LOP");
 button btnDiemThi(700 ,400,250, 50,"DIEM THI");
 button btnCauHoiThi(700, 500,250,50,"CAU HOI THI");
-button btnThiThu(700,600,250,50,"THI THU");
+button btnCaiDatThi(700,600,250,50,"THIET LAP THI");
 button btnDangXuat(750,700,150,50,"DANG XUAT");
 
 listview listviewDS;
@@ -71,6 +71,22 @@ button btnThi(350, 100, 200, 50, "THI");
 button btnXemLai(350, 200, 200, 50, "XEM LAI BAI THI");
 button btnDoiMK(350, 300, 200, 50, "DOI MAT KHAU");
 button btndangxuat(350, 400, 200,50, "DANG XUAT");
+
+// man hinh thiet lap chuc nang thi
+button btnThietLapThi(700,300,250,50,"THIET LAP LICH THI");
+button btnThiThu(700,450,250,50,"THI THU");
+editText edNgayThi(975,200,200,50,"","dd",2);
+editText edThangThi(1150,200,200,50,"","mm",2);
+editText edNamThi(1325,200,230,50,"","yyyy",4);
+
+// editText edbatdauGio(950,350,200,50,"","gio",2);
+// editText edbatdauPhut(1040,350,210,50,"","phut",2);
+editText edbatdauGio(1075,350,450,50,"GIO THI:","Tu 6h -> 17h",15);
+editText edbatdauPhut(1075,425,450,50,"PHUT:","Tu 0 -> 60p",2);
+editText edTimeThi(1075,575,450,50,"T/G LAM BAI:","Tinh theo phut",15);
+editText edsoCau(1075,650,450,50,"SO CAU:","So cau trong bai thi",15);
+
+
 
 void ClearStream();
 
@@ -134,6 +150,11 @@ void KbEvent()
                 Scan(Edit,Edit->textSize,SPACE_TEXT);
             }
             else if (Edit == &edtimKiemSV) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+            }
+        }
+        else if ( curMenu == DISPLAY_LICHTHI) {
+            if (Edit == & timKiemMon) {
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }

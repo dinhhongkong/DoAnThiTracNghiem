@@ -7,6 +7,7 @@ using namespace std;
 #include <windows.h>
 #include <direct.h> // thu vien tao folder
 #include <fstream>
+#include <ctime>
 
 #include "struct.h"
 #include "define.h"
@@ -61,6 +62,12 @@ int main()
         else if (curMenu == DISPLAY_DSLOP)
         {
             DisplayLop(DanhSachLop);
+        }
+        else if ( curMenu == DISPLAY_CAIDATTHI ) {
+            displayCaiDatThi(listMH);
+        }
+        else if ( curMenu == DISPLAY_LICHTHI) {
+            displayThietLapLichThi(listMH);
         }
         Sleep(75);
     }
