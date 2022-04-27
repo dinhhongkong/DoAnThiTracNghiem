@@ -62,11 +62,17 @@ void drawMonHoc()
     cleardevice();
     settextstyle(BOLD_FONT, 0, 7);
     setcolor(YELLOW);
-    string nameApp = "DANH SACH MON HOC";
-    outtextxy(200, 20, &nameApp[0]);
+    if ( curMenu == DISPLAY_DSMON) {
+        outtextxy(200, 20,"DANH SACH MON HOC");
+    }
+    else {
+        outtextxy(200, 20,"VUI LONG CHON 1 MON");
+    }
     btnQuaylai.draw();
     timKiemMon.draw();
-    btnMenuThemMon.draw();
+    if ( curMenu == DISPLAY_DSMON) {
+        btnMenuThemMon.draw();
+    }
     btnLui.draw();
     btnTien.draw();
     line(1000, 0, 1000, 900);
@@ -79,7 +85,7 @@ void drawMonHoc()
     outtextxy(550, 210, "TEN MON HOC");
 }
 
-int soTrangMon = 0;
+int soTrangMon = 1;
 void drawDSMonHoc(ListMonHoc listMH)
 {
     setfillstyle(1, BLACK);
@@ -101,7 +107,6 @@ void drawDSMonHoc(ListMonHoc listMH)
     }
     btnTien.click = false;
     btnLui.click = false;
-
     string textTrang = to_string(soTrangMon);
     textTrang += "/" + to_string((listMH.slmh % 10 == 0) ? ((listMH.slmh < 10) ? 1 : listMH.slmh / 10) : (listMH.slmh / 10 + 1));
     // thu nghiem xoa so trang:   setfillstyle(4, YELLOW);
@@ -171,7 +176,9 @@ void drawHieuChinhMonHoc()
 
 void drawLop()
 {
+    setbkcolor(BLACK);
     cleardevice();
+    // THU NGHIEM SET MAU BACKGROUND
     settextstyle(BOLD_FONT, 0, 7);
     setcolor(YELLOW);
     outtextxy(250, 20, "DANH SACH LOP");
@@ -540,6 +547,38 @@ void drawHieuChinhSV()
     btnResetMK.draw();
 }
 
+//----------------------------------------------------MAN HINH THEM SUA XOA CAU HOI--------------------------------------
+
+void drawCauHoi(string maMon, string tenMon) {
+    setbkcolor(BLACK);
+    cleardevice();
+    settextstyle(BOLD_FONT, 0, 5);
+    setcolor(YELLOW);
+    outtextxy(250, 20, "DANH SACH CAU HOI");
+    settextstyle(BOLD_FONT, 0, 3);
+    string TenDeMuc = maMon +" : " + tenMon;
+    outtextxy(250, 65, &TenDeMuc[0]);
+    btnQuaylai.draw();
+    edtimKiemSV.draw();
+    btnLui.draw();
+    btnTien.draw();
+    line(1000, 0, 1000, 900);
+    rectangle(50, 200, 950, 760);
+    // ve ma sv
+    line(250, 200, 250, 760);
+    // ve ho sv
+    line(600, 200, 600, 760);
+    // ve ten sv
+    line(800, 200, 800, 760);
+    // ve gach ngang
+    line(50, 250, 950, 250);
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+    outtextxy(xDsSV[0] + 75, 215, "MSSV");
+    outtextxy(xDsSV[1] + 165, 215, "HO");
+    outtextxy(xDsSV[2] + 80, 215, "TEN");
+    outtextxy(xDsSV[3] + 35, 215, "GIOI TINH");
+
+}
 
 //-----------------------------------------------------CAI DAT CHUC NANG THI----------------------------------------
 

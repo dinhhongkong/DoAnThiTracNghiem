@@ -63,12 +63,23 @@ int main()
         {
             DisplayLop(DanhSachLop);
         }
+        else if ( curMenu == DISPLAY_DIEMMON || curMenu == DISPLAY_CAUHOIMON ) {
+            // Lua chon 1 mon roi den tinh nang khac
+            displayLuaChonMon(listMH);
+        }
+        else if ( curMenu == LUACHON_LOP) {
+            displayLuaChonLop(DanhSachLop);
+        }
+        else if ( curMenu == CHUCNANG_CAUHOI) {
+            displayChucNangCauHoi();
+        }
         else if ( curMenu == DISPLAY_CAIDATTHI ) {
             displayCaiDatThi(listMH);
         }
         else if ( curMenu == DISPLAY_LICHTHI) {
             displayThietLapLichThi(listMH);
         }
+        
         Sleep(75);
     }
 }

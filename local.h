@@ -158,6 +158,11 @@ void KbEvent()
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }
+        else if (curMenu == DISPLAY_CAUHOIMON ) {
+            if (Edit == & timKiemMon) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+            }
+        }
 
         
     }
