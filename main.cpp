@@ -39,6 +39,7 @@ int main()
     Doc_File_Mon_Hoc(listMH);
     
     drawLogin();
+    int viTriLuaChonMon = -5;
     while (true)
     {
         GetAsyncKeyState(VK_RBUTTON);
@@ -65,10 +66,10 @@ int main()
         }
         else if ( curMenu == DISPLAY_DIEMMON || curMenu == DISPLAY_CAUHOIMON ) {
             // Lua chon 1 mon roi den tinh nang khac
-            displayLuaChonMon(listMH);
+            viTriLuaChonMon = displayLuaChonMon(listMH);
         }
         else if ( curMenu == LUACHON_LOP) {
-            displayLuaChonLop(DanhSachLop);
+            displayLuaChonLop(DanhSachLop, listMH.monHoc[viTriLuaChonMon]->MAMH ,listMH.monHoc[viTriLuaChonMon]->TENMH);
         }
         else if ( curMenu == CHUCNANG_CAUHOI) {
             displayChucNangCauHoi();

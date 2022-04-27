@@ -163,6 +163,11 @@ void KbEvent()
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }
+        else if ( curMenu == LUACHON_LOP) {
+            if (Edit == & timKiemLop) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+            }
+        }
 
         
     }

@@ -32,7 +32,7 @@ void drawGV()
     btnDangXuat.draw();
 }
 
-//---------------------------------------------CHUC NANG MON HOC-------------------------------------------------------
+//-----------------------------------------------------CHUC NANG MON HOC-------------------------------------------------------
 
 void DrawThemMonHoc()
 {
@@ -172,7 +172,7 @@ void drawHieuChinhMonHoc()
     btnXoaVinhVien.draw();
     btnThoat.draw();
 }
-//---------------------------------------------CHUC NANG LOP-------------------------------------------------------
+//--------------------------------------------------------CHUC NANG LOP-------------------------------------------------------
 
 void drawLop()
 {
@@ -181,10 +181,17 @@ void drawLop()
     // THU NGHIEM SET MAU BACKGROUND
     settextstyle(BOLD_FONT, 0, 7);
     setcolor(YELLOW);
-    outtextxy(250, 20, "DANH SACH LOP");
+    if ( curMenu == DISPLAY_DSLOP) {
+        outtextxy(250, 20, "DANH SACH LOP");
+    }
+    else {
+        outtextxy(200, 20, "VUI LONG CHON 1 LOP");
+    }
     btnQuaylai.draw();
     // timKiemMon.draw();
-    btnMenuThemLop.draw();
+    if ( curMenu == DISPLAY_DSLOP) {
+        btnMenuThemLop.draw();
+    }
     btnLui.draw();
     btnTien.draw();
     timKiemLop.draw();
@@ -545,6 +552,39 @@ void drawHieuChinhSV()
     btnNam.draw();
     btnNu.draw();
     btnResetMK.draw();
+}
+
+//-------------------------------------------------------MAN HINH IN BANG DIEM-------------------------------------------------
+
+void drawBangDiem(string tenMon, string tenlop) {
+    setbkcolor(BLACK);
+    cleardevice();
+    settextstyle(BOLD_FONT, 0, 6);
+    setcolor(YELLOW);
+    //outtextxy(250, 20, "DANH SACH DIEM SINH VIEN");
+    outtextxy(300, 20, "DANH SACH DIEM SINH VIEN");
+    settextstyle(BOLD_FONT, 0, 3);
+    string TenDeMuc = "Lop: " + tenlop +"          Mon: " + tenMon ;
+    outtextxy(250, 65, &TenDeMuc[0]);
+    btnQuaylai.draw();
+    edtimKiemSV.draw();
+    btnLui.draw();
+    btnTien.draw();
+    //line(1000, 0, 1000, 900);
+    rectangle(50, 200, 950, 760);
+    // ve ma sv
+    line(250, 200, 250, 760);
+    // ve ho sv
+    line(600, 200, 600, 760);
+    // ve ten sv
+    line(800, 200, 800, 760);
+    // ve gach ngang
+    line(50, 250, 950, 250);
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+    outtextxy(xDsSV[0] + 75, 215, "MSSV");
+    outtextxy(xDsSV[1] + 165, 215, "HO");
+    outtextxy(xDsSV[2] + 80, 215, "TEN");
+    outtextxy(xDsSV[3] + 50, 215, "DIEM");
 }
 
 //----------------------------------------------------MAN HINH THEM SUA XOA CAU HOI--------------------------------------

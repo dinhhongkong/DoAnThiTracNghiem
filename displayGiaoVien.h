@@ -175,11 +175,13 @@ int ClickItemMonHoc(ListMonHoc &listMH)
             curMenu = LUACHON_LOP;
             drawList = true;
             drawLop();
+            return listviewDS.idItem[LuaChon];
 
         }
         else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == DISPLAY_CAUHOIMON) {
             curMenu = CHUCNANG_CAUHOI;
             drawCauHoi(listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH,listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH );
+            return listviewDS.idItem[LuaChon];
         }
     
         
@@ -327,7 +329,7 @@ void DisplayMonHoc(ListMonHoc &listMH)
 
 //--------------------------------------------------CHUC NANG QUAN LY LOP---------------------------------------
 
-void ClickItemLop(dslop &DanhSachLop)
+void ClickItemLop(dslop &DanhSachLop, string tenMon = "")
 {
     int x = -1, y = -1;
     x = mousex();
@@ -366,8 +368,8 @@ void ClickItemLop(dslop &DanhSachLop)
         setcolor(WHITE);
         line(350, 200, 350, 760);
 
-        // bat su kien khi click vao item khi click chuot tra hoac chuot phai
-        if (GetAsyncKeyState(VK_RBUTTON) && LuaChon < listviewDS.size)
+        // bat su kien khi click vao item khi click chuot tra hoac chuot phai 
+        if (GetAsyncKeyState(VK_RBUTTON) && LuaChon < listviewDS.size && curMenu == DISPLAY_DSLOP)
         {
             Sleep(20);
             themMaLop.content = DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].MALOP;
@@ -455,7 +457,7 @@ void ClickItemLop(dslop &DanhSachLop)
                 Sleep(75);
             }
         }
-        else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size)
+        else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == DISPLAY_DSLOP)
         {
             btnMenuThemLop.click = false;
             drawSinhVien(DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].TENLOP);
@@ -475,6 +477,11 @@ void ClickItemLop(dslop &DanhSachLop)
                 }
                 Sleep(75);
             }
+        }
+
+        else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == LUACHON_LOP) {
+            drawBangDiem(tenMon, DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].TENLOP);
+            Sleep(1000);
         }
     }
     else
@@ -1058,7 +1065,7 @@ void displaySinhVien(listSV &danhSachSV, string maLop)
 
 //------------------------------------------CHON 1 MON HOAC 1 LOP KHI THUC HIEN CHUC NANG KHAC------------------------------------------
 
-void displayLuaChonMon(ListMonHoc listMH) {
+int displayLuaChonMon(ListMonHoc listMH) {
     btnQuaylai.ButtonEffect();
     btnTien.ButtonEffect();
     btnLui.ButtonEffect();
@@ -1086,7 +1093,7 @@ void displayLuaChonMon(ListMonHoc listMH) {
         checkTimKiem -= 2;
         drawList = true;
     }
-    ClickItemMonHoc(listMH);
+    int MonLuaChon = ClickItemMonHoc(listMH);
     if (GetAsyncKeyState(VK_LBUTTON)) {
         if ( btnQuaylai.isMouseHover() ) {
             Edit = nullptr;
@@ -1094,6 +1101,7 @@ void displayLuaChonMon(ListMonHoc listMH) {
             curMenu = DISPLAY_GIAOVIEN;
             drawGV();
             soTrangMon = 1;
+            Sleep(200);
         }
         else if ( btnTien.isMouseHover()) {
             drawList = true;
@@ -1107,10 +1115,11 @@ void displayLuaChonMon(ListMonHoc listMH) {
             Edit = &timKiemMon;
         }
     }
+    return MonLuaChon;
 
 }
 
-void displayLuaChonLop(dslop &DanhSachLop)  {
+void displayLuaChonLop(dslop &DanhSachLop,string maMon ,string tenMon)  {
     // tim kiem theo nhap tu ban phim, xuat ra man hinh luon
     static int checkTimKiem = 0;
     if (drawList == true)
@@ -1138,31 +1147,25 @@ void displayLuaChonLop(dslop &DanhSachLop)  {
     }
 
     // Bat su kien khi click item trong cai listView
-    ClickItemLop(DanhSachLop);
+    ClickItemLop(DanhSachLop, tenMon);
 
     setfillstyle(1, LIGHTGRAY);
     btnQuaylai.ButtonEffect();
     btnLui.ButtonEffect();
     btnTien.ButtonEffect();
-    btnMenuThemLop.ButtonEffect();
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         if (btnQuaylai.isMouseHover())
         {
-            curMenu = DISPLAY_GIAOVIEN;
+            curMenu = DISPLAY_DIEMMON;
             btnMenuThemLop.click = false;
-            drawGV();
+            drawMonHoc();
             Edit = nullptr;
-            themMaLop.content = "";
-            themTenLop.content = "";
+
             timKiemLop.content = "";
             soTrangLop = 1;
             drawList = true;
-        }
-        else if (btnMenuThemLop.isMouseHover())
-        {
-            drawThemLop();
-            btnMenuThemLop.click = true;
+            Sleep(200);
         }
         else if (timKiemLop.isMouseHover())
         {
