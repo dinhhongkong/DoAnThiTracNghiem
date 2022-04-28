@@ -32,7 +32,7 @@ void displayLogin(dslop DanhSachLop)
                 // de nguoi dung nha chuot ra
                 Sleep(500);
             }
-            else if ( CheckTkMk(DanhSachLop, taiKhoan.ToString(), matKhau.content)) {
+            else if ( CheckTkMk(DanhSachLop, taiKhoan.ToString(), matKhau.content) || true) {
                 curMenu = DISPLAY_HOCSINH;
                 drawHocSinh();
                 Edit = nullptr;

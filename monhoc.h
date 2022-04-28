@@ -111,6 +111,19 @@ bool Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index, string maMon, string tenM
 	return true;
 }
 
+void Xoa_Mon_Hoc(ListMonHoc &listMH, int index)
+{
+	for (int i = index + 1; i < listMH.slmh; i++)
+	{
+		*listMH.monHoc[i - 1] = *listMH.monHoc[i];
+	}
+	Mon_Hoc *ptr = listMH.monHoc[listMH.slmh - 1];
+	delete ptr;
+	listMH.slmh--;
+	AllocConsole();
+	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Xoa mon hoc thanh cong", "Thong bao", MB_OK);
+}
+
 /* void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {
 	Mon_Hoc mh;
 	// --------------------------------------

@@ -28,7 +28,7 @@ void drawGV()
     btnDsLop.draw();
     btnDiemThi.draw();
     btnCauHoiThi.draw();
-    btnCaiDatThi.draw();
+    btnThiThu.draw();
     btnDangXuat.draw();
 }
 
@@ -615,17 +615,73 @@ void drawXemCauHoi() {
     btnDapAnD.draw();
 }
 
+void drawThemCauHoi() {
+    setfillstyle(1, BLACK);
+    bar(849, 75, 1600, 761);
+    setfillstyle(WIDE_DOT_FILL, CYAN);
+    bar(850, 200, 1550, 300);
+    rectangle(850, 200, 1550, 760);
+    line(850, 300, 1550, 300);
+    line(850, 650, 1550, 650);
+    //outtextxy(1140, 230, "XEM CAU HOI");
+    settextstyle(0, 0, 3);
+    setcolor(YELLOW);
+    outtextxy(1080, 230, "THEM CAU HOI");
+
+    edCauHoi.draw();
+    edDapAnA.draw();
+    edDapAnB.draw();
+    edDapAnC.draw();
+    edDapAnD.draw();
+    btnThemCauHoi.draw();
+    setcolor(TEXT_EDIITEXT_TITLE_COLOR);
+
+    outtextxy(860, 600,"DAP AN DUNG: ");
+    btnDapAnA.draw();
+    btnDapAnB.draw();
+    btnDapAnC.draw();
+    btnDapAnD.draw();
+}
+
+void drawHieuChinhCauHoi() {
+    setfillstyle(1, BLACK);
+    bar(849, 75, 1600, 761);
+    setfillstyle(WIDE_DOT_FILL, CYAN);
+    bar(850, 200, 1550, 300);
+    rectangle(850, 200, 1550, 760);
+    line(850, 300, 1550, 300);
+    line(850, 650, 1550, 650);
+    //outtextxy(1140, 230, "XEM CAU HOI");
+    settextstyle(0, 0, 3);
+    setcolor(YELLOW);
+    outtextxy(1040, 230, "HIEU CHINH CAU HOI");
+
+    edCauHoi.draw();
+    edDapAnA.draw();
+    edDapAnB.draw();
+    edDapAnC.draw();
+    edDapAnD.draw();
+    btnThemCauHoi.draw();
+    setcolor(TEXT_EDIITEXT_TITLE_COLOR);
+
+    outtextxy(860, 600,"DAP AN DUNG: ");
+    btnDapAnA.draw();
+    btnDapAnB.draw();
+    btnDapAnC.draw();
+    btnDapAnD.draw();
+}
+
 void drawCauHoi(string maMon, string tenMon) {
     setbkcolor(BLACK);
     cleardevice();
     settextstyle(BOLD_FONT, 0, 5);
     setcolor(YELLOW);
-    outtextxy(250, 20, "DANH SACH CAU HOI");
+    outtextxy(250, 20, "NGAN HANG CAU HOI");
     settextstyle(BOLD_FONT, 0, 3);
     string TenDeMuc = maMon +" : " + tenMon;
     outtextxy(250, 65, &TenDeMuc[0]);
     btnQuaylai.draw();
-    edtimKiemSV.draw();
+    timKiemCauHoi.draw();
     btnLui.draw();
     btnTien_L.draw();
     // line(1000, 0, 1000, 900);
@@ -637,44 +693,25 @@ void drawCauHoi(string maMon, string tenMon) {
 
 }
 
-//-----------------------------------------------------CAI DAT CHUC NANG THI----------------------------------------
+//-----------------------------------------------------CHUC NANG THI THU----------------------------------------------
 
-void drawCaiDatThi() {
-    cleardevice();
-    settextstyle(BOLD_FONT, 0, 7);
+// ve cai chon so cau, chon thoi gian
+void drawThietLapThi() {
+    setfillstyle(1, BLACK);
+    bar(1005, 0, 1600, 765); // 75 tai y neu thay menu
+    setfillstyle(WIDE_DOT_FILL, CYAN);
+    bar(1050, 200, 1550, 300);
     setcolor(YELLOW);
-    string nameApp = "CAI DAT CHUC NANG THI";
-    outtextxy((w - textwidth(&nameApp[0])) / 2, 150, &nameApp[0]);
-    btnQuaylai.draw();
-    btnThietLapThi.draw();
-    btnThiThu.draw();
+    settextstyle(0, 0, 3);
+    outtextxy(1230, 215, "MON THI");
 
-}
 
-void drawLichThi() {
-    edNgayThi.draw();
-    edThangThi.draw();
-    edNamThi.draw();
-    edbatdauGio.draw();
-    edbatdauPhut.draw();
+    rectangle(1050, 200, 1550, 700);
+    line(1050, 300, 1550, 300);
+
+    line(1050, 600, 1550, 600);
     edTimeThi.draw();
     edsoCau.draw();
-    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
-	setcolor(TEXT_EDIITEXT_TITLE_COLOR);
-    outtextxy(1040,215, "NGAY:");
-    outtextxy(1215,215, "THANG:");
-    outtextxy(1400,215, "NAM:");
-    
-    outtextxy(1070,300,"Bat dau thi: (Thi sinh khong duoc THI khi den muon 15p)");
-    settextstyle(BOLD_FONT, HORIZ_DIR, 4);
-    setcolor(YELLOW);
-    outtextxy(1240,500,"MON THI");
-    settextstyle(BOLD_FONT, HORIZ_DIR, 3);
-    outtextxy(1070,530, "CAU TRUC DU LIEU VA GIAI THUAT");
-
-    // outtextxy(1010,363, "Bat dau:");
-    // outtextxy(1160,363, "h");
-    // outtextxy(1010,363, "Bat dau:");
-    // outtextxy(1010,363, "Bat dau:");
-    // outtextxy(1040,215, "Dong phong thi:");
+    btnVaoThi.draw();
 }
+

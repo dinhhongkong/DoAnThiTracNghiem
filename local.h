@@ -13,17 +13,22 @@ public:
 };
 
 
-// ma hinh dang nhap
+// man hinh dang nhap
 editText taiKhoan(500, 300, 600, 50, "TAI KHOAN: ", "Nhap ma so sinh vien", 100);
 editText matKhau(500, 400, 600, 50, "MAT KHAU: ", "Nhan chu, so, ki tu dac biet (chu y CapsLock)", 20, 1);
 button dangnhap(700, 500, 200, 70, "DANG NHAP");
+
+// man hinh doi mat khau ben hoc sinh
+editText matKhauCu(500, 300, 600, 50, "Mat khau cu: ", "Nhan chu, so, ki tu dac biet (chu y CapsLock)", 100);
+editText matKhauMoi(500, 400, 600, 50, "Mat khau moi: ", "Nhan chu, so, ki tu dac biet (chu y CapsLock)", 20, 1);
+editText nhapLaiMatKhau(500, 500, 600, 50, "Nhap lai mat khau: ", "Nhan chu, so, ki tu dac biet (chu y CapsLock)", 20, 1);
 
 // man hinh giao vien
 button btnMonHoc(700,200,250,50,"QUAN LY MON HOC");
 button btnDsLop(700,300,250,50,"QUAN LY LOP");
 button btnDiemThi(700 ,400,250, 50,"DIEM THI");
 button btnCauHoiThi(700, 500,250,50,"CAU HOI THI");
-button btnCaiDatThi(700,600,250,50,"THIET LAP THI");
+button btnThiThu(700,600,250,50,"THI THU");
 button btnDangXuat(750,700,150,50,"DANG XUAT");
 
 listview listviewDS;
@@ -43,6 +48,12 @@ editText timKiemMon(100,100,600,50,"TIM KIEM: ","Nhap MA hoac TEN mon hoc muon t
 button btnMenuThemMon(1175,20,250,50,"MENU THEM MON HOC");
 editText themMaMon(1075,350,450,50,"MA MON:","Toi da 10 ki tu",10);
 editText themTenMon(1075,475,450,50,"TEN MON:","Toi da 35 ki tu",35);
+
+// man hinh hoc sinh
+button btnThi(325, 50, 200, 50, "THI");
+button btnXemDiemSV(575, 50, 200, 50, "XEM DIEM");
+button btnDoiMK(825, 50, 200, 50, "DOI MAT KHAU");
+button btndangxuat(1075, 50, 200,50, "DANG XUAT");
 
 
 // nut chuc nang quan ly lop
@@ -67,19 +78,6 @@ button btnResetMK(1150, 710, 300,50,"RESET MAT KHAU MAC DINH");
 
 
 
-// man hinh hoc sinh
-button btnThi(350, 100, 200, 50, "THI");
-button btnXemLai(350, 200, 200, 50, "XEM LAI BAI THI");
-button btnDoiMK(350, 300, 200, 50, "DOI MAT KHAU");
-button btndangxuat(350, 400, 200,50, "DANG XUAT");
-
-// man hinh thiet lap chuc nang thi
-button btnThietLapThi(700,300,250,50,"THIET LAP LICH THI");
-button btnThiThu(700,450,250,50,"THI THU");
-editText edNgayThi(975,200,200,50,"","dd",2);
-editText edThangThi(1150,200,200,50,"","mm",2);
-editText edNamThi(1325,200,230,50,"","yyyy",4);
-
 // cau hoi
 int xDsCauHoi[2] = {50,800};
 int yDsCauHoi[2] = {250,750};
@@ -92,15 +90,14 @@ button btnDapAnA(1040, 590, 100,40,"A");
 button btnDapAnB(1165, 590, 100,40,"B");
 button btnDapAnC(1290, 590, 100,40,"C");
 button btnDapAnD(1415, 590, 100,40,"D");
+button btnThemCauHoi(1100, 680, 200,50,"THEM CAU HOI");
+editText timKiemCauHoi(100,100,600,50,"TIM KIEM: ","Nhap cau hoi muon tim",100);
 
+// chuc nang tuy chon truoc khi thi
 
-// editText edbatdauGio(950,350,200,50,"","gio",2);
-// editText edbatdauPhut(1040,350,210,50,"","phut",2);
-editText edbatdauGio(1075,350,450,50,"GIO THI:","Tu 6h -> 17h",15);
-editText edbatdauPhut(1075,425,450,50,"PHUT:","Tu 0 -> 60p",2);
-editText edTimeThi(1075,575,450,50,"T/G LAM BAI:","Tinh theo phut",15);
-editText edsoCau(1075,650,450,50,"SO CAU:","So cau trong bai thi",15);
-
+editText edTimeThi(1075,350,450,50,"T/G LAM BAI:","Tinh theo phut",3);
+editText edsoCau(1075,475,450,50,"SO CAU:","So cau trong bai thi",3);
+button btnVaoThi(1250, 625,100,50,"VAO THI");
 
 
 void ClearStream();
@@ -168,7 +165,7 @@ void KbEvent()
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }
-        else if ( curMenu == DISPLAY_LICHTHI) {
+        else if ( curMenu == DISPLAY_THITHU) {
             if (Edit == & timKiemMon) {
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
@@ -180,6 +177,16 @@ void KbEvent()
         }
         else if ( curMenu == LUACHON_LOP) {
             if (Edit == & timKiemLop) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+            }
+        }
+        else if ( curMenu == CHUCNANG_CAUHOI) {
+            if ( Edit == &timKiemCauHoi || Edit == &edCauHoi || Edit == &edDapAnA || Edit == &edDapAnB || Edit == &edDapAnC || Edit == &edDapAnD) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+            }
+        }
+        else if ( curMenu == DISPLAY_THITHU) {
+            if ( Edit == &edTimeThi || Edit == &edsoCau) {
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }

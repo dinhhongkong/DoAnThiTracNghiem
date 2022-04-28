@@ -71,14 +71,14 @@ int main()
         else if ( curMenu == LUACHON_LOP) {
             displayLuaChonLop(DanhSachLop, listMH.monHoc[viTriLuaChonMon]->MAMH ,listMH.monHoc[viTriLuaChonMon]->TENMH);
         }
+        else if ( curMenu == DISPLAY_DSDIEMGV) {
+            diplayDsDiem();
+        }
         else if ( curMenu == CHUCNANG_CAUHOI) {
             displayChucNangCauHoi();
         }
-        else if ( curMenu == DISPLAY_CAIDATTHI ) {
-            displayCaiDatThi(listMH);
-        }
-        else if ( curMenu == DISPLAY_LICHTHI) {
-            displayThietLapLichThi(listMH);
+        else if ( curMenu == DISPLAY_THITHU) {
+            displayThietLapThiThu(listMH);
         }
         
         Sleep(75);

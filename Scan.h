@@ -68,8 +68,6 @@ void Scan(editText *&txt, int maxn, ScanType type)
 			{
 				ScanNumber(txt, c);
 
-				// }else if(type == ONLY_NUMBER_GREATER_0){
-				// 	ScanNumberGreater0(txt, n, c);
 			}
 			else if (type == ONLY_TEXT)
 			{
