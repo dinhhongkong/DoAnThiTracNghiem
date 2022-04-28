@@ -73,10 +73,11 @@ void Them_Mon_Hoc(ListMonHoc& listMH, Mon_Hoc mh) {
 }
 
 bool Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index, string maMon, string tenMon) {
-	// if (maMon == listMH.monHoc[index]->MAMH || tenMon == listMH.monHoc[index]->TENMH) { 
-
-	// 	return false;
-	// }
+	if (maMon == listMH.monHoc[index]->MAMH && tenMon == listMH.monHoc[index]->TENMH) { 
+		AllocConsole();
+    	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong chinh sua, do MA MON vs TEN MON nhap vao van giu nguyen ", "Thong bao", MB_OK);
+		return false;
+	}
 
 	Mon_Hoc mh;
 	mh.MAMH = maMon;
@@ -87,7 +88,8 @@ bool Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index, string maMon, string tenM
 			continue;
 		}
 		if (mh.MAMH == listMH.monHoc[i]->MAMH || mh.TENMH == listMH.monHoc[i]->TENMH) {
-			// BÁO LỖI
+			AllocConsole();
+    		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "MA MON hoac TEN MON da ton tai!", "Thong bao", MB_ICONASTERISK | MB_OK);
 			return false;
 		}
 	}
@@ -108,6 +110,8 @@ bool Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index, string maMon, string tenM
 			index = i;
 		}
 	}
+	AllocConsole();
+    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thanh cong", "Thong bao", MB_OK);
 	return true;
 }
 

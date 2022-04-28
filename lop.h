@@ -139,7 +139,6 @@ bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop)
 
     if (ds.solop == 1 || ( viTri == 0 && ds.arrLop[0].MALOP > ds.arrLop[1].MALOP ) || ( viTri == ds.solop -1 && ds.arrLop[ds.solop -1].MALOP <  ds.arrLop[ds.solop -2].MALOP ) )
     {
-        cout << "Chinh sua thanh cong lop, dau cuoi" << endl;
         AllocConsole();
         MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thanh cong", "Thong bao", MB_OK);
         return true;;

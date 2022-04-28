@@ -5,8 +5,19 @@ void drawHocSinh()
     btnXemDiemSV.draw();
     btnDoiMK.draw();
     btndangxuat.draw();
-    setlinestyle(0, 0, 2);
+    setlinestyle(3, 0, 3);
+    setcolor(LIGHTGREEN);
     rectangle(325, 200, 1275,700);
+    line(325, 325 , 1275, 325);
+    setfillstyle(WIDE_DOT_FILL, LIGHTRED);
+    bar(325, 200, 1275, 325);
+    setcolor(YELLOW);
+    settextstyle(0, 0, 5);
+    setbkcolor(LIGHTRED);
+    outtextxy(430, 240,"THONG TIN SINH VIEN");
+
+    setlinestyle(3, 0, 2);
+    setbkcolor(BLACK);
 }
 
 void drawDoiMk()
