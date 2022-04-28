@@ -29,6 +29,7 @@ button btnDangXuat(750,700,150,50,"DANG XUAT");
 listview listviewDS;
 button btnLui(70, 820, 100,50,"PRE");
 button btnTien(800, 820, 100,50,"NEXT");
+button btnTien_L(640, 820, 100,50,"NEXT");
 button btnThem(1250, 625,100,50,"THEM");
 button btnHieuChinh(1075, 625,200,50,"HIEU CHINH");
 button btnXoaVinhVien(1325, 625,200,50,"XOA VINH VIEN");
@@ -78,6 +79,20 @@ button btnThiThu(700,450,250,50,"THI THU");
 editText edNgayThi(975,200,200,50,"","dd",2);
 editText edThangThi(1150,200,200,50,"","mm",2);
 editText edNamThi(1325,200,230,50,"","yyyy",4);
+
+// cau hoi
+int xDsCauHoi[2] = {50,800};
+int yDsCauHoi[2] = {250,750};
+editText edCauHoi(860, 325, 670,40,"CAU HOI:","",50);
+editText edDapAnA(860, 375, 670,40,"DAP AN A:","",50);
+editText edDapAnB(860, 425, 670,40,"DAP AN B:","",50);
+editText edDapAnC(860, 475, 670,40,"DAP AN C:","",50);
+editText edDapAnD(860, 525, 670,40,"DAP AN D:","",50);
+button btnDapAnA(1040, 590, 100,40,"A");
+button btnDapAnB(1165, 590, 100,40,"B");
+button btnDapAnC(1290, 590, 100,40,"C");
+button btnDapAnD(1415, 590, 100,40,"D");
+
 
 // editText edbatdauGio(950,350,200,50,"","gio",2);
 // editText edbatdauPhut(1040,350,210,50,"","phut",2);

@@ -181,6 +181,7 @@ int ClickItemMonHoc(ListMonHoc &listMH)
         else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == DISPLAY_CAUHOIMON) {
             curMenu = CHUCNANG_CAUHOI;
             drawCauHoi(listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH,listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH );
+            drawXemCauHoi();
             return listviewDS.idItem[LuaChon];
         }
     
@@ -1191,8 +1192,12 @@ void displayLuaChonLop(dslop &DanhSachLop,string maMon ,string tenMon)  {
 
 void displayChucNangCauHoi() {
     btnQuaylai.ButtonEffect();
-    btnTien.ButtonEffect();
+    btnTien_L.ButtonEffect();
     btnLui.ButtonEffect();
+    btnDapAnA.ButtonEffect();
+    btnDapAnB.ButtonEffect();
+    btnDapAnC.ButtonEffect();
+    btnDapAnD.ButtonEffect();
 
     if (GetAsyncKeyState(VK_LBUTTON)) {
         if ( btnQuaylai.isMouseHover()) {

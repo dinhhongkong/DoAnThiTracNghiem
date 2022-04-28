@@ -588,6 +588,32 @@ void drawBangDiem(string tenMon, string tenlop) {
 }
 
 //----------------------------------------------------MAN HINH THEM SUA XOA CAU HOI--------------------------------------
+void drawXemCauHoi() {
+    setfillstyle(1, BLACK);
+    bar(849, 75, 1600, 761);
+    setfillstyle(WIDE_DOT_FILL, CYAN);
+    bar(850, 200, 1550, 300);
+    rectangle(850, 200, 1550, 760);
+    line(850, 300, 1550, 300);
+    line(850, 650, 1550, 650);
+    //outtextxy(1140, 230, "XEM CAU HOI");
+    settextstyle(0, 0, 3);
+    setcolor(YELLOW);
+    outtextxy(1080, 230, "XEM CAU HOI");
+
+    edCauHoi.draw();
+    edDapAnA.draw();
+    edDapAnB.draw();
+    edDapAnC.draw();
+    edDapAnD.draw();
+    setcolor(TEXT_EDIITEXT_TITLE_COLOR);
+
+    outtextxy(860, 600,"DAP AN DUNG: ");
+    btnDapAnA.draw();
+    btnDapAnB.draw();
+    btnDapAnC.draw();
+    btnDapAnD.draw();
+}
 
 void drawCauHoi(string maMon, string tenMon) {
     setbkcolor(BLACK);
@@ -601,22 +627,13 @@ void drawCauHoi(string maMon, string tenMon) {
     btnQuaylai.draw();
     edtimKiemSV.draw();
     btnLui.draw();
-    btnTien.draw();
-    line(1000, 0, 1000, 900);
-    rectangle(50, 200, 950, 760);
-    // ve ma sv
-    line(250, 200, 250, 760);
-    // ve ho sv
-    line(600, 200, 600, 760);
-    // ve ten sv
-    line(800, 200, 800, 760);
-    // ve gach ngang
-    line(50, 250, 950, 250);
+    btnTien_L.draw();
+    // line(1000, 0, 1000, 900);
+    // line(800, 0, 800, 900);
+    rectangle(50, 200, 800, 760);
+    line(50, 250, 800, 250);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
-    outtextxy(xDsSV[0] + 75, 215, "MSSV");
-    outtextxy(xDsSV[1] + 165, 215, "HO");
-    outtextxy(xDsSV[2] + 80, 215, "TEN");
-    outtextxy(xDsSV[3] + 35, 215, "GIOI TINH");
+    outtextxy(xDsSV[0] + 345, 215, "CAU HOI");
 
 }
 
