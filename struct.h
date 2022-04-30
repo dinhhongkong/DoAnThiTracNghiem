@@ -20,19 +20,19 @@ typedef Danh_Sach_Mon_Hoc ListMonHoc;
 // ------------------ KHAI BAO CTLD DIEM THI -------------------
 struct Diem_Thi {
 	string MAMH;
-	float Diem;
+	float Diem = -1;
 };
 
 struct Node_Diem_Thi {
 	Diem_Thi info;
-	Node_Diem_Thi* DTnext = NULL;
+	Node_Diem_Thi* DTnext = nullptr;
 };
 typedef Node_Diem_Thi* DTNode;
 
-struct Danh_Sach_Diem_Thi {
-	DTNode* first = NULL;
-};
-typedef Danh_Sach_Diem_Thi ListDiemThi;
+// struct Danh_Sach_Diem_Thi {
+// 	DTNode* first = NULL;
+// };
+// typedef Danh_Sach_Diem_Thi ListDiemThi;
 
 
 
@@ -46,7 +46,7 @@ struct CauHoi
     string B; 
     string C; 
     string D;
-    char DapAn;
+    char DapAn; // A, B C, D la dap an dung
 };
 
 
@@ -73,9 +73,7 @@ struct sinhVien{
 	string Ho;
 	string Ten;
 	int gioiTinh;
-	// string password;
-	// con tro tro den cac mon da thi trac nghiem
-	//dsdiemThi diem;
+    DTNode listDT;
 };
 
 struct nodeSV{
@@ -102,20 +100,6 @@ struct dslop
 {
     int solop = 0;
     lop arrLop[MAXLOP]; // danh sach tuyen tinh
-};
-
-//------------------------------------struct thoi gian--------------------------------------------
-
-struct ngayThangNam {
-	int ngay = 0;
-	int thang = 0 ;
-	int nam = 0;
-};
-
-struct gioPhuGiay {
-	int gio = 0;
-	int phut = 0;
-	int giay = 0;
 };
 
 

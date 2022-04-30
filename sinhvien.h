@@ -213,13 +213,51 @@ bool ChinhSuaSinhVien(listSV &DsSinhVien, nodeSV *&nodeHieuChinh, string Mssv, s
 	return true;
 }
 
-bool xoaSinhVien( nodeSV *&sv) {
+bool xoaSinhVien(listSV &DsSinhVien, nodeSV *&sv) {
+	if ( sv->info.listDT != nullptr) {
+		AllocConsole();
+		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thong the xoa, Sinh Vien co danh sach diem", "Thong bao", MB_OK);
+		return false;
+	}
+
+	if ( sv == DsSinhVien.First ) {
+		DsSinhVien.First = sv->pNext;
+		sv->pNext = nullptr;
+		delete sv;
+		sv = nullptr;
+	}
+	else if ( sv != DsSinhVien.Last) {
+		nodeSV *node = DsSinhVien.First;
+		while (node->pNext != sv) {
+			node = node->pNext;
+		}
+		node->pNext = sv->pNext;
+		sv->pNext = nullptr;
+		delete sv;
+		sv = nullptr;
+	}
+	else if ( sv == DsSinhVien.Last) {
+		nodeSV *node = DsSinhVien.First;
+		while (node->pNext != sv) {
+			node = node->pNext;
+		}
+		DsSinhVien.Last = node;
+		DsSinhVien.Last->pNext = nullptr;
+		sv->pNext = nullptr;
+		delete sv;
+		sv = nullptr;
+	}
+	AllocConsole();
+	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Xoa sinh vien thanh cong", "Thong bao", MB_OK);
+
+	return true;
 
 }
 
 void thayDoiMK(nodeSV *&sv, string matKhauMoi) {
 	sv->info.Pass = matKhauMoi;
 }
+
 
 // dem so luong phan tu danh sach lien ket don sinh vien
 int SizeListSV(listSV l)

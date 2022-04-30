@@ -1,6 +1,7 @@
 int curMenu = 0;
-int curGV = 0;
+int preMenu = -1;
 bool drawList = true;
+int luaChonLop = -1;
 
 editText *Edit = nullptr;
 
@@ -76,27 +77,37 @@ button btnNam(1225, 540, 100,40,"NAM");
 button btnNu(1350, 540, 100,40,"NU");
 button btnResetMK(1150, 710, 300,50,"RESET MAT KHAU MAC DINH");
 
+// chuc nang xem diem tai man hinh giao vien
+int xDsDiem[5] = {350,550,900,1100,1250};
+editText edtimKiemSV_R(500,100,600,50,"TIM KIEM: ","Nhap MA hoac TEN sinh vien muon tim",100);
+button btnLui_L(370, 820, 100,50,"PRE");
+button btnTien_L1(1120, 820, 100,50,"NEXT");
+
 
 
 // cau hoi
-int xDsCauHoi[2] = {50,800};
+int xDsCauHoi[4] = {50,125,250,800};
 int yDsCauHoi[2] = {250,750};
-editText edCauHoi(860, 325, 670,40,"CAU HOI:","",50);
-editText edDapAnA(860, 375, 670,40,"DAP AN A:","",50);
-editText edDapAnB(860, 425, 670,40,"DAP AN B:","",50);
-editText edDapAnC(860, 475, 670,40,"DAP AN C:","",50);
-editText edDapAnD(860, 525, 670,40,"DAP AN D:","",50);
-button btnDapAnA(1040, 590, 100,40,"A");
-button btnDapAnB(1165, 590, 100,40,"B");
-button btnDapAnC(1290, 590, 100,40,"C");
-button btnDapAnD(1415, 590, 100,40,"D");
-button btnThemCauHoi(1100, 680, 200,50,"THEM CAU HOI");
+editText edCauHoi(860, 325, 670,40,"CAU HOI:","toi da x ki tu",50);
+editText edDapAnA(860, 375, 670,40,"DAP AN A:","toi da x ki tu",50);
+editText edDapAnB(860, 425, 670,40,"DAP AN B:","toi da x ki tu",50);
+editText edDapAnC(860, 475, 670,40,"DAP AN C:","toi da x ki tu",50);
+editText edDapAnD(860, 525, 670,40,"DAP AN D:","toi da x ki tu",50);
+editText edChonMaMon(860, 630, 500,40,"","An nut ben canh de chon tu danh sach",50);
+button btnChonMaMon(860, 630, 140,40,"MA MON:");
+button btnXoaMaMon(1380, 630, 130,40,"XOA MA MON");
+button btnDapAnA(1040, 575, 100,40,"A");
+button btnDapAnB(1165, 575, 100,40,"B");
+button btnDapAnC(1290, 575, 100,40,"C");
+button btnDapAnD(1415, 575, 100,40,"D");
+button btnThemCauHoi(1100, 695, 200,50,"THEM CAU HOI");
 editText timKiemCauHoi(100,100,600,50,"TIM KIEM: ","Nhap cau hoi muon tim",100);
 
 // chuc nang tuy chon truoc khi thi
 
-editText edTimeThi(1075,350,450,50,"T/G LAM BAI:","Tinh theo phut",3);
-editText edsoCau(1075,475,450,50,"SO CAU:","So cau trong bai thi",3);
+editText edChonMonThi(1075,350,450,50,"MA MON THI:","Chon mon thi trong danh sach",10);
+editText edTimeThi(1075,420,450,50,"T/G LAM BAI:","Tinh theo phut",3);
+editText edsoCau(1075,490,450,50,"SO CAU:","So cau trong bai thi",3);
 button btnVaoThi(1250, 625,100,50,"VAO THI");
 
 
@@ -165,12 +176,8 @@ void KbEvent()
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }
-        else if ( curMenu == DISPLAY_THITHU) {
-            if (Edit == & timKiemMon) {
-                Scan(Edit,Edit->textSize,TEXT_NUMBER);
-            }
-        }
-        else if (curMenu == DISPLAY_CAUHOIMON ) {
+        
+        else if (curMenu == LUACHON_MON ) {
             if (Edit == & timKiemMon) {
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
@@ -180,14 +187,22 @@ void KbEvent()
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }
+        else if (curMenu == DISPLAY_DSDIEMGV ) {
+            if (Edit == &edtimKiemSV_R) {
+                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+            }
+        }
         else if ( curMenu == CHUCNANG_CAUHOI) {
             if ( Edit == &timKiemCauHoi || Edit == &edCauHoi || Edit == &edDapAnA || Edit == &edDapAnB || Edit == &edDapAnC || Edit == &edDapAnD) {
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }
         else if ( curMenu == DISPLAY_THITHU) {
-            if ( Edit == &edTimeThi || Edit == &edsoCau) {
+            if (Edit == & timKiemMon) {
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
+            }
+            else if ( Edit == &edTimeThi || Edit == &edsoCau) {
+                Scan(Edit,Edit->textSize,ONLY_NUMBER);
             }
         }
 
