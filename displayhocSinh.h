@@ -1,4 +1,4 @@
-void drawHocSinh()
+void drawHocSinh(sinhVien sv, string tenlop = "")
 {
     cleardevice();
     btnThi.draw();
@@ -9,11 +9,27 @@ void drawHocSinh()
     setcolor(WHITE);
     rectangle(325, 200, 1275,700);
     line(325, 325 , 1275, 325);
-    setfillstyle(WIDE_DOT_FILL, LIGHTGREEN);
+    setfillstyle(WIDE_DOT_FILL, CYAN);
     bar(325, 200, 1275, 325);
     setcolor(YELLOW);
     settextstyle(0, 0, 5);
     outtextxy(430, 240,"THONG TIN SINH VIEN");
+    string hoTen = "Ho va Ten: "+ sv.Ho + " " + sv.Ten;
+    string mssv = "Mssv: " + sv.mssv;
+    static string tenLop;
+    if ( tenlop.size()) {
+        tenLop = "Lop: " + tenlop;
+    }
+    string temp = (sv.gioiTinh) ? ("NU") : ("NAM");
+    string gioiTinh = "Gioi tinh: " + temp ;
+    settextstyle(10, 0, 4);
+    setcolor(LIGHTRED);
+    outtextxy(430,400, &hoTen[0]);
+    outtextxy(430,475, &mssv[0]);
+    outtextxy(430,550, &tenLop[0]);
+    outtextxy(430, 625, &gioiTinh[0]);
+
+
     //setlinestyle(, 0, 2);
 }
 
@@ -34,9 +50,18 @@ void drawDoiMk()
     nhapLaiMatKhau.draw();
     btnQuaylai.draw();
     btnDoiMKMoi.draw();
-}
 
-void displayHocSinh()
+    matKhauCu.setNext(&matKhauMoi);
+    matKhauMoi.setNext(&nhapLaiMatKhau);
+    nhapLaiMatKhau.setNext(&matKhauCu);
+
+    matKhauCu.setPre(&nhapLaiMatKhau);
+    matKhauMoi.setPre(&matKhauCu);
+    nhapLaiMatKhau.setPre(&matKhauMoi);
+}
+void displayDoiMK(string &mk);
+
+void displayHocSinh(sinhVien &sv)
 {
     btnThi.ButtonEffect();
     btnXemDiemSV.ButtonEffect();
@@ -49,11 +74,23 @@ void displayHocSinh()
         {
             drawLogin();
             curMenu = DISPLAY_LOGIN;
+            btndangxuat.click = true;
         }
         else if (btnDoiMK.isMouseHover())
         {
             curMenu = DISPLAY_DOIMK;
             drawDoiMk();
+            while ( true) {
+                KbEvent();
+                displayDoiMK(sv.Pass);
+                if (btnQuaylai.click) {
+                    btnQuaylai.click = false;
+                    curMenu = DISPLAY_HOCSINH;
+                    drawHocSinh(sv);
+                    break;
+                }
+                Sleep(75);
+            }
         }
         else if (btnThi.isMouseHover())
         {
@@ -63,7 +100,7 @@ void displayHocSinh()
     }
 }
 
-void displayDoiMK()
+void displayDoiMK(string &mk)
 {
     btnQuaylai.ButtonEffect();
     btnDoiMKMoi.ButtonEffect();
@@ -94,6 +131,12 @@ void displayDoiMK()
             else {
 
             }
+        }
+        else if ( btnQuaylai.isMouseHover()) {
+            matKhauCu.content ="";
+            matKhauMoi.content = "";
+            nhapLaiMatKhau.content ="";
+            btnQuaylai.click = true;
         }
     }
 }

@@ -21,7 +21,7 @@ editText matKhau(500, 400, 600, 50, "MAT KHAU: ", "Nhan chu, so, ki tu dac biet 
 button dangnhap(700, 500, 200, 70, "DANG NHAP");
 
 // man hinh doi mat khau ben hoc sinh
-editText matKhauCu(500, 300, 600, 50, "Mat khau cu: ", "Nhan chu, so, ki tu dac biet (chu y CapsLock)", 100);
+editText matKhauCu(500, 300, 600, 50, "Mat khau cu: ", "Nhan chu, so, ki tu dac biet (chu y CapsLock)", 20,1);
 editText matKhauMoi(500, 400, 600, 50, "Mat khau moi: ", "Nhan chu, so, ki tu dac biet (chu y CapsLock)", 20, 1);
 editText nhapLaiMatKhau(500, 500, 600, 50, "Nhap lai MK: ", "Nhan chu, so, ki tu dac biet (chu y CapsLock)", 20, 1);
 button btnDoiMKMoi(700, 600, 200, 50, "DOI MAT KHAU");
@@ -141,7 +141,6 @@ void KbEvent()
                 Scan(Edit,Edit->textSize,SCAN_PASS);
             }
         }
-
         else if ( curMenu == DISPLAY_DSMON) {
             if ( Edit == &themMaMon) {
                 Scan(Edit,Edit->textSize,TEXT_NUMBER_NO_SPACE);
@@ -205,6 +204,12 @@ void KbEvent()
             }
             else if ( Edit == &edTimeThi || Edit == &edsoCau) {
                 Scan(Edit,Edit->textSize,ONLY_NUMBER);
+            }
+        }
+        // man hinh hoc sinh
+        else if ( curMenu == DISPLAY_DOIMK) {
+            if ( Edit == &matKhauCu || Edit == &matKhauMoi || Edit == &nhapLaiMatKhau ) {
+                Scan(Edit,Edit->textSize,SCAN_PASS);
             }
         }
 

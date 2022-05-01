@@ -49,13 +49,6 @@ int main()
         {
             displayLogin(DanhSachLop);
         }
-        else if (curMenu == DISPLAY_HOCSINH)
-        {
-            displayHocSinh();
-        }
-        else if ( curMenu == DISPLAY_DOIMK) {
-            displayDoiMK();
-        }
         else if (curMenu == DISPLAY_GIAOVIEN)
         {
             displayGV();
