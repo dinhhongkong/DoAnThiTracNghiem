@@ -214,7 +214,7 @@ bool ChinhSuaSinhVien(listSV &DsSinhVien, nodeSV *&nodeHieuChinh, string Mssv, s
 }
 
 bool xoaSinhVien(listSV &DsSinhVien, nodeSV *&sv) {
-	if ( sv->info.listDT != nullptr) {
+	if ( sv->info.listDT.first != nullptr) {
 		AllocConsole();
 		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thong the xoa, Sinh Vien co danh sach diem", "Thong bao", MB_OK);
 		return false;
@@ -316,3 +316,7 @@ void ghiFileDsSinhVien(listSV &dsSinhVien, string maLop)
 	cout << "ghi thanh cong sv" << endl;
 	fileOut.close();
 }
+
+
+
+

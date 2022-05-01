@@ -8,6 +8,7 @@ using namespace std;
 #include <direct.h> // thu vien tao folder
 #include <fstream>
 #include <ctime>
+#include <thread>
 
 #include "struct.h"
 #include "define.h"
@@ -52,6 +53,9 @@ int main()
         {
             displayHocSinh();
         }
+        else if ( curMenu == DISPLAY_DOIMK) {
+            displayDoiMK();
+        }
         else if (curMenu == DISPLAY_GIAOVIEN)
         {
             displayGV();
@@ -79,6 +83,9 @@ int main()
         }
         else if ( curMenu == DISPLAY_THITHU) {
             displayThietLapThiThu(listMH);
+        }
+        else if ( curMenu == VAO_THITHU) {
+            displayThiThu();
         }
         
         Sleep(75);

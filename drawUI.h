@@ -641,35 +641,29 @@ void drawDsDiem(string maMon, lop lh)
             {
                 break;
             }
-
             listviewDS.size++;
             listviewDS.idItem[i] = i + (soTrangSV - 1) * 10;
 
             outtextxy(xDsDiem[0] + 40, yDsSV[0] + 20 + i * 50, &node->info.mssv[0]);
             outtextxy(xDsDiem[1] + 45, yDsSV[0] + 20 + i * 50, &node->info.Ho[0]);
             outtextxy(xDsDiem[2] + 45, yDsSV[0] + 20 + i * 50, &node->info.Ten[0]);
-            if (node->info.listDT == nullptr)
+
+            string diem = "";
+            bool check = false;
+            for (DTNode p = node->info.listDT.first; p != nullptr; p = p->DTnext)
+            {
+                if (p->info.MAMH == maMon)
+                {
+                    diem = to_string(p->info.Diem);
+                    outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + i * 50, &diem[0]);
+                    check = true;
+                    break;
+                }
+            }
+            if (check == false)
             {
                 outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + i * 50, "CHUA THI");
             }
-            else
-            {
-                string diem = "";
-                for (DTNode p = node->info.listDT; p != nullptr; p = p->DTnext)
-                {
-                    if (p->info.MAMH == maMon && p->info.Diem != -1)
-                    {
-                        diem = to_string(node->info.listDT->info.Diem);
-                        outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + i * 50, &diem[0]);
-                        break;
-                    }
-                    else if (p->info.MAMH == maMon && p->info.Diem == -1 ) {
-                        outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + i * 50, "CHUA THI");
-                        break;
-                    }
-                }
-            }
-
             node = node->pNext;
         }
     }
@@ -698,25 +692,20 @@ void drawDsDiem(string maMon, lop lh)
                 outtextxy(xDsDiem[0] + 40, yDsSV[0] + 20 + j * 50, &node->info.mssv[0]);
                 outtextxy(xDsDiem[1] + 45, yDsSV[0] + 20 + j * 50, &node->info.Ho[0]);
                 outtextxy(xDsDiem[2] + 45, yDsSV[0] + 20 + j * 50, &node->info.Ten[0]);
-                if (node->info.listDT == nullptr)
+
+                string diem = "";
+                bool check = false;
+                for (DTNode p = node->info.listDT.first; p != nullptr; p = p->DTnext)
                 {
-                    outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + j * 50, "CHUA THI");
-                }
-                else
-                {
-                    string diem = "";
-                    for (DTNode p = node->info.listDT; p != nullptr; p = p->DTnext)
+                    if (p->info.MAMH == maMon )
                     {
-                        if (p->info.MAMH == maMon && p->info.Diem != -1)
-                        {
-                            diem = to_string(node->info.listDT->info.Diem);
-                            outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + j * 50, &diem[0]);
-                            break;
-                        }
-                        else if (p->info.MAMH == maMon && p->info.Diem == -1 ) {
-                            outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + j * 50, "CHUA THI");
-                            break;
-                        }
+                        diem = to_string(p->info.Diem);
+                        outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + j * 50, &diem[0]);
+                        check = true;
+                        break;
+                    }
+                    if ( check == false ) {
+                        outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + i * 50, "CHUA THI");
                     }
                 }
                 j++;
@@ -877,6 +866,48 @@ void drawCauHoi()
 
 //-----------------------------------------------------CHUC NANG THI THU----------------------------------------------
 
+void drawThoiGian(int giay)
+{
+    string Phut;
+    string Giay;
+    string thoiGian = Phut + "phut" + Giay;
+    while (giay > -1)
+    {
+        setfillstyle(1, BLACK);
+        bar(1102, 552, 1598, 898);
+        settextstyle(0, 0, 4);
+        Phut = to_string(giay / 60);
+        Giay = to_string(giay - giay / 60 * 60);
+        if ( Giay.size() ==1) {
+            Giay = "0" + Giay;
+        }
+        thoiGian = Phut + " : " + Giay ;
+        setcolor(YELLOW);
+        settextstyle(10,0,8);
+        
+        outtextxy(1350 - textwidth(&thoiGian[0]) / 2, 680, &thoiGian[0]);
+        Sleep(1000);
+        giay--;
+        thoiGian = to_string(giay);
+        setcolor(WHITE);
+    }
+    cout << "Het gio" << endl;
+}
+
+void drawThi()
+{
+    setbkcolor(BLACK);
+    cleardevice();
+    btnQuaylai.draw();
+    setfillstyle(WIDE_DOT_FILL, CYAN);
+    bar(1100, 450, 1600, 550);
+    setcolor(YELLOW);
+    rectangle(1100, 1, 1600, 900);
+    line(1100, 450, 1600, 450);
+    line(1100, 550, 1600, 550);
+    settextstyle(0, 0, 4);
+    outtextxy(1200, 485, "THOI GIAN:");
+}
 // ve cai chon so cau, chon thoi gian
 void drawThietLapThi()
 {

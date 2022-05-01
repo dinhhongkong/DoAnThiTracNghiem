@@ -20,7 +20,8 @@ typedef Danh_Sach_Mon_Hoc ListMonHoc;
 // ------------------ KHAI BAO CTLD DIEM THI -------------------
 struct Diem_Thi {
 	string MAMH;
-	float Diem = -1;
+	float Diem;
+    
 };
 
 struct Node_Diem_Thi {
@@ -29,10 +30,10 @@ struct Node_Diem_Thi {
 };
 typedef Node_Diem_Thi* DTNode;
 
-// struct Danh_Sach_Diem_Thi {
-// 	DTNode* first = NULL;
-// };
-// typedef Danh_Sach_Diem_Thi ListDiemThi;
+struct Danh_Sach_Diem_Thi {
+	DTNode first = nullptr;
+};
+typedef Danh_Sach_Diem_Thi ListDiemThi;
 
 
 
@@ -73,7 +74,7 @@ struct sinhVien{
 	string Ho;
 	string Ten;
 	int gioiTinh;
-    DTNode listDT;
+    ListDiemThi listDT;
 };
 
 struct nodeSV{
