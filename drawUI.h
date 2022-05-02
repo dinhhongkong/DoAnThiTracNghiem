@@ -18,6 +18,69 @@ void drawLogin()
     matKhau.setNext(&taiKhoan);
 }
 
+// Ve man hinh chuc nang hoc sinh
+void drawHocSinh(sinhVien sv, string tenlop = "")
+{
+    cleardevice();
+    btnThi.draw();
+    btnXemDiemSV.draw();
+    btnDoiMK.draw();
+    btndangxuat.draw();
+    setlinestyle(0, 0, 3);
+    setcolor(WHITE);
+    rectangle(325, 200, 1275,700);
+    line(325, 325 , 1275, 325);
+    setfillstyle(WIDE_DOT_FILL, CYAN);
+    bar(325, 200, 1275, 325);
+    setcolor(YELLOW);
+    settextstyle(0, 0, 5);
+    outtextxy(430, 240,"THONG TIN SINH VIEN");
+    string hoTen = "Ho va Ten: "+ sv.Ho + " " + sv.Ten;
+    string mssv = "Mssv: " + sv.mssv;
+    static string tenLop;
+    if ( tenlop.size()) {
+        tenLop = "Lop: " + tenlop;
+    }
+    string temp = (sv.gioiTinh) ? ("NU") : ("NAM");
+    string gioiTinh = "Gioi tinh: " + temp ;
+    settextstyle(10, 0, 4);
+    setcolor(LIGHTRED);
+    outtextxy(430,400, &hoTen[0]);
+    outtextxy(430,475, &mssv[0]);
+    outtextxy(430,550, &tenLop[0]);
+    outtextxy(430, 625, &gioiTinh[0]);
+
+
+    //setlinestyle(, 0, 2);
+}
+
+void drawDoiMk()
+{
+    setbkcolor(BLACK);
+    setfillstyle(1, BLACK);
+    cleardevice();
+    setfillstyle(WIDE_DOT_FILL, CYAN);
+    bar(325, 100, 1275, 230);
+    line(325,230,1275,230);
+    rectangle(325, 100, 1275,700);
+    setcolor(YELLOW);
+    settextstyle(0,0,5);
+    outtextxy(800 - textwidth("DOI MAT KHAU")/2 + 20,150,"DOI MAT KHAU");
+    matKhauCu.draw();
+    matKhauMoi.draw();
+    nhapLaiMatKhau.draw();
+    btnQuaylai.draw();
+    btnDoiMKMoi.draw();
+
+    matKhauCu.setNext(&matKhauMoi);
+    matKhauMoi.setNext(&nhapLaiMatKhau);
+    nhapLaiMatKhau.setNext(&matKhauCu);
+
+    matKhauCu.setPre(&nhapLaiMatKhau);
+    matKhauMoi.setPre(&matKhauCu);
+    nhapLaiMatKhau.setPre(&matKhauMoi);
+}
+
 // ve man hinh chuc nang giao vien
 void drawGV()
 {
@@ -61,7 +124,7 @@ void DrawThemMonHoc()
 void drawMonHoc()
 {
     cleardevice();
-    if (btnMenuThemMon.click == true)
+    if (MenuThemMon == true)
     {
         DrawThemMonHoc();
     }
@@ -77,10 +140,10 @@ void drawMonHoc()
     }
     btnQuaylai.draw();
     timKiemMon.draw();
-    if (curMenu == DISPLAY_DSMON)
-    {
-        btnMenuThemMon.draw();
-    }
+    // if (curMenu == DISPLAY_DSMON)
+    // {
+    //     btnMenuThemMon.draw();
+    // }
     btnLui.draw();
     btnTien.draw();
     line(1000, 0, 1000, 900);
@@ -186,7 +249,7 @@ void drawLop()
 {
     setbkcolor(BLACK);
     cleardevice();
-    if (btnMenuThemLop.click == true)
+    if (MenuThemLop == true)
     {
         drawThemLop();
     }
@@ -203,10 +266,6 @@ void drawLop()
     }
     btnQuaylai.draw();
     // timKiemMon.draw();
-    if (curMenu == DISPLAY_DSLOP)
-    {
-        btnMenuThemLop.draw();
-    }
     btnLui.draw();
     btnTien.draw();
     timKiemLop.draw();
@@ -223,7 +282,7 @@ void drawLop()
 
 void drawThemLop()
 {
-    btnMenuThemLop.click = true;
+    MenuThemLop = true;
     setfillstyle(1, BLACK);
     bar(1005, 75, 1600, 765);
     setfillstyle(WIDE_DOT_FILL, CYAN);
@@ -697,6 +756,7 @@ void drawDsDiem(string maMon, lop lh)
                 bool check = false;
                 for (DTNode p = node->info.listDT.first; p != nullptr; p = p->DTnext)
                 {
+                    check = false;
                     if (p->info.MAMH == maMon )
                     {
                         diem = to_string(p->info.Diem);
@@ -705,7 +765,7 @@ void drawDsDiem(string maMon, lop lh)
                         break;
                     }
                     if ( check == false ) {
-                        outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + i * 50, "CHUA THI");
+                        outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + j * 50, "CHUA THI");
                     }
                 }
                 j++;
@@ -899,7 +959,19 @@ void drawThi()
     setbkcolor(BLACK);
     cleardevice();
     btnQuaylai.draw();
+    btnTien.draw();
+    btnLui.draw();
+    btnChonA.draw();
+    btnChonB.draw();
+    btnChonC.draw();
+    btnChonD.draw();
+
     setfillstyle(WIDE_DOT_FILL, CYAN);
+    rectangle(50, 100, 1000, 760);
+    settextstyle(10, 0, 3);
+    string cauHoithi = "Cau hoi: ";
+    outtextxy(70,140,&cauHoithi[0]);
+    line ( 50,200,1000, 200);
     bar(1100, 450, 1600, 550);
     setcolor(YELLOW);
     rectangle(1100, 1, 1600, 900);

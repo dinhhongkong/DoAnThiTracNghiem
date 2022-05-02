@@ -48,7 +48,8 @@ int xDsMon[3] = {50,300,950};
 int yDsMon[2] = {250,750};
 button btnQuaylai(20,20,100,50,"< BACK");
 editText timKiemMon(100,100,600,50,"TIM KIEM: ","Nhap MA hoac TEN mon hoc muon tim",100);
-button btnMenuThemMon(1175,20,250,50,"MENU THEM MON HOC");
+// button btnMenuThemMon(1175,20,250,50,"MENU THEM MON HOC");
+bool MenuThemMon = true;
 editText themMaMon(1075,350,450,50,"MA MON:","Toi da 10 ki tu",10);
 editText themTenMon(1075,475,450,50,"TEN MON:","Toi da 35 ki tu",35);
 
@@ -62,7 +63,8 @@ button btndangxuat(1075, 50, 200,50, "DANG XUAT");
 // nut chuc nang quan ly lop
 int xDsLop[3] = {50, 350, 950};
 int yDsLop[2] = {250,750};
-button btnMenuThemLop(1175,20,250,50,"MENU THEM LOP HOC");
+// button btnMenuThemLop(1175,20,250,50,"MENU THEM LOP HOC");
+bool MenuThemLop = true;
 editText themMaLop(1075,350,450,50,"MA LOP HOC:","Toi da 15 ki tu",15);
 editText themTenLop(1075,475,450,50,"TEN LOP HOC:","Toi da 40 ki tu",40);
 editText timKiemLop(100,100,600,50,"TIM KIEM: ","Nhap MA hoac TEN lop muon tim",100);
@@ -111,6 +113,13 @@ editText edChonMonThi(1075,350,450,50,"MA MON THI:","Chon mon thi trong danh sac
 editText edTimeThi(1075,420,450,50,"T/G LAM BAI:","Tinh theo phut",3);
 editText edsoCau(1075,490,450,50,"SO CAU:","So cau trong bai thi",3);
 button btnVaoThi(1250, 625,100,50,"VAO THI");
+
+
+// THI
+button btnChonA(70,225,70,50,"A:");
+button btnChonB(70,375,70,50,"B:");
+button btnChonC(70,525,70,50,"C:");
+button btnChonD(70,675,70,50,"D:");
 
 
 void ClearStream();

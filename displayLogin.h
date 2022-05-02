@@ -33,7 +33,7 @@ void displayLogin(dslop &DanhSachLop)
                             Edit = nullptr;
                             while (true)
                             {
-                                displayHocSinh(node->info);
+                                displayHocSinh(DanhSachLop.arrLop[i].dsSinhVien,node->info,DanhSachLop.arrLop[i].MALOP );
                                 if ( btndangxuat.click == true) {
                                     btndangxuat.click = false;
                                     checkThoat == false;

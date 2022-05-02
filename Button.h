@@ -5,14 +5,9 @@ private:
 	int width, height;
 	string title;
 	bool isHover;
-	/*
-	-1: Left
-	0: center
-	1: right
-	*/
+
 public:
 	bool click;
-	// int id ;
 
 	button(int x, int y, int width, int height, string title)
 	{
@@ -23,15 +18,6 @@ public:
 		this->title = title;
 	}
 
-	// button(int id, int x, int y, int width, int height, string title)
-	// {
-	// 	this->id = id;
-	// 	this->x = x;
-	// 	this->y = y;
-	// 	this->width = width;
-	// 	this->height = height;
-	// 	this->title = title;
-	// }
 
 	// vẽ cái nút
 	void draw()

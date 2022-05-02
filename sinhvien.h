@@ -41,8 +41,25 @@ void AddFirst(listSV &l, nodeSV *sv)
 }
 
 // CHEN VAO DANH SACH SINH VIEN THEO THU TU
-bool InsertNodeSV(listSV &l, sinhVien sv)
+bool InsertNodeSV(dslop DanhSachLop, listSV &l, sinhVien sv)
 {
+	nodeSV *node = nullptr;
+	for (int i = 0; i < DanhSachLop.solop; i++)
+	{
+		node = DanhSachLop.arrLop[i].dsSinhVien.First;
+
+		while (node != nullptr)
+		{
+			if (node->info.mssv == sv.mssv)
+			{
+				AllocConsole();
+				MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong the them, Ma so sinh vien da ton tai", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+				return false;
+			}
+			node = node->pNext;
+		}
+	}
+
 	if (l.First == nullptr)
 	{
 		AddFirst(l, CreateNodeSV(sv));
@@ -53,7 +70,6 @@ bool InsertNodeSV(listSV &l, sinhVien sv)
 
 	if (l.First->info.mssv > sv.mssv)
 	{
-		cout << " chen sinh vien len dau" << endl;
 		nodeSV *p = new nodeSV;
 		p->info = sv;
 		p->pNext = l.First;
@@ -65,14 +81,12 @@ bool InsertNodeSV(listSV &l, sinhVien sv)
 
 	if (l.Last->info.mssv < sv.mssv)
 	{
-		cout << " chen sinh vien xuong cuoi" << endl;
 		AddLast(l, CreateNodeSV(sv));
 		AllocConsole();
 		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Them thanh cong", "Thong bao", MB_OK);
 		return true;
 	}
 
-	cout << " chen sinh vien vao giua" << endl;
 	nodeSV *temp = l.First;
 	while (temp != nullptr)
 	{
@@ -99,28 +113,38 @@ bool InsertNodeSV(listSV &l, sinhVien sv)
 }
 
 // chinh sua ko lam thay doi thu tu
-bool ChinhSuaSinhVien(listSV &DsSinhVien, nodeSV *&nodeHieuChinh, string Mssv, string Ho, string Ten, int GioiTinh)
+bool ChinhSuaSinhVien(dslop DanhSachLop, listSV &DsSinhVien, nodeSV *&nodeHieuChinh, string Mssv, string Ho, string Ten, int GioiTinh)
 {
-	nodeSV *node = DsSinhVien.First;
-	if (Mssv != nodeHieuChinh->info.mssv)
+
+	if (nodeHieuChinh->info.mssv == Mssv && nodeHieuChinh->info.Ho == Ho && nodeHieuChinh->info.Ten == Ten && nodeHieuChinh->info.gioiTinh == GioiTinh)
 	{
-		while (node != nullptr)
+		AllocConsole();
+		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong chinh sua, do thong tin nhap vao van giu nguyen", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+		return false;
+	}
+	nodeSV *node = nullptr;
+	for (int i = 0; i < DanhSachLop.solop; i++)
+	{
+		node = DanhSachLop.arrLop[i].dsSinhVien.First;
+		if (Mssv != nodeHieuChinh->info.mssv)
 		{
-			cout << "chay dc ko" << endl;
-			if (node == nodeHieuChinh)
+			while (node != nullptr)
 			{
+				if (node == nodeHieuChinh)
+				{
 
-				node = nodeHieuChinh->pNext;
-				continue;
-			}
+					node = nodeHieuChinh->pNext;
+					continue;
+				}
 
-			if (node->info.mssv == Mssv)
-			{
-				AllocConsole();
-				MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong the chinh sua, Ma so sinh vien da ton tai", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-				return false;
+				if (node->info.mssv == Mssv)
+				{
+					AllocConsole();
+					MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong the chinh sua, Ma so sinh vien da ton tai", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+					return false;
+				}
+				node = node->pNext;
 			}
-			node = node->pNext;
 		}
 	}
 	nodeSV *PreNodeHieuChinh = nullptr;
@@ -134,7 +158,8 @@ bool ChinhSuaSinhVien(listSV &DsSinhVien, nodeSV *&nodeHieuChinh, string Mssv, s
 	}
 
 	// neu chi co 1 phan tu duy nhat
-	if (nodeHieuChinh == DsSinhVien.First && nodeHieuChinh == DsSinhVien.Last) {
+	if (nodeHieuChinh == DsSinhVien.First && nodeHieuChinh == DsSinhVien.Last)
+	{
 		nodeHieuChinh->info.mssv = Mssv;
 		nodeHieuChinh->info.Ho = Ho;
 		nodeHieuChinh->info.Ten = Ten;
@@ -149,16 +174,18 @@ bool ChinhSuaSinhVien(listSV &DsSinhVien, nodeSV *&nodeHieuChinh, string Mssv, s
 		nodeHieuChinh->info.gioiTinh = GioiTinh;
 	}
 	// neu mssv dau tien lon hon mssv hieu chinh
-	else if (DsSinhVien.First->info.mssv > Mssv || ( nodeHieuChinh == DsSinhVien.First && Mssv < nodeHieuChinh->pNext->info.mssv) )
+	else if (DsSinhVien.First->info.mssv > Mssv || (nodeHieuChinh == DsSinhVien.First && Mssv < nodeHieuChinh->pNext->info.mssv))
 	{
-		if ( nodeHieuChinh == DsSinhVien.Last) {
+		if (nodeHieuChinh == DsSinhVien.Last)
+		{
 			nodeHieuChinh->pNext = DsSinhVien.First;
 			DsSinhVien.First = DsSinhVien.First->pNext;
 			DsSinhVien.Last = PreNodeHieuChinh;
 			PreNodeHieuChinh->pNext = nullptr;
 			DsSinhVien.First = nodeHieuChinh;
 		}
-		else if ( PreNodeHieuChinh != nullptr) {
+		else if (PreNodeHieuChinh != nullptr)
+		{
 			PreNodeHieuChinh->pNext = nodeHieuChinh->pNext;
 			nodeHieuChinh->pNext = DsSinhVien.First;
 			DsSinhVien.First = nodeHieuChinh;
@@ -169,14 +196,16 @@ bool ChinhSuaSinhVien(listSV &DsSinhVien, nodeSV *&nodeHieuChinh, string Mssv, s
 		nodeHieuChinh->info.gioiTinh = GioiTinh;
 	}
 	// neu mssv cuoi lon hon mssv hieu chinh
-	else if (DsSinhVien.Last->info.mssv < Mssv || ( nodeHieuChinh == DsSinhVien.Last && Mssv > PreNodeHieuChinh->info.mssv) )
+	else if (DsSinhVien.Last->info.mssv < Mssv || (nodeHieuChinh == DsSinhVien.Last && Mssv > PreNodeHieuChinh->info.mssv))
 	{
-		if ( nodeHieuChinh == DsSinhVien.First) {
+		if (nodeHieuChinh == DsSinhVien.First)
+		{
 			DsSinhVien.First = DsSinhVien.First->pNext;
 			DsSinhVien.Last->pNext = nodeHieuChinh;
 			DsSinhVien.Last = nodeHieuChinh;
 		}
-		else if ( PreNodeHieuChinh->pNext != DsSinhVien.Last) {
+		else if (PreNodeHieuChinh->pNext != DsSinhVien.Last)
+		{
 			PreNodeHieuChinh->pNext = nodeHieuChinh->pNext;
 			DsSinhVien.Last->pNext = nodeHieuChinh;
 			DsSinhVien.Last = nodeHieuChinh;
@@ -213,22 +242,27 @@ bool ChinhSuaSinhVien(listSV &DsSinhVien, nodeSV *&nodeHieuChinh, string Mssv, s
 	return true;
 }
 
-bool xoaSinhVien(listSV &DsSinhVien, nodeSV *&sv) {
-	if ( sv->info.listDT.first != nullptr) {
+bool xoaSinhVien(listSV &DsSinhVien, nodeSV *&sv)
+{
+	if (sv->info.listDT.first != nullptr)
+	{
 		AllocConsole();
 		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thong the xoa, Sinh Vien co danh sach diem", "Thong bao", MB_OK);
 		return false;
 	}
 
-	if ( sv == DsSinhVien.First ) {
+	if (sv == DsSinhVien.First)
+	{
 		DsSinhVien.First = sv->pNext;
 		sv->pNext = nullptr;
 		delete sv;
 		sv = nullptr;
 	}
-	else if ( sv != DsSinhVien.Last) {
+	else if (sv != DsSinhVien.Last)
+	{
 		nodeSV *node = DsSinhVien.First;
-		while (node->pNext != sv) {
+		while (node->pNext != sv)
+		{
 			node = node->pNext;
 		}
 		node->pNext = sv->pNext;
@@ -236,9 +270,11 @@ bool xoaSinhVien(listSV &DsSinhVien, nodeSV *&sv) {
 		delete sv;
 		sv = nullptr;
 	}
-	else if ( sv == DsSinhVien.Last) {
+	else if (sv == DsSinhVien.Last)
+	{
 		nodeSV *node = DsSinhVien.First;
-		while (node->pNext != sv) {
+		while (node->pNext != sv)
+		{
 			node = node->pNext;
 		}
 		DsSinhVien.Last = node;
@@ -251,13 +287,12 @@ bool xoaSinhVien(listSV &DsSinhVien, nodeSV *&sv) {
 	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Xoa sinh vien thanh cong", "Thong bao", MB_OK);
 
 	return true;
-
 }
 
-void thayDoiMK(nodeSV *&sv, string matKhauMoi) {
+void thayDoiMK(nodeSV *&sv, string matKhauMoi)
+{
 	sv->info.Pass = matKhauMoi;
 }
-
 
 // dem so luong phan tu danh sach lien ket don sinh vien
 int SizeListSV(listSV l)
@@ -316,7 +351,3 @@ void ghiFileDsSinhVien(listSV &dsSinhVien, string maLop)
 	cout << "ghi thanh cong sv" << endl;
 	fileOut.close();
 }
-
-
-
-
