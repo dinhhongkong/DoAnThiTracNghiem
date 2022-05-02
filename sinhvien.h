@@ -227,6 +227,7 @@ bool ChinhSuaSinhVien(dslop DanhSachLop, listSV &DsSinhVien, nodeSV *&nodeHieuCh
 				PreNodeHieuChinh->pNext = nodeHieuChinh->pNext;
 				nodeHieuChinh->pNext = preNode->pNext;
 				preNode->pNext = nodeHieuChinh;
+				
 				nodeHieuChinh->info.mssv = Mssv;
 				nodeHieuChinh->info.Ho = Ho;
 				nodeHieuChinh->info.Ten = Ten;
@@ -336,7 +337,6 @@ void DocDsSinhVien(listSV &dsSinhVien, string maLop)
 		fileIn >> sv.gioiTinh;
 		fileIn.ignore();
 		getline(fileIn, sv.Pass, '\n');
-		// cout << sv.mssv << '\n'<< sv.Ho << '\n' << sv.Ten << '\n' << sv.gioiTinh << '\n' << sv.Pass << '\n';
 		AddLast(dsSinhVien, CreateNodeSV(sv));
 	}
 	fileIn.close();

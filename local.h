@@ -2,6 +2,7 @@ int curMenu = 0;
 int preMenu = -1;
 bool drawList = true;
 int luaChonLop = -1;
+int luaChonMon = -1;
 thread timer;
 
 editText *Edit = nullptr;
@@ -207,7 +208,7 @@ void KbEvent()
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }
-        else if ( curMenu == DISPLAY_THITHU) {
+        else if ( curMenu == DISPLAY_THITHU || curMenu == DISPLAY_HSTHI) {
             if (Edit == & timKiemMon) {
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }

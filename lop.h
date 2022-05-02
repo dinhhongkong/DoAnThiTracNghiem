@@ -124,7 +124,6 @@ bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop)
         if (i == viTri ) {
             continue;
         }
-
         if (ds.arrLop[i].MALOP == maLop || ds.arrLop[i].TENLOP == tenLop)
         {
             AllocConsole();

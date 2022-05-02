@@ -62,7 +62,7 @@ void displayGV()
 
 //------------------------------------------------CHUC NANG QUAN LI MON HOC----------------------------------------
 
-int ClickItemMonHoc(ListMonHoc &listMH)
+void ClickItemMonHoc(ListMonHoc &listMH)
 {
     int x = -1, y = -1;
     x = mousex();
@@ -191,7 +191,7 @@ int ClickItemMonHoc(ListMonHoc &listMH)
             curMenu = LUACHON_LOP;
             drawList = true;
             drawLop();
-            return listviewDS.idItem[LuaChon];
+            luaChonMon = listviewDS.idItem[LuaChon];
         }
         else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == LUACHON_MON)
         {
@@ -200,7 +200,7 @@ int ClickItemMonHoc(ListMonHoc &listMH)
             drawCauHoi();
             drawThemCauHoi();
             drawList = true;
-            return listviewDS.idItem[LuaChon];
+            luaChonMon = listviewDS.idItem[LuaChon];
         }
     }
     else
@@ -222,7 +222,6 @@ int ClickItemMonHoc(ListMonHoc &listMH)
         setcolor(WHITE);
         line(300, 200, 300, 760);
     }
-    return -1;
 }
 
 void DisplayMonHoc(ListMonHoc &listMH)
@@ -1085,7 +1084,7 @@ void displaySinhVien(dslop DanhSachLop , listSV &danhSachSV, string maLop)
 
 //------------------------------------------CHON 1 MON HOAC 1 LOP KHI THUC HIEN CHUC NANG KHAC------------------------------------------
 
-int displayLuaChonMon(ListMonHoc listMH)
+void displayLuaChonMon(ListMonHoc listMH)
 {
     btnQuaylai.ButtonEffect();
     btnTien.ButtonEffect();
@@ -1114,7 +1113,7 @@ int displayLuaChonMon(ListMonHoc listMH)
         checkTimKiem -= 2;
         drawList = true;
     }
-    int MonLuaChon = ClickItemMonHoc(listMH);
+    ClickItemMonHoc(listMH);
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         if (btnQuaylai.isMouseHover() && preMenu == CHUCNANG_CAUHOI)
@@ -1154,7 +1153,6 @@ int displayLuaChonMon(ListMonHoc listMH)
             Edit = &timKiemMon;
         }
     }
-    return MonLuaChon;
 }
 
 void displayLuaChonLop(dslop &DanhSachLop, string maMon, string tenMon)

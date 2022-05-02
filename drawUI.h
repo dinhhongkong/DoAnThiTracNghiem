@@ -27,7 +27,8 @@ void drawHocSinh(sinhVien sv, string tenlop = "")
     btnDoiMK.draw();
     btndangxuat.draw();
     setlinestyle(0, 0, 3);
-    setcolor(WHITE);
+    // setcolor(WHITE);
+    setcolor(YELLOW);
     rectangle(325, 200, 1275,700);
     line(325, 325 , 1275, 325);
     setfillstyle(WIDE_DOT_FILL, CYAN);
@@ -44,14 +45,40 @@ void drawHocSinh(sinhVien sv, string tenlop = "")
     string temp = (sv.gioiTinh) ? ("NU") : ("NAM");
     string gioiTinh = "Gioi tinh: " + temp ;
     settextstyle(10, 0, 4);
-    setcolor(LIGHTRED);
+    setcolor(RED);
+    setbkcolor(BLACK);
     outtextxy(430,400, &hoTen[0]);
     outtextxy(430,475, &mssv[0]);
     outtextxy(430,550, &tenLop[0]);
     outtextxy(430, 625, &gioiTinh[0]);
-
-
     //setlinestyle(, 0, 2);
+}
+
+void drawDiemSV()
+{
+    setbkcolor(BLACK);
+    cleardevice();
+    settextstyle(BOLD_FONT, 0, 6);
+    setcolor(YELLOW);
+    // outtextxy(250, 20, "DANH SACH DIEM SINH VIEN");
+    outtextxy(460, 20, "DANH SACH DIEM CAC MON");
+    settextstyle(BOLD_FONT, 0, 3);
+    btnQuaylai.draw();
+    edtimKiemSV_R.draw();
+    btnLui_L.draw();
+    btnTien_L1.draw();
+    rectangle(350, 200, 1250, 760);
+    // ve ma mon
+    line(550, 200, 550, 760);
+    // ve ten mon
+    line(1100, 200, 1100, 760);
+    // ve gach ngang
+    line(350, 250, 1250, 250);
+
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+    outtextxy(xDsDiem[0] + 60, 215, "MA MON");
+    outtextxy(xDsDiem[1] + 220, 215, "TEN MON");
+    outtextxy(xDsDiem[3] + 50, 215, "DIEM");
 }
 
 void drawDoiMk()
@@ -80,6 +107,8 @@ void drawDoiMk()
     matKhauMoi.setPre(&matKhauCu);
     nhapLaiMatKhau.setPre(&matKhauMoi);
 }
+
+
 
 // ve man hinh chuc nang giao vien
 void drawGV()

@@ -1,67 +1,4 @@
-// void drawHocSinh(sinhVien sv, string tenlop = "")
-// {
-//     cleardevice();
-//     btnThi.draw();
-//     btnXemDiemSV.draw();
-//     btnDoiMK.draw();
-//     btndangxuat.draw();
-//     setlinestyle(0, 0, 3);
-//     setcolor(WHITE);
-//     rectangle(325, 200, 1275,700);
-//     line(325, 325 , 1275, 325);
-//     setfillstyle(WIDE_DOT_FILL, CYAN);
-//     bar(325, 200, 1275, 325);
-//     setcolor(YELLOW);
-//     settextstyle(0, 0, 5);
-//     outtextxy(430, 240,"THONG TIN SINH VIEN");
-//     string hoTen = "Ho va Ten: "+ sv.Ho + " " + sv.Ten;
-//     string mssv = "Mssv: " + sv.mssv;
-//     static string tenLop;
-//     if ( tenlop.size()) {
-//         tenLop = "Lop: " + tenlop;
-//     }
-//     string temp = (sv.gioiTinh) ? ("NU") : ("NAM");
-//     string gioiTinh = "Gioi tinh: " + temp ;
-//     settextstyle(10, 0, 4);
-//     setcolor(LIGHTRED);
-//     outtextxy(430,400, &hoTen[0]);
-//     outtextxy(430,475, &mssv[0]);
-//     outtextxy(430,550, &tenLop[0]);
-//     outtextxy(430, 625, &gioiTinh[0]);
-
-//     //setlinestyle(, 0, 2);
-// }
-
-// void drawDoiMk()
-// {
-//     setbkcolor(BLACK);
-//     setfillstyle(1, BLACK);
-//     cleardevice();
-//     setfillstyle(WIDE_DOT_FILL, CYAN);
-//     bar(325, 100, 1275, 230);
-//     line(325,230,1275,230);
-//     rectangle(325, 100, 1275,700);
-//     setcolor(YELLOW);
-//     settextstyle(0,0,5);
-//     outtextxy(800 - textwidth("DOI MAT KHAU")/2 + 20,150,"DOI MAT KHAU");
-//     matKhauCu.draw();
-//     matKhauMoi.draw();
-//     nhapLaiMatKhau.draw();
-//     btnQuaylai.draw();
-//     btnDoiMKMoi.draw();
-
-//     matKhauCu.setNext(&matKhauMoi);
-//     matKhauMoi.setNext(&nhapLaiMatKhau);
-//     nhapLaiMatKhau.setNext(&matKhauCu);
-
-//     matKhauCu.setPre(&nhapLaiMatKhau);
-//     matKhauMoi.setPre(&matKhauCu);
-//     nhapLaiMatKhau.setPre(&matKhauMoi);
-// }
-
-void displayDoiMK(listSV &dsSinhVien, string &mk, string maLop);
-
-void displayHocSinh(listSV &dsSinhVien ,sinhVien &sv, string maLop)
+void displayHocSinh(ListMonHoc listMH,listSV &dsSinhVien ,sinhVien &sv, string maLop)
 {
     btnThi.ButtonEffect();
     btnXemDiemSV.ButtonEffect();
@@ -80,24 +17,18 @@ void displayHocSinh(listSV &dsSinhVien ,sinhVien &sv, string maLop)
         {
             curMenu = DISPLAY_DOIMK;
             drawDoiMk();
-            while (true)
-            {
-                KbEvent();
-                displayDoiMK(dsSinhVien,sv.Pass,maLop);
-                if (btnQuaylai.click)
-                {
-                    btnQuaylai.click = false;
-                    curMenu = DISPLAY_HOCSINH;
-                    drawHocSinh(sv);
-                    break;
-                }
-                Sleep(75);
-            }
+
         }
         else if (btnThi.isMouseHover())
         {
-            AllocConsole();
-            MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chua den gio thi", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+            curMenu = DISPLAY_HSTHI;
+            drawMonHoc();
+            drawThietLapThi();
+            MenuThemMon = false;
+        }
+        else if ( btnXemDiemSV.isMouseHover()) {
+            curMenu = DISPLAY_DIEMSV;
+            drawDiemSV();
         }
     }
 }
@@ -173,6 +104,167 @@ void displayDoiMK(listSV &dsSinhVien, string &mk, string maLop)
             matKhauMoi.content = "";
             nhapLaiMatKhau.content = "";
             btnQuaylai.click = true;
+            curMenu = DISPLAY_HOCSINH;
         }
     }
+}
+
+void ClickItemMonThi(ListMonHoc &listMH)
+{
+    int x = -1, y = -1;
+    x = mousex();
+    y = mousey();
+    static int LuaChon = -1; // cai thanh sang khi di chuot qua item
+    static int PreLuaChon = -1;
+
+    LuaChon = (y - yDsMon[0]) / 50;
+
+    if (x > xDsMon[0] && x < xDsMon[2] && y > yDsMon[0] && y < yDsMon[1])
+    {
+        // khoi phuc item
+        settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+        if (PreLuaChon != -1 && PreLuaChon != LuaChon && PreLuaChon < listviewDS.size)
+        {
+            setcolor(WHITE);
+            setfillstyle(1, BLACK);
+            setbkcolor(BLACK);
+            bar(xDsMon[0] + 5, yDsMon[0] + 20 + PreLuaChon * 50 - 10, xDsMon[2] - 5, yDsMon[0] + 20 + PreLuaChon * 50 + 30);
+            outtextxy(xDsMon[0] + 80, yDsMon[0] + 20 + PreLuaChon * 50, &listMH.monHoc[listviewDS.idItem[PreLuaChon]]->MAMH[0]);
+            outtextxy(xDsMon[1] + 80, yDsMon[0] + 20 + PreLuaChon * 50, &listMH.monHoc[listviewDS.idItem[PreLuaChon]]->TENMH[0]);
+        }
+
+        PreLuaChon = LuaChon;
+        // ve item hien tai
+        if (PreLuaChon != -1 && LuaChon < listviewDS.size)
+        {
+            setcolor(LIGHTGREEN);
+            setfillstyle(1, RED);
+            setbkcolor(RED);
+            bar(xDsMon[0] + 5, yDsMon[0] + 20 + PreLuaChon * 50 - 10, xDsMon[2] - 5, yDsMon[0] + 20 + PreLuaChon * 50 + 30);
+            outtextxy(xDsMon[0] + 80, yDsMon[0] + 20 + LuaChon * 50, &listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH[0]);
+            outtextxy(xDsMon[1] + 80, yDsMon[0] + 20 + LuaChon * 50, &listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH[0]);
+        }
+        setlinestyle(0, 0, 2);
+        setcolor(WHITE);
+        line(300, 200, 300, 760);
+
+        // bat su kien khi o man hinh danh sach mon thi
+        if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == DISPLAY_HSTHI)
+        {
+            edChonMonThi.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH;
+            edChonMonThi.draw();
+        }
+    }
+    else
+    {
+        // khoi phuc item
+        if (PreLuaChon != -1 && PreLuaChon < listviewDS.size)
+        {
+            settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+            setcolor(WHITE);
+            setfillstyle(1, BLACK);
+            setbkcolor(BLACK);
+            bar(xDsMon[0] + 5, yDsMon[0] + 20 + PreLuaChon * 50 - 10, xDsMon[2] - 5, yDsMon[0] + 20 + PreLuaChon * 50 + 30);
+            outtextxy(xDsMon[0] + 80, yDsMon[0] + 20 + PreLuaChon * 50, &listMH.monHoc[listviewDS.idItem[PreLuaChon]]->MAMH[0]);
+            outtextxy(xDsMon[1] + 80, yDsMon[0] + 20 + PreLuaChon * 50, &listMH.monHoc[listviewDS.idItem[PreLuaChon]]->TENMH[0]);
+        }
+        LuaChon = -1;
+        PreLuaChon = -1;
+        setlinestyle(0, 0, 2);
+        setcolor(WHITE);
+        line(300, 200, 300, 760);
+    }
+}
+
+void displayLuaChonMonThi(ListMonHoc listMH, sinhVien sv)
+{
+    btnQuaylai.ButtonEffect();
+    btnTien.ButtonEffect();
+    btnLui.ButtonEffect();
+    btnVaoThi.ButtonEffect();
+    static int checkTimKiem = 0;
+    if (drawList == true)
+    {
+        drawDSMonHoc(listMH);
+        drawList = false;
+        if (checkTimKiem < 0)
+        {
+            checkTimKiem = 0;
+        }
+    }
+    if (timKiemMon.content.size() > checkTimKiem)
+    {
+        checkTimKiem++;
+        drawList = true;
+    }
+    else if (timKiemMon.content.size() == checkTimKiem)
+    {
+        drawList = false;
+    }
+    else if (timKiemMon.content.size() < checkTimKiem)
+    {
+        checkTimKiem -= 2;
+        drawList = true;
+    }
+    ClickItemMonThi(listMH);
+    if (GetAsyncKeyState(VK_LBUTTON))
+    {
+        if (btnQuaylai.isMouseHover())
+        {
+            Edit = nullptr;
+            drawList = true;
+            curMenu = DISPLAY_HOCSINH;
+            preMenu = -1;
+            MenuThemMon = true;
+            MenuThemLop = true;
+            edChonMonThi.content = "";
+            edTimeThi.content = "";
+            edsoCau.content = "";
+            timKiemMon.content = "";
+            drawHocSinh(sv);
+            soTrangMon = 1;
+        }
+        else if (btnTien.isMouseHover())
+        {
+            drawList = true;
+            btnTien.click = true;
+        }
+        else if (btnLui.isMouseHover())
+        {
+            drawList = true;
+            btnLui.click = true;
+        }
+        else if (timKiemMon.isMouseHover())
+        {
+            Edit = &timKiemMon;
+        }
+        else if (edTimeThi.isMouseHover())
+        {
+            Edit = &edTimeThi;
+        }
+        else if (edsoCau.isMouseHover())
+        {
+            Edit = &edsoCau;
+        }
+    }
+}
+
+void displayDiemSV() {
+    btnQuaylai.ButtonEffect();
+    btnTien_L1.ButtonEffect();
+    btnLui_L.ButtonEffect();
+    if (GetAsyncKeyState(VK_LBUTTON))
+    {
+        if (btnQuaylai.isMouseHover())
+        {
+            curMenu = DISPLAY_HOCSINH;
+            btnQuaylai.click = true;
+            
+            drawList = true;
+            soTrangSV = 1;
+            edtimKiemSV_R.content = "";
+            luaChonLop = -1;
+            Edit = nullptr;
+        }
+    } 
 }

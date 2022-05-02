@@ -1,7 +1,7 @@
 // const int w  = 1600;
 // const int h  = 900;
 
-void displayLogin(dslop &DanhSachLop)
+void displayLogin(ListMonHoc listMH ,dslop &DanhSachLop)
 {
     dangnhap.ButtonEffect();
     if (GetAsyncKeyState(VK_LBUTTON))
@@ -33,12 +33,31 @@ void displayLogin(dslop &DanhSachLop)
                             Edit = nullptr;
                             while (true)
                             {
-                                displayHocSinh(DanhSachLop.arrLop[i].dsSinhVien,node->info,DanhSachLop.arrLop[i].MALOP );
+                                KbEvent();
+                                if ( curMenu == DISPLAY_HOCSINH ) {
+                                    displayHocSinh(listMH, DanhSachLop.arrLop[i].dsSinhVien,node->info,DanhSachLop.arrLop[i].MALOP );
+                                }
+                                else if ( curMenu == DISPLAY_DOIMK) {
+                                    displayDoiMK(DanhSachLop.arrLop[i].dsSinhVien, node->info.mssv, DanhSachLop.arrLop[i].MALOP);
+                                    if (btnQuaylai.click) {
+                                        btnQuaylai.click = false;
+                                        drawHocSinh(node->info);
+                                    }
+                                }
+                                else if ( curMenu == DISPLAY_HSTHI) {
+                                    displayLuaChonMonThi(listMH, node->info);
+                                }
+                                else if ( curMenu == DISPLAY_DIEMSV) {
+                                    displayDiemSV();
+                                    if (btnQuaylai.click) {
+                                        btnQuaylai.click = false;
+                                        drawHocSinh(node->info);
+                                    }
+                                }
                                 if ( btndangxuat.click == true) {
                                     btndangxuat.click = false;
-                                    checkThoat == false;
                                     cout << curMenu << endl;
-                                    break;
+                                    return;
                                 }
                                 Sleep(75);
                             }
@@ -49,7 +68,7 @@ void displayLogin(dslop &DanhSachLop)
                             AllocConsole();
                             MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Tai khoan hoac Mat khau khong chinh xac", "Thong bao", MB_ICONASTERISK | MB_OK);
                             checkThoat = false;
-                            break;
+                            return;
                         }
                         // neu tim thay tai khoan, mat khau lai sai, thoat ra luon
                         if (checkThoat == false) {
@@ -58,6 +77,8 @@ void displayLogin(dslop &DanhSachLop)
                         node = node->pNext;
                     }
                 }
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Tai khoan hoac Mat khau khong chinh xac", "Thong bao", MB_ICONASTERISK | MB_OK);
                 Sleep(500);
             }
             else

@@ -65,7 +65,17 @@ struct TreeCauHoi
 };
 
 
+// ------------------------ CAU HOI THI & BAI THI --------------------------
+struct Cau_Hoi_Thi {
+	CauHoi cauHoiThi;
+	char luaChon;
+};
 
+struct Bai_Thi {
+	//Thời gian thi
+	int slcht;
+	Cau_Hoi_Thi* listCHT;
+};
 
 //---------------------------------------SINH VIEN---------------------------------------------------
 struct sinhVien{
