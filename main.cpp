@@ -24,6 +24,9 @@ using namespace std;
 #include "displayHocSinh.h"
 #include "displayGiaoVien.h"
 #include "displayLogin.h"
+
+// Bien dich thu cong bang tay qua lenh CMD
+// g++ -std=c++17 main.cpp -o main -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32
 //AllocConsole();
 //MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thong tin sinh vien thanh cong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
 int main()

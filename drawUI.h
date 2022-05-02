@@ -465,6 +465,14 @@ void drawDsSinhVien(listSV danhSachSV)
 {
     setfillstyle(1, BLACK);
     int soLuongSV = SizeListSV(danhSachSV);
+    if ( danhSachSV.First == nullptr) {
+        bar(xDsSV[0] + 1, yDsSV[0] + 1, xDsSV[1] - 1, 760 - 1);
+        bar(xDsSV[1] + 1, yDsSV[0] + 1, xDsSV[2] - 1, 760 - 1);
+        bar(xDsSV[2] + 1, yDsSV[0] + 1, xDsSV[3] - 1, 760 - 1);
+        bar(xDsSV[3] + 1, yDsSV[0] + 1, xDsSV[4] - 1, 760 - 1);
+        listviewDS.size = 0;
+        return;
+    }
 
     // static nodeSV *node = nullptr;
     nodeSV *node = nullptr;

@@ -779,6 +779,7 @@ void ClickItemSinhVien( dslop DanhSachLop ,listSV &danhSachSV, string maLop)
                                 bar(1005, 0, 1600, 765);
                                 // soTrangSV =1;
                                 drawList = true;
+                                
                                 btnMenuThemSV.click = true;
                                 btnNam.click = false;
                                 btnNu.click = false;
@@ -787,6 +788,7 @@ void ClickItemSinhVien( dslop DanhSachLop ,listSV &danhSachSV, string maLop)
                                 edTenSV.content = "";
                                 drawThemSinhVien();
                                 btnMenuThemSV.draw();
+                                ghiFileDsSinhVien(danhSachSV,maLop);
                                 break;
                             }
                         }

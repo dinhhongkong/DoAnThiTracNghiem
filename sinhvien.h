@@ -251,7 +251,13 @@ bool xoaSinhVien(listSV &DsSinhVien, nodeSV *&sv)
 		return false;
 	}
 
-	if (sv == DsSinhVien.First)
+	if ( sv == DsSinhVien.First && sv == DsSinhVien.Last) {
+		DsSinhVien.First = nullptr;
+		DsSinhVien.Last = nullptr;
+		delete sv;
+		sv = nullptr;
+	}
+	else if (sv == DsSinhVien.First)
 	{
 		DsSinhVien.First = sv->pNext;
 		sv->pNext = nullptr;

@@ -90,6 +90,8 @@ void xoaLop(dslop &ds, int viTri)
     }
     else
     {
+        string tenFileLop = "DATA\\" + ds.arrLop[viTri].MALOP + ".txt";
+        remove(&tenFileLop[0]);
 
         for (int i = viTri; i < ds.solop -1; i++)
         {
@@ -100,6 +102,7 @@ void xoaLop(dslop &ds, int viTri)
         ds.arrLop[ds.solop -1].dsSinhVien.First = nullptr;
         ds.arrLop[ds.solop -1].dsSinhVien.Last = nullptr;
         ds.solop--;
+
 
         AllocConsole();
         MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "XOA lop thanh cong", "Thong bao", MB_OK);
