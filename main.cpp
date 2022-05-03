@@ -14,6 +14,7 @@ using namespace std;
 #include "define.h"
 #include "Button.h"
 #include "EditText.h"
+#include "RadioButon.h"
 #include "Scan.h"
 #include "local.h"
 #include "sinhvien.h"

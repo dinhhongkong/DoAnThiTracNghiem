@@ -998,10 +998,12 @@ void drawThi()
     btnQuaylai.draw();
     btnTien.draw();
     btnLui.draw();
-    btnChonA.draw();
-    btnChonB.draw();
-    btnChonC.draw();
-    btnChonD.draw();
+    rdChonA.draw();
+    rdChonB.draw();
+    rdChonC.draw();
+    rdChonD.draw();
+
+    setcolor(YELLOW);
 
     setfillstyle(WIDE_DOT_FILL, CYAN);
     rectangle(50, 100, 1000, 760);
@@ -1021,7 +1023,7 @@ void drawThi()
 void drawThietLapThi()
 {
     setfillstyle(1, BLACK);
-    bar(1005, 0, 1600, 765); // 75 tai y neu thay menu
+    bar(1005, 0, 1600, 765); 
     setfillstyle(WIDE_DOT_FILL, CYAN);
     bar(1050, 200, 1550, 300);
     setcolor(YELLOW);

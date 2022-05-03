@@ -26,8 +26,15 @@ const int h  = 900;
 #define BG_EDITTEXT_COLOR 2
 #define TEXT_EDIITEXT_HINT_COLOR 7
 #define TEXT_EDITTEXT_COLOR 4
-
 #define DRAW_COLOR 15
+
+//define radiobutton
+#define RADIO_BUTTON_CLICK 4
+#define RADIO_BUTTON_DEFAULT 0
+#define RADIO_BUTTON_SELECT 1
+
+
+
 
 // define ban phim
 #define ENTER  13

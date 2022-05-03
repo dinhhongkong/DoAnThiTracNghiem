@@ -117,10 +117,14 @@ button btnVaoThi(1250, 625,100,50,"VAO THI");
 
 
 // THI
-button btnChonA(70,225,70,50,"A:");
-button btnChonB(70,375,70,50,"B:");
-button btnChonC(70,525,70,50,"C:");
-button btnChonD(70,675,70,50,"D:");
+// button btnChonA(70,225,70,50,"A:");
+// button btnChonB(70,375,70,50,"B:");
+// button btnChonC(70,525,70,50,"C:");
+// button btnChonD(70,675,70,50,"D:");
+radioButton rdChonA(105,250,30,"A.");
+radioButton rdChonB(105,400,30,"B.");
+radioButton rdChonC(105,550,30,"C.");
+radioButton rdChonD(105,700,30,"D.");
 
 
 void ClearStream();

@@ -47,40 +47,6 @@ public:
 		this->pre = nullptr;
 	}
 
-	/*xoa bo chuc nang id */
-
-	// editText(int id, int x, int y, int width, int heigh, string title, string hint, int textSize)
-	// {
-	// 	this->id = id;
-	// 	this->x = x;
-	// 	this->y = y;
-	// 	this->width = width;
-	// 	this->height = heigh;
-	// 	this->title = title;
-	// 	this->hint = hint;
-	// 	isHover = false;
-	// 	this->textSize = textSize;
-	// 	this->next = nullptr;
-	// 	this->pre = nullptr;
-	// }
-
-	// them nhap tuy chon nhap mat khau o cuoi (true la nhap mk)
-	// editText(int id, int x, int y, int width, int heigh, string title, string hint, int textSize, bool inputPass)
-	// {
-	// 	this->id = id;
-	// 	this->x = x;
-	// 	this->y = y;
-	// 	this->width = width;
-	// 	this->height = heigh;
-	// 	this->title = title;
-	// 	this->hint = hint;
-	// 	isHover = false;
-	// 	this->textSize = textSize;
-	// 	this->inputPass = inputPass;
-	// 	this->next = nullptr;
-	// 	this->pre = nullptr;
-	// }
-	
 
 	void draw()
 	{
@@ -212,42 +178,3 @@ public:
 	}
 };
 
-//////////////////////////////////////////////////////////////////////////////
-
-//				test code
-
-// editText a(1, 100, 100, 400, 50, "ten:", "dien vo");
-// void Menu()
-// {
-// 	if (GetAsyncKeyState(VK_LBUTTON))
-// 	{
-// 		a.scanTextNumber();
-// 	}
-// }
-
-// void MenuEvent()
-// {
-
-// 	if (GetAsyncKeyState(VK_LBUTTON))
-// 	{
-// 		if (a.isMouseHover())
-// 		{
-// 			a.scanTextNumber();
-// 		}
-// 	}
-// }
-
-// int main()
-// {
-// 	int w = GetSystemMetrics(SM_CXSCREEN);
-// 	int h = GetSystemMetrics(SM_CYSCREEN);
-// 	initwindow(w, h, "man hinh do hoa");
-// 	a.draw();
-// 	while (true)
-// 	{
-// 		MenuEvent();
-// 		Sleep(50);
-// 	}
-
-// 	getch();
-// }

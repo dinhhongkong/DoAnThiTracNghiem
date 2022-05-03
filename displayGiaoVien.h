@@ -1517,10 +1517,10 @@ void displayThietLapThiThu(ListMonHoc listMH)
 void displayThiThu()
 {
     btnQuaylai.ButtonEffect();
-    btnChonA.ButtonEffect();
-    btnChonB.ButtonEffect();
-    btnChonC.ButtonEffect();
-    btnChonD.ButtonEffect();
+    // rdChonA.RadioEffect();
+    // rdChonB.RadioEffect();
+    // rdChonC.RadioEffect();
+    // rdChonD.RadioEffect();
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         // if (btnQuaylai.isMouseHover())
@@ -1533,53 +1533,53 @@ void displayThiThu()
         //     drawList = true;
         //     drawGV();
         // }
-        if (btnChonA.isMouseHover())
+        if (rdChonA.isMouseHover())
         {
-            btnChonA.click = true;
-            btnChonB.click = false;
-            btnChonC.click = false;
-            btnChonD.click = false;
+            rdChonA.click = true;
+            rdChonB.click = false;
+            rdChonC.click = false;
+            rdChonD.click = false;
 
-            btnChonA.draw();
-            btnChonB.draw();
-            btnChonC.draw();
-            btnChonD.draw();
+            rdChonA.drawEffect();
+            rdChonB.drawEffect();
+            rdChonC.drawEffect();
+            rdChonD.drawEffect();
         }
-        else if (btnChonB.isMouseHover())
+        else if (rdChonB.isMouseHover())
         {
-            btnChonA.click = false;
-            btnChonB.click = true;
-            btnChonC.click = false;
-            btnChonD.click = false;
+            rdChonA.click = false;
+            rdChonB.click = true;
+            rdChonC.click = false;
+            rdChonD.click = false;
 
-            btnChonA.draw();
-            btnChonB.draw();
-            btnChonC.draw();
-            btnChonD.draw();
+            rdChonA.drawEffect();
+            rdChonB.drawEffect();
+            rdChonC.drawEffect();
+            rdChonD.drawEffect();
         }
-        else if (btnChonC.isMouseHover())
+        else if (rdChonC.isMouseHover())
         {
-            btnChonA.click = false;
-            btnChonB.click = false;
-            btnChonC.click = true;
-            btnChonD.click = false;
+            rdChonA.click = false;
+            rdChonB.click = false;
+            rdChonC.click = true;
+            rdChonD.click = false;
 
-            btnChonA.draw();
-            btnChonB.draw();
-            btnChonC.draw();
-            btnChonD.draw();
+            rdChonA.drawEffect();
+            rdChonB.drawEffect();
+            rdChonC.drawEffect();
+            rdChonD.drawEffect();
         }
-        else if (btnChonD.isMouseHover())
+        else if (rdChonD.isMouseHover())
         {
-            btnChonA.click = false;
-            btnChonB.click = false;
-            btnChonC.click = false;
-            btnChonD.click = true;
+            rdChonA.click = false;
+            rdChonB.click = false;
+            rdChonC.click = false;
+            rdChonD.click = true;
 
-            btnChonA.draw();
-            btnChonB.draw();
-            btnChonC.draw();
-            btnChonD.draw();
+            rdChonA.drawEffect();
+            rdChonB.drawEffect();
+            rdChonC.drawEffect();
+            rdChonD.drawEffect();
         }
     }
 
