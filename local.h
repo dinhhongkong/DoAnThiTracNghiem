@@ -212,7 +212,7 @@ void KbEvent()
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }
         }
-        else if ( curMenu == DISPLAY_THITHU || curMenu == DISPLAY_HSTHI) {
+        else if ( curMenu == DISPLAY_THITHU || curMenu == LUACHON_THI_HS) {
             if (Edit == & timKiemMon) {
                 Scan(Edit,Edit->textSize,TEXT_NUMBER);
             }

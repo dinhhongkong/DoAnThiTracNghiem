@@ -21,7 +21,7 @@ void displayHocSinh(ListMonHoc listMH,listSV &dsSinhVien ,sinhVien &sv, string m
         }
         else if (btnThi.isMouseHover())
         {
-            curMenu = DISPLAY_HSTHI;
+            curMenu = LUACHON_THI_HS;
             drawMonHoc();
             drawThietLapThi();
             MenuThemMon = false;
@@ -149,7 +149,7 @@ void ClickItemMonThi(ListMonHoc &listMH)
         line(300, 200, 300, 760);
 
         // bat su kien khi o man hinh danh sach mon thi
-        if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == DISPLAY_HSTHI)
+        if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == LUACHON_THI_HS)
         {
             edChonMonThi.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH;
             edChonMonThi.draw();
@@ -176,7 +176,7 @@ void ClickItemMonThi(ListMonHoc &listMH)
     }
 }
 
-void displayLuaChonMonThi(ListMonHoc listMH, sinhVien sv)
+void displayLuaChonMonThi(ListMonHoc listMH, sinhVien sv, string maLOP)
 {
     btnQuaylai.ButtonEffect();
     btnTien.ButtonEffect();
@@ -246,6 +246,11 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien sv)
         {
             Edit = &edsoCau;
         }
+        else if ( btnVaoThi.isMouseHover()) {
+            Edit = nullptr;
+            curMenu = DISPLAY_HSTHI;
+            drawThi(sv.Ho, sv.Ten,sv.mssv, maLOP ,"" );
+        }
     }
 }
 
@@ -267,4 +272,74 @@ void displayDiemSV() {
             Edit = nullptr;
         }
     } 
+}
+
+void dipslayHocSinhThi() {
+    btnTien.ButtonEffect();
+    btnLui.ButtonEffect();
+    rdChonA.RadioEffect();
+    rdChonB.RadioEffect();
+    rdChonC.RadioEffect();
+    rdChonD.RadioEffect();
+    if (GetAsyncKeyState(VK_LBUTTON))
+    {
+        // if (btnQuaylai.isMouseHover())
+        // {
+        //     timer.join();
+        //     // if (timer.join()) {
+
+        //     // }
+        //     curMenu = DISPLAY_GIAOVIEN;
+        //     drawList = true;
+        //     drawGV();
+        // }
+        if (rdChonA.isMouseHover())
+        {
+            rdChonA.click = true;
+            rdChonB.click = false;
+            rdChonC.click = false;
+            rdChonD.click = false;
+
+            rdChonA.drawEffect();
+            rdChonB.drawEffect();
+            rdChonC.drawEffect();
+            rdChonD.drawEffect();
+        }
+        else if (rdChonB.isMouseHover())
+        {
+            rdChonA.click = false;
+            rdChonB.click = true;
+            rdChonC.click = false;
+            rdChonD.click = false;
+
+            rdChonA.drawEffect();
+            rdChonB.drawEffect();
+            rdChonC.drawEffect();
+            rdChonD.drawEffect();
+        }
+        else if (rdChonC.isMouseHover())
+        {
+            rdChonA.click = false;
+            rdChonB.click = false;
+            rdChonC.click = true;
+            rdChonD.click = false;
+
+            rdChonA.drawEffect();
+            rdChonB.drawEffect();
+            rdChonC.drawEffect();
+            rdChonD.drawEffect();
+        }
+        else if (rdChonD.isMouseHover())
+        {
+            rdChonA.click = false;
+            rdChonB.click = false;
+            rdChonC.click = false;
+            rdChonD.click = true;
+
+            rdChonA.drawEffect();
+            rdChonB.drawEffect();
+            rdChonC.drawEffect();
+            rdChonD.drawEffect();
+        }
+    }
 }

@@ -44,8 +44,11 @@ void displayLogin(ListMonHoc listMH ,dslop &DanhSachLop)
                                         drawHocSinh(node->info);
                                     }
                                 }
+                                else if ( curMenu == LUACHON_THI_HS) {
+                                    displayLuaChonMonThi(listMH, node->info, DanhSachLop.arrLop[i].MALOP);
+                                }
                                 else if ( curMenu == DISPLAY_HSTHI) {
-                                    displayLuaChonMonThi(listMH, node->info);
+                                    dipslayHocSinhThi();
                                 }
                                 else if ( curMenu == DISPLAY_DIEMSV) {
                                     displayDiemSV();

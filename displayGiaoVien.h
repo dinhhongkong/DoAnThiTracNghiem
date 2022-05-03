@@ -1505,10 +1505,6 @@ void displayThietLapThiThu(ListMonHoc listMH)
                 Edit = nullptr;
                 Sleep(100);
                 timer = thread(drawThoiGian, giay);
-                timKiemMon.content = "";
-                edChonMonThi.content = "";
-                edTimeThi.content = "";
-                edsoCau.content = "";
             }
         }
     }
@@ -1516,23 +1512,12 @@ void displayThietLapThiThu(ListMonHoc listMH)
 
 void displayThiThu()
 {
-    btnQuaylai.ButtonEffect();
-    // rdChonA.RadioEffect();
-    // rdChonB.RadioEffect();
-    // rdChonC.RadioEffect();
-    // rdChonD.RadioEffect();
+    rdChonA.RadioEffect();
+    rdChonB.RadioEffect();
+    rdChonC.RadioEffect();
+    rdChonD.RadioEffect();
     if (GetAsyncKeyState(VK_LBUTTON))
     {
-        // if (btnQuaylai.isMouseHover())
-        // {
-        //     timer.join();
-        //     // if (timer.join()) {
-
-        //     // }
-        //     curMenu = DISPLAY_GIAOVIEN;
-        //     drawList = true;
-        //     drawGV();
-        // }
         if (rdChonA.isMouseHover())
         {
             rdChonA.click = true;
