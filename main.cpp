@@ -12,11 +12,15 @@ using namespace std;
 
 #include "struct.h"
 #include "define.h"
+#include "random.h"
+
 #include "Button.h"
 #include "EditText.h"
 #include "RadioButon.h"
 #include "Scan.h"
 #include "local.h"
+
+#include "cauhoi.h"
 #include "sinhvien.h"
 #include "monhoc.h"
 #include "lop.h"

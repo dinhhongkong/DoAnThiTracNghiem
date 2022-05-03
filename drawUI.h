@@ -1042,10 +1042,6 @@ void drawThi(string ho = "", string ten = "", string mssv = "", string Lop = "",
     outtextxy(1130, 280, "Mon thi: ");
     outtextxy(1130, 340, &SoCau[0]);
     outtextxy(1130, 400, &tg[0]);
-    timKiemMon.content = "";
-    edChonMonThi.content = "";
-    edTimeThi.content = "";
-    edsoCau.content = "";
 }
 // ve cai chon so cau, chon thoi gian
 void drawThietLapThi()

@@ -53,10 +53,10 @@ struct CauHoi
 
 struct NodeCauHoi
 {
+	int key;
     CauHoi info;
-    int key;
-    int bf;
-    NodeCauHoi *Left = nullptr, *Right = nullptr;
+    int height;
+    NodeCauHoi *left = nullptr, *right = nullptr;
 };
 
 struct TreeCauHoi

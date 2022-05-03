@@ -1,4 +1,4 @@
-void displayHocSinh(ListMonHoc listMH,listSV &dsSinhVien ,sinhVien &sv, string maLop)
+void displayHocSinh(ListMonHoc listMH, listSV &dsSinhVien, sinhVien &sv, string maLop)
 {
     btnThi.ButtonEffect();
     btnXemDiemSV.ButtonEffect();
@@ -17,7 +17,6 @@ void displayHocSinh(ListMonHoc listMH,listSV &dsSinhVien ,sinhVien &sv, string m
         {
             curMenu = DISPLAY_DOIMK;
             drawDoiMk();
-
         }
         else if (btnThi.isMouseHover())
         {
@@ -26,7 +25,8 @@ void displayHocSinh(ListMonHoc listMH,listSV &dsSinhVien ,sinhVien &sv, string m
             drawThietLapThi();
             MenuThemMon = false;
         }
-        else if ( btnXemDiemSV.isMouseHover()) {
+        else if (btnXemDiemSV.isMouseHover())
+        {
             curMenu = DISPLAY_DIEMSV;
             drawDiemSV();
         }
@@ -81,7 +81,8 @@ void displayDoiMK(listSV &dsSinhVien, string &mk, string maLop)
                     AllocConsole();
                     MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Mat khau moi khong trung nhau", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
                 }
-                else if ( mk == matKhauMoi.content ) {
+                else if (mk == matKhauMoi.content)
+                {
                     AllocConsole();
                     MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Mat khau moi trung voi mat khau cu", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
                 }
@@ -246,15 +247,24 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien sv, string maLOP)
         {
             Edit = &edsoCau;
         }
-        else if ( btnVaoThi.isMouseHover()) {
+        else if (btnVaoThi.isMouseHover())
+        {
             Edit = nullptr;
             curMenu = DISPLAY_HSTHI;
-            drawThi(sv.Ho, sv.Ten,sv.mssv, maLOP ,"" );
+            drawThi(sv.Ho, sv.Ten, sv.mssv, maLOP, "");
+            int giay = edTimeThi.toInt() * 60;
+            timer = thread(drawThoiGian, giay);
+            // timer.join();
+            timKiemMon.content = "";
+            edChonMonThi.content = "";
+            edTimeThi.content = "";
+            edsoCau.content = "";
         }
     }
 }
 
-void displayDiemSV() {
+void displayDiemSV()
+{
     btnQuaylai.ButtonEffect();
     btnTien_L1.ButtonEffect();
     btnLui_L.ButtonEffect();
@@ -264,17 +274,18 @@ void displayDiemSV() {
         {
             curMenu = DISPLAY_HOCSINH;
             btnQuaylai.click = true;
-            
+
             drawList = true;
             soTrangSV = 1;
             edtimKiemSV_R.content = "";
             luaChonLop = -1;
             Edit = nullptr;
         }
-    } 
+    }
 }
 
-void dipslayHocSinhThi() {
+void dipslayHocSinhThi()
+{
     btnTien.ButtonEffect();
     btnLui.ButtonEffect();
     rdChonA.RadioEffect();
