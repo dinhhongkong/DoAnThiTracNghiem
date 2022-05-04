@@ -9,11 +9,11 @@ int height(NodeCauHoi *N)
 /* Helper function that allocates a
    new node with the given key and
    nullptr left and right pointers. */
-NodeCauHoi* newNode(int key , CauHoi cauHoiMoi)
+NodeCauHoi* newNode(CauHoi cauHoiMoi)
 {
     NodeCauHoi* node = new NodeCauHoi();
     node->info = cauHoiMoi;
-    node->key = key;
+    node->key = cauHoiMoi.id;
     node->left = nullptr;
     node->right = nullptr;
     node->height = 1; // new node is initially
@@ -76,15 +76,15 @@ int getBalance(NodeCauHoi *N)
 // Recursive function to insert a key
 // in the subtree rooted with node and
 // returns the new root of the subtree.
-NodeCauHoi* insert(NodeCauHoi* node, int key, CauHoi cauHoiMoi)
+NodeCauHoi* themCauHoi(NodeCauHoi* node, int key, CauHoi cauHoiMoi)
 {
     /* 1. Perform the normal BST insertion */
     if (node == nullptr)
-        return(newNode(key, cauHoiMoi));
+        return(newNode(cauHoiMoi));
     if (key < node->key)
-        node->left = insert(node->left, key,cauHoiMoi);
+        node->left = themCauHoi(node->left, key,cauHoiMoi);
     else if (key > node->key)
-        node->right = insert(node->right, key,cauHoiMoi);
+        node->right = themCauHoi(node->right, key,cauHoiMoi);
     else // Equal keys are not allowed in BST
         return node;
  
@@ -125,3 +125,36 @@ NodeCauHoi* insert(NodeCauHoi* node, int key, CauHoi cauHoiMoi)
     return node;
 }
  
+int countNodeCauHoi(NodeCauHoi *root)
+{
+    if (root == nullptr) {
+        return 0;
+    }
+    else {
+        return 1 + countNodeCauHoi(root->left) + countNodeCauHoi(root->right);
+    }
+   
+}
+
+
+int TreeToArray(NodeCauHoi *rootCauHoi, NodeCauHoi *arrCauHoi[], int i)
+{
+    if (rootCauHoi == nullptr)
+    {
+        return i;
+    }
+
+    arrCauHoi[i] = rootCauHoi;
+    i++;
+    if (rootCauHoi->left != nullptr)
+    {
+        i = TreeToArray(rootCauHoi->left, arrCauHoi, i);
+    }
+
+    if (rootCauHoi->right != nullptr)
+    {
+        i = TreeToArray(rootCauHoi->right, arrCauHoi, i);
+    }
+
+    return i;
+}

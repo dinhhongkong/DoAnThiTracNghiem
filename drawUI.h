@@ -19,7 +19,7 @@ void drawLogin()
 }
 
 // Ve man hinh chuc nang hoc sinh
-void drawHocSinh(sinhVien sv, string tenlop = "")
+void drawHocSinh(string HO = "", string TEN = "", string MSSV ="", int GIOITINH = 0, string tenlop = "")
 {
     cleardevice();
     btnThi.draw();
@@ -36,15 +36,22 @@ void drawHocSinh(sinhVien sv, string tenlop = "")
     setcolor(YELLOW);
     settextstyle(0, 0, 5);
     outtextxy(430, 240, "THONG TIN SINH VIEN");
-    string hoTen = "Ho va Ten: " + sv.Ho + " " + sv.Ten;
-    string mssv = "Mssv: " + sv.mssv;
+
+    static string hoTen;
+    static string mssv ;
     static string tenLop;
+    string temp = (GIOITINH) ? ("NU") : ("NAM");
+    static string gioiTinh;
+
+    if ( HO.size()) {
+        hoTen = "Ho va Ten: " + HO + " " + TEN;
+        mssv = "Mssv: " + MSSV;
+        gioiTinh = "Gioi tinh: " + temp;
+    }
     if (tenlop.size())
     {
         tenLop = "Lop: " + tenlop;
     }
-    string temp = (sv.gioiTinh) ? ("NU") : ("NAM");
-    string gioiTinh = "Gioi tinh: " + temp;
     settextstyle(10, 0, 4);
     setcolor(RED);
     setbkcolor(BLACK);
@@ -875,6 +882,66 @@ void drawXemCauHoi()
     btnDapAnD.draw();
 }
 
+int soTrangCauHoi = 1;
+void drawDsCauHoi(NodeCauHoi *rootCauHoi) {
+    setfillstyle(1, BLACK);
+    bar(xDsCauHoi[0] + 1, yDsCauHoi[0] + 1, xDsCauHoi[1] - 1, 760 - 1);
+    bar(xDsCauHoi[1] + 1, yDsCauHoi[0] + 1, xDsCauHoi[2] - 1, 760 - 1);
+    bar(xDsCauHoi[2] + 1, yDsCauHoi[0] + 1, xDsCauHoi[3] -1, 760 - 1);
+
+    NodeCauHoi *arrCauHoi[MAX_CAUHOI];
+    int soLuongCauHoi = TreeToArray(rootCauHoi,arrCauHoi,0);
+    // int soLuongCauHoi = 0;
+    // while ( arrCauHoi[soLuongCauHoi] != nullptr)
+    // {
+    //     soLuongCauHoi ++;
+    // }
+    
+    
+    if (soLuongCauHoi <= 10)
+    {
+        soTrangCauHoi = 1;
+    }
+    else if (btnTien.click && soLuongCauHoi > soTrangCauHoi * 10 && timKiemCauHoi.content.size() == 0)
+    {
+        soTrangCauHoi++;
+        btnTien.click = false;
+    }
+    else if (btnLui.click && soTrangCauHoi > 1 && timKiemCauHoi.content.size() == 0)
+    {
+        soTrangCauHoi--;
+    }
+    btnTien.click = false;
+    btnLui.click = false;
+    setbkcolor(BLACK);
+    string textTrang = to_string(soTrangCauHoi);
+    textTrang += "/" + to_string((soLuongCauHoi % 10 == 0) ? ((soLuongCauHoi < 10) ? 1 :soLuongCauHoi / 10) : (soLuongCauHoi / 10 + 1));
+    // thu nghiem xoa so trang:   setfillstyle(4, YELLOW);
+    bar(425, 825, 500, 850);
+    setcolor(WHITE);
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+    listviewDS.size = 0;
+
+    if (timKiemCauHoi.content.size() == 0)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (i + (soTrangCauHoi - 1) * 10 >= soLuongCauHoi)
+            {
+                break;
+            }
+            listviewDS.size++;
+            listviewDS.idItem[i] = i + (soTrangCauHoi - 1) * 10;
+            string Key = to_string (arrCauHoi[i + (soTrangLop - 1) * 10]->key);
+            outtextxy(xDsCauHoi[0] + 15, yDsCauHoi[0] + 20 + i * 50, &Key[0]);
+            outtextxy(xDsCauHoi[1] + 25, yDsCauHoi[0] + 20 + i * 50, &arrCauHoi[i + (soTrangLop - 1) * 10]->info.maMonHoc[0]);
+            outtextxy(xDsCauHoi[2] + 10, yDsCauHoi[0] + 20 + i * 50, &arrCauHoi[i + (soTrangLop - 1) * 10]->info.NoiDung[0]);
+        }
+        outtextxy(400, 825, &textTrang[0]);
+    }
+
+}
+
 void drawThemCauHoi()
 {
     setfillstyle(1, BLACK);
@@ -985,12 +1052,30 @@ void drawThoiGian(int giay)
         settextstyle(10, 0, 8);
 
         outtextxy(1350 - textwidth(&thoiGian[0]) / 2, 680, &thoiGian[0]);
-        Sleep(1000);
+        Sleep(50);
         giay--;
         thoiGian = to_string(giay);
         setcolor(WHITE);
     }
-    cout << "Het gio" << endl;
+    AllocConsole();
+    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Het gio!", "Thong bao",  MB_OK);
+    drawList = true;
+    if (curMenu == VAO_THITHU)
+    {
+        preMenu = VAO_THITHU;
+        curMenu = DISPLAY_GIAOVIEN;
+        drawGV();
+    }
+    else if (curMenu == DISPLAY_HSTHI)
+    {
+        preMenu = DISPLAY_HSTHI;
+        curMenu = DISPLAY_HOCSINH;
+        drawHocSinh();
+    }
+    edChonMonThi.content = "";
+    edsoCau.content = "";
+    edTimeThi.content = "";
+    return;
 }
 
 void drawThi(string ho = "", string ten = "", string mssv = "", string Lop = "", string mon = "")

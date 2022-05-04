@@ -222,7 +222,7 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien sv, string maLOP)
             edTimeThi.content = "";
             edsoCau.content = "";
             timKiemMon.content = "";
-            drawHocSinh(sv);
+            drawHocSinh();
             soTrangMon = 1;
         }
         else if (btnTien.isMouseHover())

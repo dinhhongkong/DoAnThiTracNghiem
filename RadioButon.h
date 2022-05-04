@@ -16,9 +16,6 @@ public:
 		this->r = r;
 		this->title = title;
 	}
-    //circle(int x, int y, int r)
-
-
 	// vẽ cái nút
 	void draw()
 	{
@@ -40,12 +37,7 @@ public:
 	// chi ve cai nut, ko ve content
 	void drawEffect()
 	{
-		// setfillstyle(SOLID_FILL,LIGHTGREEN);
-		// floodfill(x + r - 5,y,GREEN);
 		setfillstyle(SOLID_FILL, click ? RADIO_BUTTON_CLICK : (isHover ? RADIO_BUTTON_SELECT : RADIO_BUTTON_DEFAULT));
-		// setcolor(GREEN);
-		// circle( x,  y, r);
-		// circle( x,  y, r -10);
 		floodfill(x,y,GREEN);
 		setbkcolor(BG_COLOR);
 		setcolor(DRAW_COLOR);

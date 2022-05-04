@@ -59,10 +59,10 @@ struct NodeCauHoi
     NodeCauHoi *left = nullptr, *right = nullptr;
 };
 
-struct TreeCauHoi
-{
-    CauHoi *root = nullptr;
-};
+// struct TreeCauHoi
+// {
+//     NodeCauHoi *root = nullptr;
+// };
 
 
 // ------------------------ CAU HOI THI & BAI THI --------------------------

@@ -1,5 +1,5 @@
 
-void displaySinhVien(dslop DanhSachLop,listSV &danhSachSV, string maLop);
+void displaySinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop);
 
 void displayGV()
 {
@@ -49,7 +49,6 @@ void displayGV()
             drawCauHoi();
             drawThemCauHoi();
             MenuThemMon = false;
-
         }
         else if (btnThiThu.isMouseHover())
         {
@@ -481,7 +480,7 @@ void ClickItemLop(dslop &DanhSachLop, string maMon = "", string tenMon = "")
             while (true)
             {
                 KbEvent();
-                displaySinhVien(DanhSachLop ,DanhSachLop.arrLop[viTri].dsSinhVien, DanhSachLop.arrLop[viTri].MALOP);
+                displaySinhVien(DanhSachLop, DanhSachLop.arrLop[viTri].dsSinhVien, DanhSachLop.arrLop[viTri].MALOP);
                 if (btnQuaylai.click)
                 {
                     MenuThemLop = true;
@@ -637,7 +636,7 @@ void DisplayLop(dslop &DanhSachLop)
 
 //---------------------------------------------------CHUC NANG SINH VIEN--------------------------------------
 
-void ClickItemSinhVien( dslop DanhSachLop ,listSV &danhSachSV, string maLop)
+void ClickItemSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
 {
     int x = -1, y = -1;
     x = mousex();
@@ -778,7 +777,7 @@ void ClickItemSinhVien( dslop DanhSachLop ,listSV &danhSachSV, string maLop)
                                 bar(1005, 0, 1600, 765);
                                 // soTrangSV =1;
                                 drawList = true;
-                                
+
                                 btnMenuThemSV.click = true;
                                 btnNam.click = false;
                                 btnNu.click = false;
@@ -787,14 +786,14 @@ void ClickItemSinhVien( dslop DanhSachLop ,listSV &danhSachSV, string maLop)
                                 edTenSV.content = "";
                                 drawThemSinhVien();
                                 btnMenuThemSV.draw();
-                                ghiFileDsSinhVien(danhSachSV,maLop);
+                                ghiFileDsSinhVien(danhSachSV, maLop);
                                 break;
                             }
                         }
                     }
                     else if (btnHieuChinh.isMouseHover())
                     {
-                        if (ChinhSuaSinhVien(DanhSachLop,danhSachSV, node, edMSSV.ToString(), edHoSV.ToString(), edTenSV.ToString(), btnNam.click ? 0 : 1))
+                        if (ChinhSuaSinhVien(DanhSachLop, danhSachSV, node, edMSSV.ToString(), edHoSV.ToString(), edTenSV.ToString(), btnNam.click ? 0 : 1))
                         {
                             ghiFileDsSinhVien(danhSachSV, maLop);
                             btnHieuChinh.click = true;
@@ -860,7 +859,7 @@ void ClickItemSinhVien( dslop DanhSachLop ,listSV &danhSachSV, string maLop)
                         if (MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chuc nang nay de cap lai MK mac dinh cho sinh vien. Ban muon tiep tuc?", "Thong bao", MB_ICONQUESTION | MB_OKCANCEL) == IDOK)
                         {
                             thayDoiMK(node, "mk");
-                            ghiFileDsSinhVien(danhSachSV,maLop);
+                            ghiFileDsSinhVien(danhSachSV, maLop);
                             MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Reset Mat khau thanh cong", "Thong bao", MB_OK);
                         }
                     }
@@ -920,7 +919,7 @@ void ClickItemSinhVien( dslop DanhSachLop ,listSV &danhSachSV, string maLop)
     }
 }
 
-void displaySinhVien(dslop DanhSachLop , listSV &danhSachSV, string maLop)
+void displaySinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
 {
     static int checkTimKiem = 0;
     if (drawList == true)
@@ -953,7 +952,7 @@ void displaySinhVien(dslop DanhSachLop , listSV &danhSachSV, string maLop)
     btnTien.ButtonEffect();
     btnMenuThemSV.ButtonEffect();
 
-    ClickItemSinhVien(DanhSachLop,danhSachSV, maLop);
+    ClickItemSinhVien(DanhSachLop, danhSachSV, maLop);
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         if (btnQuaylai.isMouseHover())
@@ -1053,7 +1052,7 @@ void displaySinhVien(dslop DanhSachLop , listSV &danhSachSV, string maLop)
                     // pass mac dinh la mssv;
                     // sv.Pass = sv.mssv;
                     sv.Pass = "mk";
-                    if (InsertNodeSV(DanhSachLop,danhSachSV, sv) )
+                    if (InsertNodeSV(DanhSachLop, danhSachSV, sv))
                     {
                         ghiFileDsSinhVien(danhSachSV, maLop);
                         edMSSV.content = "";
@@ -1289,8 +1288,36 @@ void diplayDsDiem(string maMon, lop lh)
 //---------------------------------------------------TUY CHINH CAU HOI THI------------------------------------------
 
 bool chucNangThemCauHoi = true;
-void displayChucNangCauHoi()
+void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[])
 {
+
+    static int checkTimKiem = 0;
+    static NodeCauHoi *arrCauHoi[MAX_CAUHOI];
+    if (drawList == true)
+    {
+        // listviewDS.size = 0;
+        drawDsCauHoi(rootCauHoi);
+        drawList = false;
+        if (checkTimKiem < 0)
+        {
+            checkTimKiem = 0;
+        }
+    }
+    if (timKiemCauHoi.content.size() > checkTimKiem)
+    {
+        checkTimKiem++;
+        drawList = true;
+    }
+    else if (timKiemCauHoi.content.size() == checkTimKiem)
+    {
+        drawList = false;
+    }
+    else if (timKiemCauHoi.content.size() < checkTimKiem)
+    {
+        checkTimKiem -= 2;
+        drawList = true;
+    }
+
     btnQuaylai.ButtonEffect();
     btnTien_L.ButtonEffect();
     btnLui.ButtonEffect();
@@ -1298,7 +1325,6 @@ void displayChucNangCauHoi()
     btnDapAnB.ButtonEffect();
     btnDapAnC.ButtonEffect();
     btnDapAnD.ButtonEffect();
-    //btnThoat.ButtonEffect();
     btnChonMaMon.ButtonEffect();
     btnXoaMaMon.ButtonEffect();
 
@@ -1404,6 +1430,7 @@ void displayChucNangCauHoi()
                 preMenu = curMenu;
                 curMenu = LUACHON_MON;
                 soTrangMon = 1;
+                drawList = true;
                 drawMonHoc();
             }
             else if (btnXoaMaMon.isMouseHover())
@@ -1413,7 +1440,96 @@ void displayChucNangCauHoi()
             }
             else if (btnThemCauHoi.isMouseHover())
             {
-                // goi ham them cau hoi
+                if (!edCauHoi.content.size())
+                {
+                    AllocConsole();
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Cau hoi khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                }
+                else if (!edDapAnA.content.size())
+                {
+                    AllocConsole();
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an A khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                }
+                else if (!edDapAnB.content.size())
+                {
+                    AllocConsole();
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an B khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                }
+                else if (!edDapAnC.content.size())
+                {
+                    AllocConsole();
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an C khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                }
+                else if (!edDapAnD.content.size())
+                {
+                    AllocConsole();
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an D khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                }
+                else if (!btnDapAnA.click && !btnDapAnB.click && !btnDapAnC.click && !btnDapAnD.click)
+                {
+                    AllocConsole();
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon 1 dap an dung", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                }
+                else if (!edChonMaMon.content.size())
+                {
+                    AllocConsole();
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ma mon khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                }
+                else
+                {
+
+                    int id = arrID[countNodeCauHoi(rootCauHoi)];
+                    CauHoi cauHoiMoi;
+                    cauHoiMoi.id = id;
+                    cauHoiMoi.NoiDung = edCauHoi.ToString();
+                    cauHoiMoi.A = edDapAnA.ToString();
+                    cauHoiMoi.B = edDapAnB.ToString();
+                    cauHoiMoi.C = edDapAnC.ToString();
+                    cauHoiMoi.D = edDapAnD.ToString();
+                    cauHoiMoi.maMonHoc = edChonMaMon.ToString();
+                    if (btnDapAnA.click == true)
+                    {
+                        cauHoiMoi.DapAn = 'A';
+                    }
+                    else if (btnDapAnB.click == true)
+                    {
+                        cauHoiMoi.DapAn = 'B';
+                    }
+                    else if (btnDapAnC.click == true)
+                    {
+                        cauHoiMoi.DapAn = 'C';
+                    }
+                    else if (btnDapAnD.click == true)
+                    {
+                        cauHoiMoi.DapAn = 'D';
+                    }
+                    rootCauHoi = themCauHoi(rootCauHoi, id, cauHoiMoi);
+                    AllocConsole();
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Them thanh cong", "Thong bao", MB_OK);
+                    btnDapAnA.click = false;
+                    btnDapAnB.click = false;
+                    btnDapAnC.click = false;
+                    btnDapAnD.click = false;
+                    btnDapAnA.draw();
+                    btnDapAnB.draw();
+                    btnDapAnC.draw();
+                    btnDapAnD.draw();
+
+                    edDapAnA.content = "";
+                    edCauHoi.content = "";
+                    edDapAnB.content = "";
+                    edDapAnC.content = "";
+                    edDapAnD.content = "";
+                    edCauHoi.content = "";
+                    edChonMaMon.content = "";
+                    edCauHoi.draw();
+                    edChonMaMon.draw();
+                    edDapAnA.draw();
+                    edDapAnB.draw();
+                    edDapAnC.draw();
+                    edDapAnD.draw();
+                    drawList = true;
+                }
             }
         }
     }

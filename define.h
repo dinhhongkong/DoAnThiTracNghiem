@@ -12,6 +12,9 @@ const int h  = 900;
 //     5 = Purple      D = Light Purple
 //     6 = Yellow      E = Light Yellow
 //     7 = White       F = Bright White
+#define MAX_RANDOM 5000
+#define MAX_CAUHOI 1000
+
 
 // define button
 #define BG_BUTTON_DEFAULT 				7

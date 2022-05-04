@@ -46,7 +46,13 @@ int main()
 
     ListMonHoc listMH;
     Doc_File_Mon_Hoc(listMH);
-    
+
+    int arrID[MAX_RANDOM];
+    docFileRandom(arrID);
+    cout << arrID[3] << endl;
+
+    NodeCauHoi *rootCayCauHoi;
+
     drawLogin();
     while (true)
     {
@@ -54,7 +60,7 @@ int main()
         KbEvent();
         if (curMenu == DISPLAY_LOGIN)   
         {
-            displayLogin(listMH, DanhSachLop);
+            displayLogin(listMH, DanhSachLop, arrID);
         }
         else if (curMenu == DISPLAY_GIAOVIEN)
         {
@@ -79,13 +85,17 @@ int main()
             diplayDsDiem(listMH.monHoc[luaChonMon]->MAMH, DanhSachLop.arrLop[luaChonLop]);
         }
         else if ( curMenu == CHUCNANG_CAUHOI) {
-            displayChucNangCauHoi();
+            displayChucNangCauHoi(rootCayCauHoi ,arrID);
         }
         else if ( curMenu == DISPLAY_THITHU) {
             displayThietLapThiThu(listMH);
         }
         else if ( curMenu == VAO_THITHU) {
             displayThiThu();
+        }
+        if ( preMenu == VAO_THITHU) {
+            timer.join();
+            preMenu = -1;
         }
         
         Sleep(75);

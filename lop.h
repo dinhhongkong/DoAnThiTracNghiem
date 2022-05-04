@@ -29,26 +29,6 @@ bool ThemVaoDanhSach(dslop &ds, string maLop, string tenLop)
     }
 
     int i = 0;
-
-    // if (ds.solop == 0 || maLop < ds.arrLop[0].MALOP)
-    // {
-    //     i = 0;
-    // }
-    // else if (maLop > ds.arrLop[ds.solop - 1].MALOP)
-    // {
-    //     i = ds.solop;
-    // }
-    // else
-    // {
-    //     for (i = 0; i < ds.solop - 1; i++)
-    //     {
-    //         if (ds.arrLop[i].MALOP > maLop)
-    //         {
-    //             break;
-    //         }
-    //     }
-    // }
-    //--------------------------------------test---------------------------
     if (ds.solop == 0 || maLop > ds.arrLop[0].MALOP)
     {
         i = 0;
