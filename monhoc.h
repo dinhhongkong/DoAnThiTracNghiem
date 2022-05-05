@@ -218,6 +218,7 @@ string Truy_Xuat_Ten_Mon(ListMonHoc listMH, string maMonHoc)
 			left = middle + 1;
 		}
 	}
+	return "";
 }
 
 /* void Hieu_Chinh_Mon_Hoc(ListMonHoc& listMH, int index) {

@@ -1,6 +1,7 @@
 #define MAXLOP 100
 #define MAXMONHOC 100
 #define STACKSIZE 1000
+#pragma once
 #include<iostream>
 using namespace std;
 
@@ -66,15 +67,15 @@ struct NodeCauHoi
 
 
 // ------------------------ CAU HOI THI & BAI THI --------------------------
-struct Cau_Hoi_Thi {
+struct cauHoiThi {
 	CauHoi cauHoiThi;
 	char luaChon;
 };
 
+
 struct Bai_Thi {
-	//Thời gian thi
-	int slcht;
-	Cau_Hoi_Thi* listCHT;
+	int slcht =0;
+	cauHoiThi *arrCauHoi;
 };
 
 //---------------------------------------SINH VIEN---------------------------------------------------

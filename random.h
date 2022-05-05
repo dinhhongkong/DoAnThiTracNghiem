@@ -1,3 +1,9 @@
+
+// random [a, b)
+int randomNumber(int a, int b) {
+    return rand() % (b-a) + a;
+}
+
 void RandomArrNumber(int arr[])
 {
     for (int i = 0; i < MAX_RANDOM; i++)
@@ -6,7 +12,6 @@ void RandomArrNumber(int arr[])
     }
 
     int temp;
-    srand((int)time(0));
     for (int i = 0; i < MAX_RANDOM; i++)
     {
         temp = rand() % MAX_RANDOM ;

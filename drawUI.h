@@ -1026,6 +1026,20 @@ void drawCauHoi()
     outtextxy(xDsCauHoi[0] + 30, 215, "ID");
     outtextxy(xDsCauHoi[1] + 25, 215, "MA MON");
     outtextxy(xDsCauHoi[2] + 230, 215, "CAU HOI");
+
+    edCauHoi.setNext(&edDapAnA);
+    edDapAnA.setNext(&edDapAnB);
+    edDapAnB.setNext(&edDapAnC);
+    edDapAnC.setNext(&edDapAnD);
+    edDapAnD.setNext(&edCauHoi);
+
+    edCauHoi.setPre(&edDapAnD);
+    edDapAnA.setPre(&edCauHoi);
+    edDapAnB.setPre(&edDapAnA);
+    edDapAnC.setPre(&edDapAnB);
+    edDapAnD.setPre(&edDapAnC);
+
+    
 }
 
 //-----------------------------------------------------CHUC NANG THI THU----------------------------------------------

@@ -8,6 +8,7 @@ using namespace std;
 #include <direct.h> // thu vien tao folder
 #include <fstream>
 #include <ctime>
+#include <cmath>
 #include <thread>
 
 #include "struct.h"
@@ -21,6 +22,7 @@ using namespace std;
 #include "local.h"
 
 #include "cauhoi.h"
+#include "baithi.h"
 #include "sinhvien.h"
 #include "monhoc.h"
 #include "lop.h"
@@ -40,6 +42,8 @@ int main()
     initwindow(1600, 900, "THI TRAC NGHIEM");
     // Tao folder de luu du lieu
     mkdir("DATA") ;
+    mkdir("DATA\\bai thi") ;
+    srand((int)time(0));
 
     dslop DanhSachLop;
     docFileDsLop(DanhSachLop);
@@ -51,7 +55,6 @@ int main()
     docFileRandom(arrID);
 
     NodeCauHoi *rootCayCauHoi;
-
     drawLogin();
     while (true)
     {
