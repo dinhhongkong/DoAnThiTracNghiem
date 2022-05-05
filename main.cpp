@@ -49,7 +49,6 @@ int main()
 
     int arrID[MAX_RANDOM];
     docFileRandom(arrID);
-    cout << arrID[3] << endl;
 
     NodeCauHoi *rootCayCauHoi;
 
@@ -68,7 +67,7 @@ int main()
         }
         else if (curMenu == DISPLAY_DSMON)
         {
-            DisplayMonHoc(listMH);
+            DisplayMonHoc(rootCayCauHoi ,listMH);
         }
         else if (curMenu == DISPLAY_DSLOP)
         {
@@ -97,7 +96,6 @@ int main()
             timer.join();
             preMenu = -1;
         }
-        
         Sleep(75);
     }
 }

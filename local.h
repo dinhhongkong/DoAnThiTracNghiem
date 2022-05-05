@@ -73,7 +73,8 @@ editText timKiemLop(100,100,600,50,"TIM KIEM: ","Nhap MA hoac TEN lop muon tim",
 // danh sach hoc sinh trong 1 lop
 int xDsSV[6] = {50,250,600,800,950};
 int yDsSV[2] = {250,750};
-button btnMenuThemSV(1175,20,250,50,"MENU THEM SINH VIEN");
+//bool MenuThemSV = true;
+//button btnMenuThemSV(1175,20,250,50,"MENU THEM SINH VIEN");
 editText edtimKiemSV(100,100,600,50,"TIM KIEM: ","Nhap MA hoac TEN sinh vien muon tim",100);
 editText edMSSV(1075,325,450,50,"MSSV:","Toi da 10 ki tu",10);
 editText edHoSV(1075,400,450,50,"Ho va ten dem:","nhap ho vs ten lot",40);
@@ -93,7 +94,7 @@ button btnTien_L1(1120, 820, 100,50,"NEXT");
 // cau hoi
 int xDsCauHoi[4] = {50,125,250,800};
 int yDsCauHoi[2] = {250,750};
-editText edCauHoi(860, 325, 670,40,"CAU HOI:","toi da x ki tu",50);
+editText edCauHoi(860, 325, 670,40,"NOI DUNG:","toi da x ki tu",50);
 editText edDapAnA(860, 375, 670,40,"DAP AN A:","toi da x ki tu",50);
 editText edDapAnB(860, 425, 670,40,"DAP AN B:","toi da x ki tu",50);
 editText edDapAnC(860, 475, 670,40,"DAP AN C:","toi da x ki tu",50);

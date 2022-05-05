@@ -442,8 +442,7 @@ void drawSinhVien(string tenlop)
     outtextxy(250, 65, &TenDeMuc[0]);
     btnQuaylai.draw();
     edtimKiemSV.draw();
-    btnMenuThemSV.click = true;
-    btnMenuThemSV.draw();
+    // MenuThemSV = true;
     btnLui.draw();
     btnTien.draw();
     line(1000, 0, 1000, 900);

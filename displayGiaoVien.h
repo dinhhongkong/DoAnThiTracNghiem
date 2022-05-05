@@ -61,7 +61,7 @@ void displayGV()
 
 //------------------------------------------------CHUC NANG QUAN LI MON HOC----------------------------------------
 
-void ClickItemMonHoc(ListMonHoc &listMH)
+void ClickItemMonHoc(NodeCauHoi *r, ListMonHoc &listMH)
 {
     int x = -1, y = -1;
     x = mousex();
@@ -122,19 +122,21 @@ void ClickItemMonHoc(ListMonHoc &listMH)
                         AllocConsole();
                         if (MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ban co chac chan muon XOA mon hoc nay", "Thong bao", MB_ICONASTERISK | MB_OKCANCEL) == IDOK)
                         {
-                            Xoa_Mon_Hoc(listMH, listviewDS.idItem[LuaChon]);
-                            Luu_File_Mon_Hoc(listMH);
-                            drawList = true;
-                            themMaMon.content = "";
-                            themTenMon.content = "";
-                            MenuThemMon = true;
-                            DrawThemMonHoc();
-                            break;
+                            if (Xoa_Mon_Hoc(r, listMH, listviewDS.idItem[LuaChon]))
+                            {
+                                Luu_File_Mon_Hoc(listMH);
+                                drawList = true;
+                                themMaMon.content = "";
+                                themTenMon.content = "";
+                                MenuThemMon = true;
+                                DrawThemMonHoc();
+                                break;
+                            }
                         }
                     }
                     else if (btnHieuChinh.isMouseHover())
                     {
-                        if (Hieu_Chinh_Mon_Hoc(listMH, listviewDS.idItem[LuaChon], themMaMon.ToString(), themTenMon.ToString()))
+                        if (Hieu_Chinh_Mon_Hoc(r, listMH, listviewDS.idItem[LuaChon], themMaMon.ToString(), themTenMon.ToString()))
                         {
                             Luu_File_Mon_Hoc(listMH);
                             drawDSMonHoc(listMH);
@@ -223,7 +225,7 @@ void ClickItemMonHoc(ListMonHoc &listMH)
     }
 }
 
-void DisplayMonHoc(ListMonHoc &listMH)
+void DisplayMonHoc(NodeCauHoi *r, ListMonHoc &listMH)
 {
     // tim kiem theo nhap tu ban phim, xuat ra man hinh luon
     static int checkTimKiem = 0;
@@ -251,7 +253,7 @@ void DisplayMonHoc(ListMonHoc &listMH)
         drawList = true;
     }
 
-    ClickItemMonHoc(listMH);
+    ClickItemMonHoc(r, listMH);
 
     btnQuaylai.ButtonEffect();
     btnTien.ButtonEffect();
@@ -328,13 +330,15 @@ void DisplayMonHoc(ListMonHoc &listMH)
                     mh.MAMH = themMaMon.ToString();
                     mh.TENMH = themTenMon.ToString();
 
-                    Them_Mon_Hoc(listMH, mh);
-                    Luu_File_Mon_Hoc(listMH);
-                    drawList = true;
-                    themMaMon.content = "";
-                    themTenMon.content = "";
-                    themMaMon.draw();
-                    themTenMon.draw();
+                    if (Them_Mon_Hoc(listMH, mh))
+                    {
+                        Luu_File_Mon_Hoc(listMH);
+                        drawList = true;
+                        themMaMon.content = "";
+                        themTenMon.content = "";
+                        themMaMon.draw();
+                        themTenMon.draw();
+                    }
                 }
             }
         }
@@ -775,17 +779,15 @@ void ClickItemSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
                             {
                                 setfillstyle(1, BLACK);
                                 bar(1005, 0, 1600, 765);
-                                // soTrangSV =1;
                                 drawList = true;
 
-                                btnMenuThemSV.click = true;
+                                // MenuThemSV = true;
                                 btnNam.click = false;
                                 btnNu.click = false;
                                 edMSSV.content = "";
                                 edHoSV.content = "";
                                 edTenSV.content = "";
                                 drawThemSinhVien();
-                                btnMenuThemSV.draw();
                                 ghiFileDsSinhVien(danhSachSV, maLop);
                                 break;
                             }
@@ -798,7 +800,7 @@ void ClickItemSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
                             ghiFileDsSinhVien(danhSachSV, maLop);
                             btnHieuChinh.click = true;
                             drawDsSinhVien(danhSachSV);
-                            btnMenuThemSV.click = true;
+                            // MenuThemSV = true;
                             setfillstyle(1, BLACK);
                             bar(1005, 0, 1600, 765);
                             edMSSV.content = "";
@@ -806,7 +808,6 @@ void ClickItemSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
                             edTenSV.content = "";
                             btnNam.click = false;
                             btnNu.click = false;
-                            btnMenuThemSV.draw();
                             Sleep(100);
                             drawThemSinhVien();
                             break;
@@ -814,7 +815,7 @@ void ClickItemSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
                     }
                     else if (btnThoat.isMouseHover())
                     {
-                        btnMenuThemSV.click = true;
+                        // MenuThemSV = true;
                         setfillstyle(1, BLACK);
                         bar(1005, 0, 1600, 765);
                         edMSSV.content = "";
@@ -822,7 +823,6 @@ void ClickItemSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
                         edTenSV.content = "";
                         btnNam.click = false;
                         btnNu.click = false;
-                        btnMenuThemSV.draw();
                         Sleep(100);
                         drawThemSinhVien();
                         break;
@@ -950,7 +950,6 @@ void displaySinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
     btnQuaylai.ButtonEffect();
     btnLui.ButtonEffect();
     btnTien.ButtonEffect();
-    btnMenuThemSV.ButtonEffect();
 
     ClickItemSinhVien(DanhSachLop, danhSachSV, maLop);
     if (GetAsyncKeyState(VK_LBUTTON))
@@ -987,97 +986,98 @@ void displaySinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
         }
     }
 
-    if (btnMenuThemSV.click)
+    // btnMenuThemSV.click
+    //  if (btnMenuThemSV.click)
+    //  {
+    btnNam.ButtonEffect();
+    btnNu.ButtonEffect();
+    btnThem.ButtonEffect();
+    if (GetAsyncKeyState(VK_LBUTTON))
     {
-        btnNam.ButtonEffect();
-        btnNu.ButtonEffect();
-        btnThem.ButtonEffect();
-        if (GetAsyncKeyState(VK_LBUTTON))
+        if (edMSSV.isMouseHover())
         {
-            if (edMSSV.isMouseHover())
+            Edit = &edMSSV;
+        }
+        else if (edHoSV.isMouseHover())
+        {
+            Edit = &edHoSV;
+        }
+        else if (edTenSV.isMouseHover())
+        {
+            Edit = &edTenSV;
+        }
+        else if (btnNam.isMouseHover())
+        {
+            btnNam.click = true;
+            btnNu.click = false;
+            btnNam.draw();
+            btnNu.draw();
+        }
+        else if (btnNu.isMouseHover())
+        {
+            btnNam.click = false;
+            btnNu.click = true;
+            btnNam.draw();
+            btnNu.draw();
+        }
+        else if (btnThem.isMouseHover())
+        {
+            if (edMSSV.content.size() == 0)
             {
-                Edit = &edMSSV;
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien MSSV", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
-            else if (edHoSV.isMouseHover())
+            else if (edHoSV.content.size() == 0)
             {
-                Edit = &edHoSV;
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien Ho vs Ten dem", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
-            else if (edTenSV.isMouseHover())
+            else if (edTenSV.content.size() == 0)
             {
-                Edit = &edTenSV;
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien Ten", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
-            else if (btnNam.isMouseHover())
+            else if (!btnNam.click && !btnNu.click)
             {
-                btnNam.click = true;
-                btnNu.click = false;
-                btnNam.draw();
-                btnNu.draw();
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long lua chon gioi tinh", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
-            else if (btnNu.isMouseHover())
+            else
             {
-                btnNam.click = false;
-                btnNu.click = true;
-                btnNam.draw();
-                btnNu.draw();
-            }
-            else if (btnThem.isMouseHover())
-            {
-                if (edMSSV.content.size() == 0)
+                sinhVien sv;
+                sv.mssv = edMSSV.ToString();
+                sv.Ho = edHoSV.ToString();
+                sv.Ten = edTenSV.ToString();
+                sv.gioiTinh = (btnNam.click ? 0 : 1);
+                // pass mac dinh la mssv;
+                // sv.Pass = sv.mssv;
+                sv.Pass = "mk";
+                if (InsertNodeSV(DanhSachLop, danhSachSV, sv))
                 {
-                    AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien MSSV", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-                }
-                else if (edHoSV.content.size() == 0)
-                {
-                    AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien Ho vs Ten dem", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-                }
-                else if (edTenSV.content.size() == 0)
-                {
-                    AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long dien Ten", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-                }
-                else if (!btnNam.click && !btnNu.click)
-                {
-                    AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long lua chon gioi tinh", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-                }
-                else
-                {
-                    sinhVien sv;
-                    sv.mssv = edMSSV.ToString();
-                    sv.Ho = edHoSV.ToString();
-                    sv.Ten = edTenSV.ToString();
-                    sv.gioiTinh = (btnNam.click ? 0 : 1);
-                    // pass mac dinh la mssv;
-                    // sv.Pass = sv.mssv;
-                    sv.Pass = "mk";
-                    if (InsertNodeSV(DanhSachLop, danhSachSV, sv))
-                    {
-                        ghiFileDsSinhVien(danhSachSV, maLop);
-                        edMSSV.content = "";
-                        edHoSV.content = "";
-                        edTenSV.content = "";
-                        btnNam.click = false;
-                        btnNu.click = false;
-                        btnThem.click = true;
-                        drawDsSinhVien(danhSachSV);
-                        drawThemSinhVien();
-                        Sleep(100);
-                    }
-                }
-            }
-            if (btnMenuThemSV.isMouseHover())
-            {
-                nodeSV *node = danhSachSV.First;
-
-                while (node != nullptr)
-                {
-                    cout << node->info.mssv << endl;
-                    node = node->pNext;
+                    ghiFileDsSinhVien(danhSachSV, maLop);
+                    edMSSV.content = "";
+                    edHoSV.content = "";
+                    edTenSV.content = "";
+                    btnNam.click = false;
+                    btnNu.click = false;
+                    btnThem.click = true;
+                    drawDsSinhVien(danhSachSV);
+                    drawThemSinhVien();
+                    Sleep(100);
                 }
             }
         }
+        // if (btnMenuThemSV.isMouseHover())
+        // {
+        //     nodeSV *node = danhSachSV.First;
+
+        //     while (node != nullptr)
+        //     {
+        //         cout << node->info.mssv << endl;
+        //         node = node->pNext;
+        //     }
+        // }
+        // }
     }
 }
 
@@ -1112,7 +1112,7 @@ void displayLuaChonMon(ListMonHoc listMH)
         checkTimKiem -= 2;
         drawList = true;
     }
-    ClickItemMonHoc(listMH);
+    ClickItemMonHoc(nullptr, listMH);
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         if (btnQuaylai.isMouseHover() && preMenu == CHUCNANG_CAUHOI)
@@ -1569,7 +1569,7 @@ void displayThietLapThiThu(ListMonHoc listMH)
         drawList = true;
     }
 
-    ClickItemMonHoc(listMH);
+    ClickItemMonHoc(nullptr, listMH);
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         if (btnQuaylai.isMouseHover())
