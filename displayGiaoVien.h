@@ -1537,7 +1537,7 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[])
 
 //---------------------------------------------------CAI DAT CHUC NANG THI----------------------------------------------------
 
-void displayThietLapThiThu(ListMonHoc listMH)
+void displayThietLapThiThu(ListMonHoc listMH, NodeCauHoi *rootCayCauHoi, mangCauHoi &arrCauHoi, Bai_Thi &gvThiThu)
 {
     btnQuaylai.ButtonEffect();
     btnTien.ButtonEffect();
@@ -1598,6 +1598,7 @@ void displayThietLapThiThu(ListMonHoc listMH)
         }
         else if (btnVaoThi.isMouseHover())
         {
+            taoMangCauHoi(rootCayCauHoi,arrCauHoi,edChonMonThi.ToString() );
             if (edChonMonThi.content.size() == 0)
             {
                 AllocConsole();
@@ -1613,11 +1614,12 @@ void displayThietLapThiThu(ListMonHoc listMH)
                 AllocConsole();
                 MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon dien so cau", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
-            else
+            else if ( taoBaiThi(gvThiThu, arrCauHoi, edsoCau.toInt()))
             {
                 curMenu = VAO_THITHU;
                 int giay = edTimeThi.toInt() * 60;
                 drawThi();
+                drawBaiLam(gvThiThu.arrCauHoi);
                 Edit = nullptr;
                 Sleep(100);
                 timer = thread(drawThoiGian, giay);
@@ -1626,16 +1628,19 @@ void displayThietLapThiThu(ListMonHoc listMH)
     }
 }
 
-void displayThiThu()
+void displayThiThu(Bai_Thi &gvThiThu)
 {
     rdChonA.RadioEffect();
     rdChonB.RadioEffect();
     rdChonC.RadioEffect();
     rdChonD.RadioEffect();
+    btnTien.ButtonEffect();
+    btnLui.ButtonEffect();
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         if (rdChonA.isMouseHover())
         {
+            gvThiThu.arrCauHoi[cauHoiSo].luaChon = 'A';
             rdChonA.click = true;
             rdChonB.click = false;
             rdChonC.click = false;
@@ -1648,6 +1653,7 @@ void displayThiThu()
         }
         else if (rdChonB.isMouseHover())
         {
+            gvThiThu.arrCauHoi[cauHoiSo-1].luaChon = 'B';
             rdChonA.click = false;
             rdChonB.click = true;
             rdChonC.click = false;
@@ -1660,6 +1666,7 @@ void displayThiThu()
         }
         else if (rdChonC.isMouseHover())
         {
+            gvThiThu.arrCauHoi[cauHoiSo-1].luaChon = 'C';
             rdChonA.click = false;
             rdChonB.click = false;
             rdChonC.click = true;
@@ -1672,6 +1679,7 @@ void displayThiThu()
         }
         else if (rdChonD.isMouseHover())
         {
+            gvThiThu.arrCauHoi[cauHoiSo-1].luaChon = 'D';
             rdChonA.click = false;
             rdChonB.click = false;
             rdChonC.click = false;
@@ -1681,6 +1689,14 @@ void displayThiThu()
             rdChonB.drawEffect();
             rdChonC.drawEffect();
             rdChonD.drawEffect();
+        }
+        else if ( btnTien.isMouseHover() ) {
+            btnTien.click = true;
+            drawBaiLam(gvThiThu.arrCauHoi);
+        }
+        else if ( btnLui.isMouseHover()) {
+            btnLui.click = true;
+            drawBaiLam(gvThiThu.arrCauHoi);
         }
     }
 

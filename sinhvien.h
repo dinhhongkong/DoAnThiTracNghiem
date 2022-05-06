@@ -245,7 +245,7 @@ bool ChinhSuaSinhVien(dslop DanhSachLop, listSV &DsSinhVien, nodeSV *&nodeHieuCh
 
 bool xoaSinhVien(listSV &DsSinhVien, nodeSV *&sv)
 {
-	if (sv->info.listDT.first != nullptr)
+	if (sv->info.listDT.first!= nullptr)
 	{
 		AllocConsole();
 		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thong the xoa, Sinh Vien co danh sach diem", "Thong bao", MB_OK);
@@ -338,6 +338,7 @@ void DocDsSinhVien(listSV &dsSinhVien, string maLop)
 		fileIn.ignore();
 		getline(fileIn, sv.Pass, '\n');
 		AddLast(dsSinhVien, CreateNodeSV(sv));
+		docBaiThi(sv.mssv, sv.listDT);
 	}
 	fileIn.close();
 }
@@ -351,7 +352,7 @@ void ghiFileDsSinhVien(listSV &dsSinhVien, string maLop)
 	while (temp != nullptr)
 	{
 		fileOut << temp->info.mssv << ',' << temp->info.Ho << ',' << temp->info.Ten << ',' << temp->info.gioiTinh << ',' << temp->info.Pass << '\n';
-		// cout << temp->info.mssv << '\n'<< temp->info.Ho << '\n' << temp->info.Ten << '\n' << temp->info.gioiTinh << '\n' << temp->info.Pass << '\n';
+		
 		temp = temp->pNext;
 	}
 	cout << "ghi thanh cong sv" << endl;

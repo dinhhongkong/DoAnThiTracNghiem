@@ -18,25 +18,6 @@ struct Danh_Sach_Mon_Hoc {
 };
 typedef Danh_Sach_Mon_Hoc ListMonHoc;
 
-// ------------------ KHAI BAO CTLD DIEM THI -------------------
-struct Diem_Thi {
-	string MAMH;
-	float Diem;
-    
-};
-
-struct Node_Diem_Thi {
-	Diem_Thi info;
-	Node_Diem_Thi* DTnext = nullptr;
-};
-typedef Node_Diem_Thi* DTNode;
-
-struct Danh_Sach_Diem_Thi {
-	DTNode first = nullptr;
-};
-typedef Danh_Sach_Diem_Thi ListDiemThi;
-
-
 
 //------------------------------------------------CAU HOI------------------------------------------------
 struct CauHoi 
@@ -60,6 +41,12 @@ struct NodeCauHoi
     NodeCauHoi *left = nullptr, *right = nullptr;
 };
 
+struct mangCauHoi
+{
+    int tongSoCau = 0;
+    NodeCauHoi *arrCauHoiThi[MAX_CAUHOI];
+};
+
 // struct TreeCauHoi
 // {
 //     NodeCauHoi *root = nullptr;
@@ -78,6 +65,27 @@ struct Bai_Thi {
 	cauHoiThi *arrCauHoi;
 };
 
+
+// ------------------ KHAI BAO CTLD DIEM THI -------------------
+struct Diem_Thi {
+	string MAMH;
+	float Diem;
+	Bai_Thi baithi;
+};
+
+struct Node_Diem_Thi {
+	Diem_Thi info;
+	Node_Diem_Thi* DTnext = nullptr;
+};
+// typedef Node_Diem_Thi* DTNode;
+
+struct Danh_Sach_Diem_Thi {
+	Node_Diem_Thi  *first = nullptr;
+};
+// typedef Danh_Sach_Diem_Thi ListDiemThi;
+
+
+
 //---------------------------------------SINH VIEN---------------------------------------------------
 struct sinhVien{
 	string mssv;
@@ -85,7 +93,7 @@ struct sinhVien{
 	string Ho;
 	string Ten;
 	int gioiTinh;
-    ListDiemThi listDT;
+    Danh_Sach_Diem_Thi listDT;
 };
 
 struct nodeSV{

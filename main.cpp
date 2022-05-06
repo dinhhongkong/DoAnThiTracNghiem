@@ -11,8 +11,8 @@ using namespace std;
 #include <cmath>
 #include <thread>
 
-#include "struct.h"
 #include "define.h"
+#include "struct.h"
 #include "random.h"
 
 #include "Button.h"
@@ -23,6 +23,7 @@ using namespace std;
 
 #include "cauhoi.h"
 #include "baithi.h"
+#include "diem.h"
 #include "sinhvien.h"
 #include "monhoc.h"
 #include "lop.h"
@@ -39,6 +40,8 @@ using namespace std;
 int main()
 {
     // 1600 * 900 la do phan giai man hinh 14 inch (ti le 16/9)
+    HWND hWnd = GetConsoleWindow();
+	ShowWindow( hWnd, SW_HIDE );
     initwindow(1600, 900, "THI TRAC NGHIEM");
     // Tao folder de luu du lieu
     mkdir("DATA") ;
@@ -55,6 +58,10 @@ int main()
     docFileRandom(arrID);
 
     NodeCauHoi *rootCayCauHoi;
+
+    mangCauHoi arrCauHoi;
+
+    Bai_Thi gvThiThu;
     drawLogin();
     while (true)
     {
@@ -90,10 +97,10 @@ int main()
             displayChucNangCauHoi(rootCayCauHoi ,arrID);
         }
         else if ( curMenu == DISPLAY_THITHU) {
-            displayThietLapThiThu(listMH);
+            displayThietLapThiThu(listMH, rootCayCauHoi,arrCauHoi, gvThiThu);
         }
         else if ( curMenu == VAO_THITHU) {
-            displayThiThu();
+            displayThiThu(gvThiThu);
         }
         if ( preMenu == VAO_THITHU) {
             timer.join();
