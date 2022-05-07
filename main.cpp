@@ -40,8 +40,8 @@ using namespace std;
 int main()
 {
     // 1600 * 900 la do phan giai man hinh 14 inch (ti le 16/9)
-    HWND hWnd = GetConsoleWindow();
-	ShowWindow( hWnd, SW_HIDE );
+    // HWND hWnd = GetConsoleWindow();
+	// ShowWindow( hWnd, SW_HIDE );
     initwindow(1600, 900, "THI TRAC NGHIEM");
     // Tao folder de luu du lieu
     mkdir("DATA") ;
@@ -104,6 +104,7 @@ int main()
         }
         if ( preMenu == VAO_THITHU) {
             timer.join();
+            giaiPhongArrCauHoi(arrCauHoi);
             preMenu = -1;
         }
         Sleep(75);

@@ -13,7 +13,7 @@ const int h  = 900;
 //     6 = Yellow      E = Light Yellow
 //     7 = White       F = Bright White
 #define MAX_RANDOM 5000
-#define MAX_CAUHOI 1000
+// #define MAX_CAUHOI 1000
 
 
 // define button

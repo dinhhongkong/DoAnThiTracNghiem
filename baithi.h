@@ -10,10 +10,10 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi arr, int soCau)
     }
     baiThi.slcht = soCau;
     baiThi.arrCauHoi = new cauHoiThi[soCau];
-
     for (int i = 0; i < maxSoCau; i++)
     {
-        swap(arr.arrCauHoiThi[i], arr.arrCauHoiThi[randomNumber(0, maxSoCau)]);
+        int vitri = randomNumber(0, maxSoCau);
+        swap(arr.arrCauHoiThi[i], arr.arrCauHoiThi[randomNumber(0, maxSoCau)] );
     }
 
     for (int i = 0; i < soCau; i++)

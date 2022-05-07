@@ -78,7 +78,7 @@ bool checkDapAnTrung(string a, string b, string c, string d)
     {
         return false;
     }
-    else if (b == c, b == d)
+    else if (b == c || b == d)
     {
         return false;
     }
@@ -88,6 +88,8 @@ bool checkDapAnTrung(string a, string b, string c, string d)
     }
     return true;
 }
+
+
 
 NodeCauHoi *themCauHoi(NodeCauHoi *node, int key, CauHoi cauHoiMoi)
 {
@@ -144,7 +146,8 @@ int countNodeCauHoi(NodeCauHoi *root)
 }
 
 
-void rongMangCauHoi(mangCauHoi &dsCauHoi) {
+void giaiPhongArrCauHoi(mangCauHoi &dsCauHoi) {
+    delete [](dsCauHoi.arrCauHoiThi);
     for ( int i = 0 ; i < dsCauHoi.tongSoCau; i++) {
         dsCauHoi.arrCauHoiThi[i] = nullptr;
     }
@@ -161,6 +164,7 @@ void taoMangCauHoi(NodeCauHoi *rootCauHoi, mangCauHoi &dsCauHoi, string maMon)
         {
             dsCauHoi.arrCauHoiThi[dsCauHoi.tongSoCau] = rootCauHoi;
             dsCauHoi.tongSoCau++;
+            
         }
         taoMangCauHoi(rootCauHoi->left, dsCauHoi, maMon);
         taoMangCauHoi(rootCauHoi->right, dsCauHoi, maMon);

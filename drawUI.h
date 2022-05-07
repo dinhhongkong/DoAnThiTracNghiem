@@ -889,14 +889,13 @@ void drawDsCauHoi(NodeCauHoi *rootCauHoi)
     bar(xDsCauHoi[0] + 1, yDsCauHoi[0] + 1, xDsCauHoi[1] - 1, 760 - 1);
     bar(xDsCauHoi[1] + 1, yDsCauHoi[0] + 1, xDsCauHoi[2] - 1, 760 - 1);
     bar(xDsCauHoi[2] + 1, yDsCauHoi[0] + 1, xDsCauHoi[3] - 1, 760 - 1);
-
-    NodeCauHoi *arrCauHoi[MAX_CAUHOI];
-    int soLuongCauHoi = TreeToArray(rootCauHoi, arrCauHoi, 0);
-    // int soLuongCauHoi = 0;
-    // while ( arrCauHoi[soLuongCauHoi] != nullptr)
-    // {
-    //     soLuongCauHoi ++;
+    // if ( rootCauHoi == nullptr) {
+    //     return;
     // }
+
+    int soLuongCauHoi = countNodeCauHoi(rootCauHoi);
+    NodeCauHoi **arrCauHoi = new NodeCauHoi*[soLuongCauHoi];
+    TreeToArray(rootCauHoi, arrCauHoi, 0);
 
     if (soLuongCauHoi <= 10)
     {
@@ -939,6 +938,9 @@ void drawDsCauHoi(NodeCauHoi *rootCauHoi)
         }
         outtextxy(400, 825, &textTrang[0]);
     }
+
+
+    delete []arrCauHoi;
 }
 
 void drawThemCauHoi()

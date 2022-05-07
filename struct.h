@@ -44,7 +44,7 @@ struct NodeCauHoi
 struct mangCauHoi
 {
     int tongSoCau = 0;
-    NodeCauHoi *arrCauHoiThi[MAX_CAUHOI];
+    NodeCauHoi **arrCauHoiThi;
 };
 
 // struct TreeCauHoi
