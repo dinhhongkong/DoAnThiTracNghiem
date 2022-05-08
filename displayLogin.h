@@ -76,6 +76,8 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, int arrID[], NodeCauHoi
                                 if (preMenu == DISPLAY_HSTHI)
                                 {
                                     timer.join();
+                                    chamBai(node->info.listDT.first->info);
+                                    luuBaiThi(node->info.mssv, node->info.listDT);
                                     giaiPhongArrCauHoi(arrCauHoi);
                                     preMenu = -1;
                                 }

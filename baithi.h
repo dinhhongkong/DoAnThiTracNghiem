@@ -13,7 +13,7 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi arr, int soCau)
     for (int i = 0; i < maxSoCau; i++)
     {
         int vitri = randomNumber(0, maxSoCau);
-        swap(arr.arrCauHoiThi[i], arr.arrCauHoiThi[randomNumber(0, maxSoCau)] );
+        swap(arr.arrCauHoiThi[i], arr.arrCauHoiThi[randomNumber(0, maxSoCau)]);
     }
 
     for (int i = 0; i < soCau; i++)
@@ -23,33 +23,50 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi arr, int soCau)
     return true;
 }
 
+bool kiemTraDaThi(Danh_Sach_Diem_Thi listDT, string maMon)
+{
+    Node_Diem_Thi *node = listDT.first;
+
+    while (node != nullptr)
+    {
+        if (node->info.MAMH == maMon)
+        {
+            AllocConsole();
+            MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ban da thi mon nay!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+            return false;
+        }
+        node = node->DTnext;
+    }
+    return true;
+}
+
 void lamBaiThi(cauHoiThi &lamBai, char chonDapAn)
 {
     lamBai.luaChon = chonDapAn;
 }
 
-float chamBai(Bai_Thi &baiThi)
+void chamBai(Diem_Thi &chamThi)
 {
-    float diemMoiCau = 10.0 / (float)baiThi.slcht;
+    float diemMoiCau = 10.0 / (float)chamThi.baithi.slcht;
     float tongDiem = 0;
-    for (int i = 0; i < baiThi.slcht; i++)
+    for (int i = 0; i < chamThi.baithi.slcht; i++)
     {
-        if (baiThi.arrCauHoi[i].cauHoiThi.DapAn == baiThi.arrCauHoi[i].luaChon)
+        if (chamThi.baithi.arrCauHoi[i].cauHoiThi.DapAn == chamThi.baithi.arrCauHoi[i].luaChon)
         {
             tongDiem += diemMoiCau;
         }
     }
-    tongDiem = ceilf(tongDiem * 100) / 100;
-    return tongDiem;
+    chamThi.Diem = ceilf(tongDiem * 100) / 100;
+    
 }
 
-void luuBaiThi(string mssv, Danh_Sach_Diem_Thi *dsDiem)
+void luuBaiThi(string mssv, Danh_Sach_Diem_Thi dsDiem)
 {
     ofstream fileOut;
     string fileName = "DATA\\bai thi\\" + mssv + ".txt";
     fileOut.open(fileName, ios_base::out);
 
-    Node_Diem_Thi *nodeDiemThi = dsDiem->first;
+    Node_Diem_Thi *nodeDiemThi = dsDiem.first;
     while (nodeDiemThi != nullptr)
     {
         fileOut << nodeDiemThi->info.MAMH << ',';
@@ -81,28 +98,41 @@ void docBaiThi(string mssv, Danh_Sach_Diem_Thi &dsDiem)
         return;
     }
 
-    Node_Diem_Thi *nodeDiemThi = dsDiem.first;
-    while (getline(fileIn, nodeDiemThi->info.MAMH, ','))
+    Diem_Thi diemthi;
+    while (getline(fileIn, diemthi.MAMH, ','))
     {
-        fileIn >> nodeDiemThi->info.Diem;
-        cin.ignore();
-        fileIn >> nodeDiemThi->info.baithi.slcht;
-        cin.ignore();
-        nodeDiemThi->info.baithi.arrCauHoi = new cauHoiThi[nodeDiemThi->info.baithi.slcht];
-        for (int i = 0; i < nodeDiemThi->info.baithi.slcht; i++)
+        fileIn >> diemthi.Diem;
+        fileIn >> diemthi.baithi.slcht;
+        diemthi.baithi.arrCauHoi = new cauHoiThi[diemthi.baithi.slcht];
+        cout << diemthi.MAMH << endl << diemthi.Diem << endl << diemthi.baithi.slcht<< endl;
+        for (int i = 0; i < diemthi.baithi.slcht; i++)
         {
-            fileIn >> nodeDiemThi->info.baithi.arrCauHoi[i].cauHoiThi.id;
-            cin.ignore();
-            fileIn >> nodeDiemThi->info.baithi.arrCauHoi[i].cauHoiThi.NoiDung;
-            fileIn >> nodeDiemThi->info.baithi.arrCauHoi[i].cauHoiThi.A;
-            fileIn >> nodeDiemThi->info.baithi.arrCauHoi[i].cauHoiThi.B;
-            fileIn >> nodeDiemThi->info.baithi.arrCauHoi[i].cauHoiThi.C;
-            fileIn >> nodeDiemThi->info.baithi.arrCauHoi[i].cauHoiThi.D;
-            fileIn >> nodeDiemThi->info.baithi.arrCauHoi[i].cauHoiThi.DapAn;
-            fileIn >> nodeDiemThi->info.baithi.arrCauHoi[i].luaChon;
+            fileIn >> diemthi.baithi.arrCauHoi[i].cauHoiThi.id;
+            fileIn.ignore();
+            cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.id << endl;
+            getline(fileIn,diemthi.baithi.arrCauHoi[i].cauHoiThi.NoiDung, '\n');
+            getline(fileIn,diemthi.baithi.arrCauHoi[i].cauHoiThi.A, '\n');
+            getline(fileIn,diemthi.baithi.arrCauHoi[i].cauHoiThi.B, '\n');
+            getline(fileIn,diemthi.baithi.arrCauHoi[i].cauHoiThi.C, '\n');
+            getline(fileIn,diemthi.baithi.arrCauHoi[i].cauHoiThi.D, '\n');
+            fileIn >> diemthi.baithi.arrCauHoi[i].cauHoiThi.DapAn;
+            fileIn >> diemthi.baithi.arrCauHoi[i].luaChon;
+            fileIn.ignore();
+            Node_Diem_Thi *nodeDiemSV = new Node_Diem_Thi;
+            nodeDiemSV->info = diemthi;
+            Them_Diem_Vao_Cuoi(dsDiem, nodeDiemSV);
+
+
+            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.NoiDung << endl;
+            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.A << endl;
+            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.B << endl;
+            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.C << endl;
+            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.D << endl;
+            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.DapAn << endl;
+            // cout << diemthi.baithi.arrCauHoi[i].luaChon << endl;
         }
         // addlasst ()
-        nodeDiemThi = nodeDiemThi->DTnext;
+        // nodeDiemThi = nodeDiemThi->DTnext;
     }
     fileIn.close();
 }

@@ -60,7 +60,7 @@ struct mangCauHoi
 // ------------------------ CAU HOI THI & BAI THI --------------------------
 struct cauHoiThi {
 	CauHoi cauHoiThi;
-	char luaChon;
+	char luaChon = '0';
 };
 
 

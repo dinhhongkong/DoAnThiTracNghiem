@@ -321,12 +321,7 @@ void DocDsSinhVien(listSV &dsSinhVien, string maLop)
 	fileIn.open(nameFILE, ios_base::in);
 	if (!fileIn.is_open())
 	{
-		cout << "Khong mo dc file " << maLop << endl;
 		return;
-	}
-	else
-	{
-		cout << "doc dc file " << maLop << endl;
 	}
 
 	sinhVien sv;

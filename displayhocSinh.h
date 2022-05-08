@@ -278,17 +278,15 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCa
             //     timer = thread(drawThoiGian, giay);
             //     timKiemMon.content = "";
             // }
-            else
+            else if ( kiemTraDaThi(sv.listDT,edChonMonThi.ToString()))
             {
                 Diem_Thi diemThiSV;
-                diemThiSV.MAMH = edChonMaMon.ToString();
-
-                Node_Diem_Thi *nodeDiemSV = createNodeDiem(diemThiSV);
+                diemThiSV.MAMH = edChonMonThi.ToString();
+                Node_Diem_Thi *nodeDiemSV = new Node_Diem_Thi;
+                nodeDiemSV->info = diemThiSV;
                 if (taoBaiThi( nodeDiemSV->info.baithi, arrCauHoi, edsoCau.toInt()))
                 {
                     Them_Diem_Vao_Dau(sv.listDT,nodeDiemSV);
-                    cout << nodeDiemSV->info.baithi.arrCauHoi[1].cauHoiThi.id << endl;
-                    cout << nodeDiemSV->info.baithi.arrCauHoi[2].cauHoiThi.id << endl;
                     curMenu = DISPLAY_HSTHI;
                     int giay = edTimeThi.toInt() * 60;
                     drawThi(sv.Ho, sv.Ten, sv.mssv, tenLOP, "");
@@ -299,10 +297,10 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCa
                     timKiemMon.content = "";
                 }
                 else {
-                    giaiPhongArrCauHoi(arrCauHoi);
                     delete nodeDiemSV;
                 }
             }
+            giaiPhongArrCauHoi(arrCauHoi);
             // Edit = nullptr;
             // curMenu = DISPLAY_HSTHI;
             // drawThi(sv.Ho, sv.Ten, sv.mssv, tenLOP, "");
