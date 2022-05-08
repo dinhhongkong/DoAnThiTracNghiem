@@ -153,6 +153,7 @@ void ClickItemMonThi(ListMonHoc &listMH)
         if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == LUACHON_THI_HS)
         {
             edChonMonThi.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH;
+            outtextTenMon = listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH;
             edChonMonThi.draw();
         }
     }
@@ -177,7 +178,7 @@ void ClickItemMonThi(ListMonHoc &listMH)
     }
 }
 
-void displayLuaChonMonThi(ListMonHoc listMH, sinhVien sv, string maLOP)
+void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCauHoi *root, mangCauHoi &arrCauHoi)
 {
     btnQuaylai.ButtonEffect();
     btnTien.ButtonEffect();
@@ -249,16 +250,64 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien sv, string maLOP)
         }
         else if (btnVaoThi.isMouseHover())
         {
-            Edit = nullptr;
-            curMenu = DISPLAY_HSTHI;
-            drawThi(sv.Ho, sv.Ten, sv.mssv, maLOP, "");
-            int giay = edTimeThi.toInt() * 60;
-            timer = thread(drawThoiGian, giay);
-            // timer.join();
-            timKiemMon.content = "";
-            edChonMonThi.content = "";
-            edTimeThi.content = "";
-            edsoCau.content = "";
+            arrCauHoi.arrCauHoiThi = new NodeCauHoi *[countNodeCauHoi(root)];
+            taoMangCauHoi(root, arrCauHoi, edChonMonThi.ToString());
+            if (edChonMonThi.content.size() == 0)
+            {
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon 1 mon", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+            }
+            else if (edTimeThi.content.size() == 0)
+            {
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon dien thoi gian thi", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+            }
+            else if (edsoCau.content.size() == 0)
+            {
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon dien so cau", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+            }
+            // else if (taoBaiThi(, arrCauHoi, edsoCau.toInt()))
+            // {
+            //     curMenu = DISPLAY_HSTHI;
+            //     int giay = edTimeThi.toInt() * 60;
+            //     drawThi(sv.Ho, sv.Ten, sv.mssv, tenLOP, "");
+            //     drawBaiLam(gvThiThu.arrCauHoi);
+            //     Edit = nullptr;
+            //     Sleep(100);
+            //     timer = thread(drawThoiGian, giay);
+            //     timKiemMon.content = "";
+            // }
+            else
+            {
+                Diem_Thi diemThiSV;
+                diemThiSV.MAMH = edChonMaMon.ToString();
+
+                Node_Diem_Thi *nodeDiemSV = createNodeDiem(diemThiSV);
+                if (taoBaiThi( nodeDiemSV->info.baithi, arrCauHoi, edsoCau.toInt()))
+                {
+                    Them_Diem_Vao_Dau(sv.listDT,nodeDiemSV);
+                    cout << nodeDiemSV->info.baithi.arrCauHoi[1].cauHoiThi.id << endl;
+                    cout << nodeDiemSV->info.baithi.arrCauHoi[2].cauHoiThi.id << endl;
+                    curMenu = DISPLAY_HSTHI;
+                    int giay = edTimeThi.toInt() * 60;
+                    drawThi(sv.Ho, sv.Ten, sv.mssv, tenLOP, "");
+                    drawBaiLam(nodeDiemSV->info.baithi.arrCauHoi);
+                    Edit = nullptr;
+                    Sleep(100);
+                    timer = thread(drawThoiGian, giay);
+                    timKiemMon.content = "";
+                }
+                else {
+                    giaiPhongArrCauHoi(arrCauHoi);
+                    delete nodeDiemSV;
+                }
+            }
+            // Edit = nullptr;
+            // curMenu = DISPLAY_HSTHI;
+            // drawThi(sv.Ho, sv.Ten, sv.mssv, tenLOP, "");
+            // int giay = edTimeThi.toInt() * 60;
+            // timer = thread(drawThoiGian, giay);
         }
     }
 }
@@ -284,28 +333,18 @@ void displayDiemSV()
     }
 }
 
-void dipslayHocSinhThi()
+void dipslayHocSinhThi(Bai_Thi &baiThisv)
 {
-    btnTien.ButtonEffect();
-    btnLui.ButtonEffect();
     rdChonA.RadioEffect();
     rdChonB.RadioEffect();
     rdChonC.RadioEffect();
     rdChonD.RadioEffect();
     if (GetAsyncKeyState(VK_LBUTTON))
     {
-        // if (btnQuaylai.isMouseHover())
-        // {
-        //     timer.join();
-        //     // if (timer.join()) {
 
-        //     // }
-        //     curMenu = DISPLAY_GIAOVIEN;
-        //     drawList = true;
-        //     drawGV();
-        // }
         if (rdChonA.isMouseHover())
         {
+            baiThisv.arrCauHoi[cauHoiSo - 1].luaChon = 'A';
             rdChonA.click = true;
             rdChonB.click = false;
             rdChonC.click = false;
@@ -318,6 +357,7 @@ void dipslayHocSinhThi()
         }
         else if (rdChonB.isMouseHover())
         {
+            baiThisv.arrCauHoi[cauHoiSo - 1].luaChon = 'B';
             rdChonA.click = false;
             rdChonB.click = true;
             rdChonC.click = false;
@@ -330,6 +370,7 @@ void dipslayHocSinhThi()
         }
         else if (rdChonC.isMouseHover())
         {
+            baiThisv.arrCauHoi[cauHoiSo - 1].luaChon = 'C';
             rdChonA.click = false;
             rdChonB.click = false;
             rdChonC.click = true;
@@ -342,6 +383,7 @@ void dipslayHocSinhThi()
         }
         else if (rdChonD.isMouseHover())
         {
+            baiThisv.arrCauHoi[cauHoiSo - 1].luaChon = 'D';
             rdChonA.click = false;
             rdChonB.click = false;
             rdChonC.click = false;
@@ -351,6 +393,16 @@ void dipslayHocSinhThi()
             rdChonB.drawEffect();
             rdChonC.drawEffect();
             rdChonD.drawEffect();
+        }
+        else if (btnTien.isMouseHover())
+        {
+            btnTien.click = true;
+            drawBaiLam(baiThisv.arrCauHoi);
+        }
+        else if (btnLui.isMouseHover())
+        {
+            btnLui.click = true;
+            drawBaiLam(baiThisv.arrCauHoi);
         }
     }
 }

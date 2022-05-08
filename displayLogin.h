@@ -1,7 +1,7 @@
 // const int w  = 1600;
 // const int h  = 900;
 
-void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, int arrID[])
+void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, int arrID[], NodeCauHoi *root ,mangCauHoi arrCauHoi)
 {
     dangnhap.ButtonEffect();
     if (GetAsyncKeyState(VK_LBUTTON))
@@ -49,11 +49,11 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, int arrID[])
                                 }
                                 else if (curMenu == LUACHON_THI_HS)
                                 {
-                                    displayLuaChonMonThi(listMH, node->info, DanhSachLop.arrLop[i].MALOP);
+                                    displayLuaChonMonThi(listMH, node->info, DanhSachLop.arrLop[i].MALOP, root, arrCauHoi);
                                 }
                                 else if (curMenu == DISPLAY_HSTHI)
                                 {
-                                    dipslayHocSinhThi();
+                                    dipslayHocSinhThi(node->info.listDT.first->info.baithi);
                                 }
                                 else if (curMenu == DISPLAY_DIEMSV)
                                 {
@@ -66,6 +66,7 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, int arrID[])
                                 }
 
 
+
                                 if (btndangxuat.click == true)
                                 {
                                     btndangxuat.click = false;
@@ -75,6 +76,7 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, int arrID[])
                                 if (preMenu == DISPLAY_HSTHI)
                                 {
                                     timer.join();
+                                    giaiPhongArrCauHoi(arrCauHoi);
                                     preMenu = -1;
                                 }
                                 Sleep(75);

@@ -110,7 +110,7 @@ button btnThemCauHoi(1100, 695, 200,50,"THEM CAU HOI");
 editText timKiemCauHoi(100,100,600,50,"TIM KIEM: ","Nhap cau hoi muon tim",100);
 
 // chuc nang tuy chon truoc khi thi
-
+string outtextTenMon;
 editText edChonMonThi(1075,350,450,50,"MA MON THI:","Chon mon thi trong danh sach",10);
 editText edTimeThi(1075,420,450,50,"T/G LAM BAI:","Tinh theo phut",3);
 editText edsoCau(1075,490,450,50,"SO CAU:","So cau trong bai thi",3);
@@ -210,7 +210,7 @@ void KbEvent()
         }
         else if ( curMenu == CHUCNANG_CAUHOI) {
             if ( Edit == &timKiemCauHoi || Edit == &edCauHoi || Edit == &edDapAnA || Edit == &edDapAnB || Edit == &edDapAnC || Edit == &edDapAnD) {
-                Scan(Edit,Edit->textSize,TEXT_NUMBER);
+                Scan(Edit,Edit->textSize,SCAN_ALL);
             }
         }
         else if ( curMenu == DISPLAY_THITHU || curMenu == LUACHON_THI_HS) {
@@ -233,7 +233,6 @@ void KbEvent()
     else {
         if ( PreEdit != nullptr) {
             PreEdit->isChoose = false;
-            // PreEdit->draw();
             PreEdit = nullptr;
         }
         ClearStream();

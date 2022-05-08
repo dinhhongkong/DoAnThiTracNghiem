@@ -917,13 +917,8 @@ void drawDsCauHoi(NodeCauHoi *rootCauHoi)
     bar(xDsCauHoi[0] + 1, yDsCauHoi[0] + 1, xDsCauHoi[1] - 1, 760 - 1);
     bar(xDsCauHoi[1] + 1, yDsCauHoi[0] + 1, xDsCauHoi[2] - 1, 760 - 1);
     bar(xDsCauHoi[2] + 1, yDsCauHoi[0] + 1, xDsCauHoi[3] - 1, 760 - 1);
-    // if ( rootCauHoi == nullptr) {
-    //     return;
-    // }
 
     int soLuongCauHoi = countNodeCauHoi(rootCauHoi);
-    // NodeCauHoi **arrCauHoi = new NodeCauHoi*[soLuongCauHoi];
-    // TreeToArray(rootCauHoi, arrCauHoi, 0);
 
     if (soLuongCauHoi <= 10)
     {
@@ -955,24 +950,8 @@ void drawDsCauHoi(NodeCauHoi *rootCauHoi)
     {
         int i = 0, j = 0;
         outTextCauHoi(rootCauHoi, i, j);
-        // for (int i = 0; i < 10; i++)
-        // {
-        //     if (i + (soTrangCauHoi - 1) * 10 >= soLuongCauHoi)
-        //     {
-        //         break;
-        //     }
-        //     listviewDS.size++;
-        //     listviewDS.idItem[i] = i + (soTrangCauHoi - 1) * 10;
-        //     string Key = to_string(arrCauHoi[i + (soTrangLop - 1) * 10]->key);
-        //     outtextxy(xDsCauHoi[0] + 15, yDsCauHoi[0] + 20 + i * 50, &Key[0]);
-        //     outtextxy(xDsCauHoi[1] + 25, yDsCauHoi[0] + 20 + i * 50, &arrCauHoi[i + (soTrangLop - 1) * 10]->info.maMonHoc[0]);
-        //     outtextxy(xDsCauHoi[2] + 10, yDsCauHoi[0] + 20 + i * 50, &arrCauHoi[i + (soTrangLop - 1) * 10]->info.NoiDung[0]);
-        // }
-        // outtextxy(400, 825, &textTrang[0]);
+        outtextxy(400,825,&textTrang[0]);
     }
-
-
-    //delete []arrCauHoi;
 }
 
 void drawThemCauHoi()
@@ -1075,7 +1054,7 @@ void drawCauHoi()
 }
 
 //-----------------------------------------------------CHUC NANG THI THU----------------------------------------------
-
+int cauHoiSo = 1;
 void drawThoiGian(int giay)
 {
     string Phut;
@@ -1085,19 +1064,18 @@ void drawThoiGian(int giay)
     {
         setfillstyle(1, BLACK);
         bar(1102, 552, 1598, 898);
-        settextstyle(0, 0, 4);
         Phut = to_string(giay / 60);
         Giay = to_string(giay - giay / 60 * 60);
         if (Giay.size() == 1)
         {
             Giay = "0" + Giay;
         }
-        thoiGian = Phut + " : " + Giay;
+        thoiGian = Phut + " PHUT : " + Giay +" GIAY";
         setcolor(YELLOW);
-        settextstyle(10, 0, 8);
+        settextstyle(10, 0, 3);
 
         outtextxy(1350 - textwidth(&thoiGian[0]) / 2, 680, &thoiGian[0]);
-        Sleep(1000);
+        Sleep(100);
         giay--;
         thoiGian = to_string(giay);
         setcolor(WHITE);
@@ -1120,6 +1098,7 @@ void drawThoiGian(int giay)
     edChonMonThi.content = "";
     edsoCau.content = "";
     edTimeThi.content = "";
+    cauHoiSo = 1;
     return;
 }
 
@@ -1151,30 +1130,31 @@ void drawThi(string ho = "", string ten = "", string mssv = "", string Lop = "",
     line(50, 200, 1000, 200);
 
     settextstyle(0, 0, 4);
-    string cauHoithi = "Cau hoi: ";
+    // string cauHoithi = "Cau 1: ";
     outtextxy(1200, 485, "THOI GIAN:");
 
     outtextxy(1150, 20, "THONG TIN SV");
     settextstyle(10, 0, 3);
     setbkcolor(BLACK);
     setcolor(YELLOW);
-    outtextxy(70, 140, &cauHoithi[0]);
+    // outtextxy(70, 140, &cauHoithi[0]);
 
     ho = "Ho va Ten: " + ho + " " + ten;
     mssv = "MSSV: " + mssv;
     Lop = "Lop: " + Lop;
+    outtextTenMon = "Mon: " + outtextTenMon;
     string SoCau = "So cau hoi: " + edsoCau.ToString();
     string tg = "Thoi gian: " + edTimeThi.ToString() + " phut";
     setcolor(WHITE);
     outtextxy(1130, 100, &ho[0]);
     outtextxy(1130, 160, &mssv[0]);
     outtextxy(1130, 220, &Lop[0]);
-    outtextxy(1130, 280, "Mon thi: ");
+    outtextxy(1130, 280, &outtextTenMon[0]);
     outtextxy(1130, 340, &SoCau[0]);
     outtextxy(1130, 400, &tg[0]);
 }
 
-int cauHoiSo = 1;
+
 void drawBaiLam(cauHoiThi arrCauHoi[])
 {
     if (btnTien.click && edsoCau.toInt() > cauHoiSo)
@@ -1196,11 +1176,16 @@ void drawBaiLam(cauHoiThi arrCauHoi[])
 
     setbkcolor(BLACK);
     setfillstyle(1, BLACK);
-    bar(185, 105, 998, 198);
+    bar(53, 105, 998, 198);
     bar(178, 205, 998, 758);
-    settextstyle(10, 0, 2);
+
+    setcolor(YELLOW);
+    settextstyle(10, 0, 3);
+    string cauSo = "CAU " + to_string(cauHoiSo) + ":";
+    outtextxy(70, 140, &cauSo[0]);
+    settextstyle(10, 0, 3);
     setcolor(WHITE);
-    outtextxy(190, 140, &arrCauHoi[cauHoiSo -1].cauHoiThi.NoiDung[0]);
+    outtextxy(180, 140, &arrCauHoi[cauHoiSo -1].cauHoiThi.NoiDung[0]);
     outtextxy(180, 240, &arrCauHoi[cauHoiSo -1].cauHoiThi.A[0]);
     outtextxy(180, 390, &arrCauHoi[cauHoiSo -1].cauHoiThi.B[0]);
     outtextxy(180, 540, &arrCauHoi[cauHoiSo -1].cauHoiThi.C[0]);
@@ -1239,9 +1224,9 @@ void drawBaiLam(cauHoiThi arrCauHoi[])
         rdChonC.click = false;
         rdChonD.click = false;
     }
-    bar(725, 825, 800, 850);
-    string textTrang = to_string(cauHoiSo);
-    outtextxy(750, 825, &textTrang[0]);
+    // bar(725, 825, 800, 850);
+    // string textTrang = to_string(cauHoiSo);
+    // outtextxy(750, 825, &textTrang[0]);
 
     rdChonA.drawEffect();
     rdChonB.drawEffect();

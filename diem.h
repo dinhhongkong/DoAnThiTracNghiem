@@ -19,3 +19,10 @@ void Them_Diem_Vao_Dau(Danh_Sach_Diem_Thi& dsDiem, Node_Diem_Thi* nodeDiemThi) {
 	nodeDiemThi->DTnext = dsDiem.first->DTnext;
 	dsDiem.first = nodeDiemThi;
 }
+
+Node_Diem_Thi *createNodeDiem( Diem_Thi diemthi) {
+	Node_Diem_Thi *a = new Node_Diem_Thi;
+	a->info = diemthi;
+	a->DTnext = nullptr;
+	return a;
+}

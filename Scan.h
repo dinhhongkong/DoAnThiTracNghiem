@@ -5,6 +5,7 @@ void ScanTextNumber(editText *&txt, char c);
 void ScanTextNumberNoSpace(editText *&txt, char c);
 void ScanMaLop(editText *&txt, char c);
 void ScanPass(editText *&txt, char c);
+void ScanAll(editText *&txt, char c);
 
 void Scan(editText *&txt, int maxn, ScanType type)
 {
@@ -80,16 +81,6 @@ void Scan(editText *&txt, int maxn, ScanType type)
 			else if (type == TEXT_NUMBER)
 			{
 				ScanTextNumber(txt, c);
-				// }else if(type == DATE_TIME){
-				// 	ScanDate(txt, n, c);
-				// }else if(type == LIMIT_CHARACTER){
-				// 	ScanLimit(txt, n, c, startLimit, endLimit);
-				// }else if(type == ISBN){
-				// 	ScanNumber(txt, n, c);
-				// 	ScanTextOnly(txt, n, c);
-				// }else if(type == MASACH){
-				// 	ScanMaSach(txt, n, c);
-				// }
 			}
 			else if (type == TEXT_NUMBER_NO_SPACE)
 			{
@@ -100,6 +91,9 @@ void Scan(editText *&txt, int maxn, ScanType type)
 			}
 			else if ( type == SCAN_PASS) {
 				ScanPass(txt, c);
+			}
+			else if ( type == SCAN_ALL) {
+				ScanAll(txt, c);
 			}
 		}
 	}
@@ -183,4 +177,24 @@ void ScanPass(editText *&txt, char c) {
 	{
 		txt->content += c;
 	}
+}
+
+void ScanAll(editText *&txt, char c) {
+	if (c == SPACE)
+	{
+		if (txt->content.size() > 0 && txt->content[txt->content.size() - 1] != ' ')
+			txt->content += ' ';
+	}
+	else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	{
+		txt->content += toupper(c);
+	}
+	else if ( c!= SPACE)
+	{
+		txt->content += toupper(c);
+	}
+	// else if ( (c >= '!' && c <= '@' ) || ( c >= '[' && c <= '`' ) ||   ( c >= '{' && c <= '~' ))
+	// {
+	// 	txt->content += c;
+	// }
 }

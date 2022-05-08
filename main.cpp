@@ -58,6 +58,7 @@ int main()
     docFileRandom(arrID);
 
     NodeCauHoi *rootCayCauHoi;
+    Doc_File_Cau_Hoi(rootCayCauHoi);
 
     mangCauHoi arrCauHoi;
 
@@ -69,7 +70,7 @@ int main()
         KbEvent();
         if (curMenu == DISPLAY_LOGIN)   
         {
-            displayLogin(listMH, DanhSachLop, arrID);
+            displayLogin(listMH, DanhSachLop, arrID,rootCayCauHoi,arrCauHoi);
         }
         else if (curMenu == DISPLAY_GIAOVIEN)
         {
