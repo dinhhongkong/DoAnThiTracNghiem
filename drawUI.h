@@ -882,7 +882,35 @@ void drawXemCauHoi()
     btnDapAnD.draw();
 }
 
+
 int soTrangCauHoi = 1;
+void outTextCauHoi(NodeCauHoi *rootCauHoi, int &i, int &j)
+{
+
+
+    // duyet LNR
+    if (rootCauHoi != nullptr)
+    {
+        if ( j >= (soTrangCauHoi -1)* 10 && j < (soTrangCauHoi)* 10 ) {
+            listviewDS.idItem[i] = rootCauHoi->key;
+            listviewDS.size++;
+            string Key = to_string(rootCauHoi->key);
+            outtextxy(xDsCauHoi[0] + 15, yDsCauHoi[0] + 20 + i * 50, &Key[0]);
+            outtextxy(xDsCauHoi[1] + 25, yDsCauHoi[0] + 20 + i * 50, &rootCauHoi->info.maMonHoc[0]);
+            outtextxy(xDsCauHoi[2] + 10, yDsCauHoi[0] + 20 + i * 50, &rootCauHoi->info.NoiDung[0]);
+            i++;
+        }
+        else if ( j == (soTrangCauHoi)* 10  ) {
+            return;
+        }
+        j++;
+        
+        outTextCauHoi(rootCauHoi->left, i, j);
+        outTextCauHoi(rootCauHoi->right,  i, j);
+    }
+}
+
+
 void drawDsCauHoi(NodeCauHoi *rootCauHoi)
 {
     setfillstyle(1, BLACK);
@@ -894,8 +922,8 @@ void drawDsCauHoi(NodeCauHoi *rootCauHoi)
     // }
 
     int soLuongCauHoi = countNodeCauHoi(rootCauHoi);
-    NodeCauHoi **arrCauHoi = new NodeCauHoi*[soLuongCauHoi];
-    TreeToArray(rootCauHoi, arrCauHoi, 0);
+    // NodeCauHoi **arrCauHoi = new NodeCauHoi*[soLuongCauHoi];
+    // TreeToArray(rootCauHoi, arrCauHoi, 0);
 
     if (soLuongCauHoi <= 10)
     {
@@ -910,6 +938,7 @@ void drawDsCauHoi(NodeCauHoi *rootCauHoi)
     {
         soTrangCauHoi--;
     }
+    cout << "so trang cau hoi:"<< soTrangCauHoi << endl;
     btnTien.click = false;
     btnLui.click = false;
     setbkcolor(BLACK);
@@ -921,26 +950,29 @@ void drawDsCauHoi(NodeCauHoi *rootCauHoi)
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
     listviewDS.size = 0;
 
+
     if (timKiemCauHoi.content.size() == 0)
     {
-        for (int i = 0; i < 10; i++)
-        {
-            if (i + (soTrangCauHoi - 1) * 10 >= soLuongCauHoi)
-            {
-                break;
-            }
-            listviewDS.size++;
-            listviewDS.idItem[i] = i + (soTrangCauHoi - 1) * 10;
-            string Key = to_string(arrCauHoi[i + (soTrangLop - 1) * 10]->key);
-            outtextxy(xDsCauHoi[0] + 15, yDsCauHoi[0] + 20 + i * 50, &Key[0]);
-            outtextxy(xDsCauHoi[1] + 25, yDsCauHoi[0] + 20 + i * 50, &arrCauHoi[i + (soTrangLop - 1) * 10]->info.maMonHoc[0]);
-            outtextxy(xDsCauHoi[2] + 10, yDsCauHoi[0] + 20 + i * 50, &arrCauHoi[i + (soTrangLop - 1) * 10]->info.NoiDung[0]);
-        }
-        outtextxy(400, 825, &textTrang[0]);
+        int i = 0, j = 0;
+        outTextCauHoi(rootCauHoi, i, j);
+        // for (int i = 0; i < 10; i++)
+        // {
+        //     if (i + (soTrangCauHoi - 1) * 10 >= soLuongCauHoi)
+        //     {
+        //         break;
+        //     }
+        //     listviewDS.size++;
+        //     listviewDS.idItem[i] = i + (soTrangCauHoi - 1) * 10;
+        //     string Key = to_string(arrCauHoi[i + (soTrangLop - 1) * 10]->key);
+        //     outtextxy(xDsCauHoi[0] + 15, yDsCauHoi[0] + 20 + i * 50, &Key[0]);
+        //     outtextxy(xDsCauHoi[1] + 25, yDsCauHoi[0] + 20 + i * 50, &arrCauHoi[i + (soTrangLop - 1) * 10]->info.maMonHoc[0]);
+        //     outtextxy(xDsCauHoi[2] + 10, yDsCauHoi[0] + 20 + i * 50, &arrCauHoi[i + (soTrangLop - 1) * 10]->info.NoiDung[0]);
+        // }
+        // outtextxy(400, 825, &textTrang[0]);
     }
 
 
-    delete []arrCauHoi;
+    //delete []arrCauHoi;
 }
 
 void drawThemCauHoi()
