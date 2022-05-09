@@ -994,21 +994,27 @@ void drawHieuChinhCauHoi()
     bar(850, 200, 1550, 300);
     rectangle(850, 200, 1550, 760);
     line(850, 300, 1550, 300);
-    line(850, 650, 1550, 650);
+    line(850, 680, 1550, 680);
     // outtextxy(1140, 230, "XEM CAU HOI");
     settextstyle(0, 0, 3);
     setcolor(YELLOW);
-    outtextxy(1040, 230, "HIEU CHINH CAU HOI");
+    outtextxy(1000, 230, "HIEU CHINH CAU HOI");
 
     edCauHoi.draw();
     edDapAnA.draw();
     edDapAnB.draw();
     edDapAnC.draw();
     edDapAnD.draw();
-    btnThemCauHoi.draw();
-    setcolor(TEXT_EDIITEXT_TITLE_COLOR);
+    edChonMaMon.draw();
+    btnChonMaMon.draw();
+    btnXoaMaMon.draw();
+    btnHieuChinhCauHoi.draw();
+    btnXoaCauHoi.draw();
+    btnThoatHieuChinhCH.draw();
 
-    outtextxy(860, 600, "DAP AN DUNG: ");
+    setcolor(TEXT_EDIITEXT_TITLE_COLOR);
+    settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+    outtextxy(860, 585, "DAP AN DUNG: ");
     btnDapAnA.draw();
     btnDapAnB.draw();
     btnDapAnC.draw();

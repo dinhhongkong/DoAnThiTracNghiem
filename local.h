@@ -3,6 +3,7 @@ int preMenu = -1;
 bool drawList = true;
 int luaChonLop = -1;
 int luaChonMon = -1;
+const char *troNgonTay  = "DATA\\icon_NgonTay.jpg";
 thread timer;
 
 editText *Edit = nullptr;
@@ -94,6 +95,7 @@ button btnTien_L1(1120, 820, 100,50,"NEXT");
 // cau hoi
 int xDsCauHoi[4] = {50,125,250,800};
 int yDsCauHoi[2] = {250,750};
+bool chucNangThemCauHoi = true;
 editText edCauHoi(860, 325, 670,40,"NOI DUNG:","toi da x ki tu",50);
 editText edDapAnA(860, 375, 670,40,"DAP AN A:","toi da x ki tu",50);
 editText edDapAnB(860, 425, 670,40,"DAP AN B:","toi da x ki tu",50);
@@ -107,6 +109,9 @@ button btnDapAnB(1165, 575, 100,40,"B");
 button btnDapAnC(1290, 575, 100,40,"C");
 button btnDapAnD(1415, 575, 100,40,"D");
 button btnThemCauHoi(1100, 695, 200,50,"THEM CAU HOI");
+button btnHieuChinhCauHoi( 950, 695, 200,50,"HIEU CHINH");
+button btnThoatHieuChinhCH(850,20,220,50,"< THOAT HIEU CHINH");
+button btnXoaCauHoi(1250, 695, 200,50,"XOA");
 editText timKiemCauHoi(100,100,600,50,"TIM KIEM: ","Nhap cau hoi muon tim",100);
 
 // chuc nang tuy chon truoc khi thi

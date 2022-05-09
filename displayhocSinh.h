@@ -267,17 +267,6 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCa
                 AllocConsole();
                 MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon dien so cau", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
-            // else if (taoBaiThi(, arrCauHoi, edsoCau.toInt()))
-            // {
-            //     curMenu = DISPLAY_HSTHI;
-            //     int giay = edTimeThi.toInt() * 60;
-            //     drawThi(sv.Ho, sv.Ten, sv.mssv, tenLOP, "");
-            //     drawBaiLam(gvThiThu.arrCauHoi);
-            //     Edit = nullptr;
-            //     Sleep(100);
-            //     timer = thread(drawThoiGian, giay);
-            //     timKiemMon.content = "";
-            // }
             else if ( kiemTraDaThi(sv.listDT,edChonMonThi.ToString()))
             {
                 Diem_Thi diemThiSV;
@@ -301,11 +290,6 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCa
                 }
             }
             giaiPhongArrCauHoi(arrCauHoi);
-            // Edit = nullptr;
-            // curMenu = DISPLAY_HSTHI;
-            // drawThi(sv.Ho, sv.Ten, sv.mssv, tenLOP, "");
-            // int giay = edTimeThi.toInt() * 60;
-            // timer = thread(drawThoiGian, giay);
         }
     }
 }

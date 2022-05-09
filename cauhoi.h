@@ -10,7 +10,7 @@ NodeCauHoi* Xoay_Phai(NodeCauHoi*& root);
 NodeCauHoi* Node_Cuc_Trai(NodeCauHoi* root);
 NodeCauHoi* Them_Cau_Hoi_Moi(NodeCauHoi*& root, int key, CauHoi cauHoiMoi);
 NodeCauHoi* Xoa_Cau_Hoi(NodeCauHoi*& root, int key);
-void Hieu_Chinh_Cau_Hoi(NodeCauHoi*& root, int key);
+bool Hieu_Chinh_Cau_Hoi(NodeCauHoi*& root, int key, CauHoi cauHoiHieuChinh);
 void Them_Cau_Hoi_File(NodeCauHoi*& root, NodeCauHoi* cauHoiFile);
 void Doc_File_Cau_Hoi(NodeCauHoi*& root);
 void Duyet_Luu_Cau_Hoi(NodeCauHoi* p, ofstream& fileout);
@@ -99,18 +99,7 @@ NodeCauHoi* Xoay_Phai(NodeCauHoi*& root) {
 	return ptr;
 }
 
-//Thực hiện thao tác thêm như sau
-//if (/*KiemTra_TrungNoiDung*/) {
-//	cout << "Noi dung cau hoi da ton tai. Khong the thuc hien them!";
-//}
-//else if (/*KiemTra_TrungDapAn*/) {
-//	cout << "Xuat hien cac dap an trung nhau. Khong the thuc hien them!";
-//}
-//else {
-//	//Tạo biến thông tin cauHoiMoi để truyền vào hàm thêm
-//	//Gọi hàm thêm
-//	cout << "Them thanh cong";
-//}
+
 
 NodeCauHoi* Them_Cau_Hoi_Moi(NodeCauHoi*& root, int key, CauHoi cauHoiMoi) {
 	//Them nut moi
@@ -147,15 +136,19 @@ NodeCauHoi* Them_Cau_Hoi_Moi(NodeCauHoi*& root, int key, CauHoi cauHoiMoi) {
 	return root;
 }
 
-//Thực hiện thao tác xóa như sau
-//if (root == nullptr) {
-//	cout << "Danh sach rong. Khong the xoa!";
-//}
-//else {
-//	//Bắt click trả về key
-//	//Gọi hàm xóa
-//	cout << "Xoa thanh cong";
-//}
+
+
+NodeCauHoi* Tim_Kiem_Key(NodeCauHoi* root, int key) {
+	while (root != nullptr && root->key != key) {
+		if (key < root->key) {
+			root = root->left;
+		}
+		else {
+			root = root->right;
+		}
+	}
+	return root;
+}
 
 NodeCauHoi* Xoa_Cau_Hoi(NodeCauHoi*& root, int key) {
 	//Xoa nut nhu cay BST
@@ -218,40 +211,26 @@ NodeCauHoi* Xoa_Cau_Hoi(NodeCauHoi*& root, int key) {
 	return root;
 }
 
-void Hieu_Chinh_Cau_Hoi(NodeCauHoi*& root, int key) {
-	NodeCauHoi* ptr = root;
-	while (ptr != nullptr && ptr->key != key) {
-		if (key < ptr->key) {
-			ptr = ptr->left;
-		}
-		else {
-			ptr = ptr->right;
-		}
-	}
-	//Cho phép thay đổi mã môn học, nội dung, các lựa chọn A, B, C, D và đáp án (Không được phép thay đổi ID [key])
-	CauHoi tmp;
-	tmp.id = key;
-	//-------------------------- NHẬP LIỆU --------------------------
-	getline(cin, tmp.NoiDung);
-	getline(cin, tmp.A);
-	getline(cin, tmp.B);
-	getline(cin, tmp.C);
-	getline(cin, tmp.D);
-	cin >> tmp.DapAn;
-	//Bắt mã môn học [Xuất danh sách môn học và bắt click trả về mã môn]
-	//----------------------------------------------------------------
-	//if (tmp == ptr->info) { //Bắt trường hợp không thay đổi thông tin
-	//	cout << "Thong tin cau hoi khong thay doi. Khong the thuc hien hieu chinh!";
+bool Hieu_Chinh_Cau_Hoi(NodeCauHoi*& root, int key, CauHoi cauHoiHieuChinh) {
+	NodeCauHoi* ptr = Tim_Kiem_Key(root, key);
 
-	//}else if (KiemTra_TrungNoiDung(root, key, tmp.NoiDung)) { //Bắt trường hợp trùng nội dung
-	//	cout << "Noi dung cau hoi da ton tai. Khong the thuc hien hieu chinh!";
-	//}else if (KiemTra_TrungDapAn(tmp.A, tmp.B, tmp.C, tmp.D)) { //Bắt trường hợp trùng đáp án
-	//	cout << "Xuat hien cac dap an trung nhau. Khong the thuc hien hieu chinh!";
-	//}
-	//else {
-	//	ptr->info = tmp;
-	//	cout << "Hieu chinh thanh cong";
-	//}
+	if (cauHoiHieuChinh.maMonHoc == ptr->info.maMonHoc && cauHoiHieuChinh.NoiDung == ptr->info.NoiDung && cauHoiHieuChinh.A == ptr->info.A 
+		&& cauHoiHieuChinh.B == ptr->info.B && cauHoiHieuChinh.C == ptr->info.C && cauHoiHieuChinh.D == ptr->info.D && cauHoiHieuChinh.DapAn == ptr->info.DapAn) {
+		AllocConsole();
+		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thong tin cau hoi khong thay doi. Khong the thuc hien hieu chinh!", "Thong bao", MB_ICONASTERISK | MB_OK);
+		return false;
+
+	}
+	else if (!KiemTra_TrungNoiDung(root, key, cauHoiHieuChinh.NoiDung) && !KiemTra_TrungDapAn(cauHoiHieuChinh.A, cauHoiHieuChinh.B, cauHoiHieuChinh.C, cauHoiHieuChinh.D)) {
+		ptr->info.maMonHoc = cauHoiHieuChinh.maMonHoc;
+		ptr->info.NoiDung = cauHoiHieuChinh.NoiDung;
+		ptr->info.A = cauHoiHieuChinh.A;
+		ptr->info.B = cauHoiHieuChinh.B;
+		ptr->info.C = cauHoiHieuChinh.C;
+		ptr->info.D = cauHoiHieuChinh.D;
+		ptr->info.DapAn = cauHoiHieuChinh.DapAn;
+	}
+	return true;
 }
 
 void Them_Cau_Hoi_File(NodeCauHoi*& ptr, NodeCauHoi* cauHoiFile) {
@@ -270,13 +249,15 @@ void Doc_File_Cau_Hoi(NodeCauHoi*& root) {
 	ifstream filein;
 	filein.open("DATA\\FileDSCauHoi.txt", ios_base::in);
 	if (!filein.is_open()) return;
-	string id, height;
+	string id, height, used;
 	while (getline(filein, id, ',')) {
 		NodeCauHoi* cauHoiFile = new NodeCauHoi;
 		cauHoiFile->key = cauHoiFile->info.id = stoi(id);
 		getline(filein, cauHoiFile->info.maMonHoc, ',');
 		getline(filein, height, ',');
 		cauHoiFile->height = stoi(height);
+		getline(filein, used, ',');
+		cauHoiFile->info.used = stoi(used);
 		getline(filein, cauHoiFile->info.NoiDung);
 		getline(filein, cauHoiFile->info.A);
 		getline(filein, cauHoiFile->info.B);
@@ -285,12 +266,13 @@ void Doc_File_Cau_Hoi(NodeCauHoi*& root) {
 		filein >> cauHoiFile->info.DapAn;
 		filein.ignore();
 		Them_Cau_Hoi_File(root, cauHoiFile);
+		cout << "them thanh cong " << endl;
 	}
 }
 
 void Duyet_Luu_Cau_Hoi(NodeCauHoi* p, ofstream& fileout) {
 	if (p != nullptr) {
-		fileout << p->info.id << "," << p->info.maMonHoc << "," << p->height << "," << p->info.NoiDung << endl;
+		fileout << p->info.id << "," << p->info.maMonHoc << "," << p->height << "," << p->info.used << "," << p->info.NoiDung << endl;
 		fileout << p->info.A << endl << p->info.B << endl << p->info.C << endl << p->info.D << endl;
 		fileout << p->info.DapAn << endl;
 		Duyet_Luu_Cau_Hoi(p->left, fileout);

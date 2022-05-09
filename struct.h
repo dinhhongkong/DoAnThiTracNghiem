@@ -30,10 +30,11 @@ struct CauHoi
     string C; 
     string D;
     char DapAn; // A, B C, D la dap an dung
-
-	friend bool operator == (CauHoi a , CauHoi b) {
-		return a == b;
-	}
+	
+	bool used = false;
+	// friend bool operator == (CauHoi a , CauHoi b) {
+	// 	return a == b;
+	// }
 };
 
 

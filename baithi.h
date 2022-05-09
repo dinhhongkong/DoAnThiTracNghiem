@@ -19,6 +19,7 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi arr, int soCau)
     for (int i = 0; i < soCau; i++)
     {
         baiThi.arrCauHoi[i].cauHoiThi = arr.arrCauHoiThi[i]->info;
+        arr.arrCauHoiThi[i]->info.used = true;
     }
     return true;
 }

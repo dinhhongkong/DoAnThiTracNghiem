@@ -51,6 +51,7 @@ public:
 	void draw()
 	{
 		// vuot qua do dai text box thi tien len
+		settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
 		if (textwidth(&content[i]) >= width - 170 - textwidth("_"))
 		{
 			i++;
@@ -77,7 +78,6 @@ public:
 
 		setbkcolor(BG_COLOR);
 		// Ve tieu de
-		settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
 		setcolor(TEXT_EDIITEXT_TITLE_COLOR);
 		outtextxy(x, y + (height - textheight("TD")) / 2, &title[0]);
 

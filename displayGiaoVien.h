@@ -200,7 +200,15 @@ void ClickItemMonHoc(NodeCauHoi *root, ListMonHoc &listMH)
             curMenu = CHUCNANG_CAUHOI;
             edChonMaMon.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH;
             drawCauHoi();
-            drawThemCauHoi();
+            if (chucNangThemCauHoi)
+            {
+                drawThemCauHoi();
+            }
+            else
+            {
+                drawHieuChinhCauHoi();
+            }
+
             drawList = true;
             luaChonMon = listviewDS.idItem[LuaChon];
         }
@@ -1290,32 +1298,153 @@ void diplayDsDiem(string maMon, lop lh)
 
 //---------------------------------------------------TUY CHINH CAU HOI THI------------------------------------------
 
-/*
-void ClickItemCauHoi(NodeCauHoi *&root) {
+bool kiemTraNhapCauHoi()
+{
+    if (!edCauHoi.content.size())
+    {
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Cau hoi khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        return false;
+    }
+    else if (!edDapAnA.content.size())
+    {
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an A khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        return false;
+    }
+    else if (!edDapAnB.content.size())
+    {
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an B khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        return false;
+    }
+    else if (!edDapAnC.content.size())
+    {
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an C khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        return false;
+    }
+    else if (!edDapAnD.content.size())
+    {
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an D khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        return false;
+    }
+    else if (!btnDapAnA.click && !btnDapAnB.click && !btnDapAnC.click && !btnDapAnD.click)
+    {
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon 1 dap an dung", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        return false;
+    }
+    else if (!edChonMaMon.content.size())
+    {
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ma mon khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        return false;
+    }
+    return true;
+}
+
+void batSKnhapCauHoi()
+{
+    if (edCauHoi.isMouseHover())
+    {
+        Edit = &edCauHoi;
+    }
+    else if (edDapAnA.isMouseHover())
+    {
+        Edit = &edDapAnA;
+    }
+    else if (edDapAnB.isMouseHover())
+    {
+        Edit = &edDapAnB;
+    }
+    else if (edDapAnC.isMouseHover())
+    {
+        Edit = &edDapAnC;
+    }
+    else if (edDapAnD.isMouseHover())
+    {
+        Edit = &edDapAnD;
+    }
+    else if (btnDapAnA.isMouseHover())
+    {
+        btnDapAnA.click = true;
+        btnDapAnB.click = false;
+        btnDapAnC.click = false;
+        btnDapAnD.click = false;
+        btnDapAnA.draw();
+        btnDapAnB.draw();
+        btnDapAnC.draw();
+        btnDapAnD.draw();
+    }
+    else if (btnDapAnB.isMouseHover())
+    {
+        btnDapAnA.click = false;
+        btnDapAnB.click = true;
+        btnDapAnC.click = false;
+        btnDapAnD.click = false;
+        btnDapAnA.draw();
+        btnDapAnB.draw();
+        btnDapAnC.draw();
+        btnDapAnD.draw();
+    }
+    else if (btnDapAnC.isMouseHover())
+    {
+        btnDapAnA.click = false;
+        btnDapAnB.click = false;
+        btnDapAnC.click = true;
+        btnDapAnD.click = false;
+        btnDapAnA.draw();
+        btnDapAnB.draw();
+        btnDapAnC.draw();
+        btnDapAnD.draw();
+    }
+    else if (btnDapAnD.isMouseHover())
+    {
+        btnDapAnA.click = false;
+        btnDapAnB.click = false;
+        btnDapAnC.click = false;
+        btnDapAnD.click = true;
+        btnDapAnA.draw();
+        btnDapAnB.draw();
+        btnDapAnC.draw();
+        btnDapAnD.draw();
+    }
+    else if (btnChonMaMon.isMouseHover())
+    {
+        Edit = nullptr;
+        preMenu = curMenu;
+        curMenu = LUACHON_MON;
+        soTrangMon = 1;
+        drawList = true;
+        drawMonHoc();
+    }
+    else if (btnXoaMaMon.isMouseHover())
+    {
+        edChonMaMon.content = "";
+        edChonMaMon.draw();
+    }
+}
+
+void ClickItemCauHoi(NodeCauHoi *&root, ListMonHoc listMH)
+{
     int x = -1, y = -1;
     x = mousex();
     y = mousey();
-    static int LuaChon = -1; // cai thanh sang khi di chuot qua item
+    static int LuaChon = -1;
     static int PreLuaChon = -1;
 
     int soLuongCauHoi = countNodeCauHoi(root);
-    NodeCauHoi **arrCauHoi = new NodeCauHoi*[soLuongCauHoi];
-    TreeToArray(root, arrCauHoi, 0);
+    LuaChon = (y - yDsCauHoi[0]) / 50;
 
-    LuaChon = (y - yDsMon[0]) / 50;
-
-    if (x > xDsMon[0] && x < xDsMon[2] && y > yDsMon[0] && y < yDsMon[1])
+    if (x > xDsCauHoi[0] && x < xDsCauHoi[3] && y > yDsCauHoi[0] && y < yDsCauHoi[1])
     {
         // khoi phuc item
-        settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
         if (PreLuaChon != -1 && PreLuaChon != LuaChon && PreLuaChon < listviewDS.size)
         {
-            setcolor(WHITE);
             setfillstyle(1, BLACK);
-            setbkcolor(BLACK);
-            bar(xDsMon[0] + 5, yDsMon[0] + 20 + PreLuaChon * 50 - 10, xDsMon[2] - 5, yDsMon[0] + 20 + PreLuaChon * 50 + 30);
-            outtextxy(xDsMon[0] + 80, yDsMon[0] + 20 + PreLuaChon * 50, &listMH.monHoc[listviewDS.idItem[PreLuaChon]]->MAMH[0]);
-            outtextxy(xDsMon[1] + 80, yDsMon[0] + 20 + PreLuaChon * 50, &listMH.monHoc[listviewDS.idItem[PreLuaChon]]->TENMH[0]);
+            bar(0, yDsCauHoi[0] + 20 + PreLuaChon * 50 - 10, xDsCauHoi[0] - 5, yDsCauHoi[0] + 20 + PreLuaChon * 50 + 30);
         }
 
         PreLuaChon = LuaChon;
@@ -1323,125 +1452,200 @@ void ClickItemCauHoi(NodeCauHoi *&root) {
         if (PreLuaChon != -1 && LuaChon < listviewDS.size)
         {
             setcolor(LIGHTGREEN);
-            setfillstyle(1, RED);
             setbkcolor(RED);
-            bar(xDsMon[0] + 5, yDsMon[0] + 20 + PreLuaChon * 50 - 10, xDsMon[2] - 5, yDsMon[0] + 20 + PreLuaChon * 50 + 30);
-            outtextxy(xDsMon[0] + 80, yDsMon[0] + 20 + LuaChon * 50, &listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH[0]);
-            outtextxy(xDsMon[1] + 80, yDsMon[0] + 20 + LuaChon * 50, &listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH[0]);
+            readimagefile(troNgonTay, 0, yDsCauHoi[0] + 20 + PreLuaChon * 50 - 10, xDsCauHoi[0] - 5, yDsCauHoi[0] + 20 + PreLuaChon * 50 + 30);
         }
-        setlinestyle(0, 0, 2);
-        setcolor(WHITE);
-        line(300, 200, 300, 760);
 
         // bat su kien khi o man hinh danh sach mon ( co the them, hieu chinh)
-        if (GetAsyncKeyState(VK_RBUTTON) && LuaChon < listviewDS.size && curMenu == DISPLAY_DSMON)
+        if (GetAsyncKeyState(VK_RBUTTON) && LuaChon < listviewDS.size)
         {
             Sleep(20);
-            themMaMon.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH;
-            themTenMon.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH;
-            drawHieuChinhMonHoc();
-            while (true)
+            NodeCauHoi *node = Tim_Kiem_Key(root, listviewDS.idItem[LuaChon]);
+            chucNangThemCauHoi = false;
+
+            if (node->info.DapAn == 'A')
             {
-                KbEvent();
-                btnHieuChinh.ButtonEffect();
-                btnXoaVinhVien.ButtonEffect();
-                btnThoat.ButtonEffect();
-                btnQuaylai.ButtonEffect();
-                GetAsyncKeyState(VK_RBUTTON); // xoa bo nho dem chuot trai
-                if (GetAsyncKeyState(VK_LBUTTON))
+                btnDapAnA.click = true;
+                btnDapAnB.click = false;
+                btnDapAnC.click = false;
+                btnDapAnD.click = false;
+            }
+            else if (node->info.DapAn == 'B')
+            {
+                btnDapAnA.click = false;
+                btnDapAnB.click = true;
+                btnDapAnC.click = false;
+                btnDapAnD.click = false;
+            }
+            else if (node->info.DapAn == 'C')
+            {
+                btnDapAnA.click = false;
+                btnDapAnB.click = false;
+                btnDapAnC.click = true;
+                btnDapAnD.click = false;
+            }
+            else if (node->info.DapAn == 'D')
+            {
+                btnDapAnA.click = false;
+                btnDapAnB.click = false;
+                btnDapAnC.click = false;
+                btnDapAnD.click = true;
+            }
+            edCauHoi.content = node->info.NoiDung;
+            edDapAnA.content = node->info.A;
+            edDapAnB.content = node->info.B;
+            edDapAnC.content = node->info.C;
+            edDapAnD.content = node->info.D;
+            edChonMaMon.content = node->info.maMonHoc;
+            drawHieuChinhCauHoi();
+
+            while (!chucNangThemCauHoi)
+            {
+                Sleep(75);
+                if (curMenu == LUACHON_MON)
                 {
-                    if (btnXoaVinhVien.isMouseHover())
+                    displayLuaChonMon(listMH);
+                }
+                else
+                {
+                    if (drawList)
                     {
-                        AllocConsole();
-                        if (MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ban co chac chan muon XOA mon hoc nay", "Thong bao", MB_ICONASTERISK | MB_OKCANCEL) == IDOK)
+                        drawDsCauHoi(root);
+                        drawList = false;
+                    }
+                    btnHieuChinhCauHoi.ButtonEffect();
+                    btnXoaCauHoi.ButtonEffect();
+                    btnThoatHieuChinhCH.ButtonEffect();
+                    KbEvent();
+                    if (GetAsyncKeyState(VK_LBUTTON))
+                    {
+                        batSKnhapCauHoi();
+                        if (btnHieuChinhCauHoi.isMouseHover() && kiemTraNhapCauHoi())
                         {
-                            if (Xoa_Mon_Hoc(r, listMH, listviewDS.idItem[LuaChon]))
+                            CauHoi cauHoiHieuChinh;
+                            cauHoiHieuChinh.NoiDung = edCauHoi.ToString();
+                            cauHoiHieuChinh.A = edDapAnA.ToString();
+                            cauHoiHieuChinh.B = edDapAnB.ToString();
+                            cauHoiHieuChinh.C = edDapAnC.ToString();
+                            cauHoiHieuChinh.D = edDapAnD.ToString();
+                            if (btnDapAnA.click)
                             {
-                                Luu_File_Mon_Hoc(listMH);
+                                cauHoiHieuChinh.DapAn = 'A';
+                            }
+                            else if (btnDapAnB.click)
+                            {
+                                cauHoiHieuChinh.DapAn = 'B';
+                            }
+                            else if (btnDapAnC.click)
+                            {
+                                cauHoiHieuChinh.DapAn = 'C';
+                            }
+                            else if (btnDapAnD.click)
+                            {
+                                cauHoiHieuChinh.DapAn = 'D';
+                            }
+                            cauHoiHieuChinh.maMonHoc = edChonMaMon.ToString();
+
+                            if (Hieu_Chinh_Cau_Hoi(root, listviewDS.idItem[LuaChon], cauHoiHieuChinh))
+                            {
+                                AllocConsole();
+                                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Hieu chinh thanh cong", "Thong bao", MB_OK);
+                                Luu_File_Cau_Hoi(root);
                                 drawList = true;
-                                themMaMon.content = "";
-                                themTenMon.content = "";
-                                MenuThemMon = true;
-                                DrawThemMonHoc();
-                                break;
+                                chucNangThemCauHoi = true;
+                                btnDapAnA.click = false;
+                                btnDapAnB.click = false;
+                                btnDapAnC.click = false;
+                                btnDapAnD.click = false;
+                                timKiemCauHoi.content = "";
+                                edDapAnA.content = "";
+                                edCauHoi.content = "";
+                                edDapAnB.content = "";
+                                edDapAnC.content = "";
+                                edDapAnD.content = "";
+                                edChonMaMon.content = "";
+                                Edit = nullptr;
+                                drawThemCauHoi();
                             }
                         }
-                    }
-                    else if (btnHieuChinh.isMouseHover())
-                    {
-                        if (Hieu_Chinh_Mon_Hoc(r, listMH, listviewDS.idItem[LuaChon], themMaMon.ToString(), themTenMon.ToString()))
+                        else if (btnXoaCauHoi.isMouseHover())
                         {
-                            Luu_File_Mon_Hoc(listMH);
-                            drawDSMonHoc(listMH);
-                            themMaMon.content = "";
-                            themTenMon.content = "";
-                            MenuThemMon = true;
-                            DrawThemMonHoc();
+                            AllocConsole();
+                            if (MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ban cho chac chan muon xoa", "Thong bao", MB_ICONQUESTION | MB_OK) == IDOK)
+                            {
+                                NodeCauHoi *xoaNode = Tim_Kiem_Key(root, listviewDS.idItem[LuaChon]);
+                                if (xoaNode->info.used)
+                                {
+                                    AllocConsole();
+                                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong the xoa, id cau hoi nay da co nguoi thi", "Thong bao", MB_ICONASTERISK | MB_OK);
+                                }
+                                else
+                                {
+                                    Xoa_Cau_Hoi(root, listviewDS.idItem[LuaChon]);
+                                    Luu_File_Cau_Hoi(root);
+                                    AllocConsole();
+                                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Xoa thanh cong", "Thong bao", MB_OK);
+                                    drawList = true;
+                                    chucNangThemCauHoi = true;
+                                    btnDapAnA.click = false;
+                                    btnDapAnB.click = false;
+                                    btnDapAnC.click = false;
+                                    btnDapAnD.click = false;
+                                    timKiemCauHoi.content = "";
+                                    edDapAnA.content = "";
+                                    edCauHoi.content = "";
+                                    edDapAnB.content = "";
+                                    edDapAnC.content = "";
+                                    edDapAnD.content = "";
+                                    edChonMaMon.content = "";
+                                    Edit = nullptr;
+                                    drawThemCauHoi();
+                                    break;
+                                }
+                            }
+                        }
+                        else if (btnThoatHieuChinhCH.isMouseHover())
+                        {
+                            setfillstyle(1, BLACK);
+                            bar(850, 20, 1070, 70);
+                            drawList = true;
+                            chucNangThemCauHoi = true;
+                            btnDapAnA.click = false;
+                            btnDapAnB.click = false;
+                            btnDapAnC.click = false;
+                            btnDapAnD.click = false;
+                            timKiemCauHoi.content = "";
+                            edDapAnA.content = "";
+                            edCauHoi.content = "";
+                            edDapAnB.content = "";
+                            edDapAnC.content = "";
+                            edDapAnD.content = "";
+                            edChonMaMon.content = "";
+                            Edit = nullptr;
+                            drawThemCauHoi();
                             break;
                         }
                     }
-                    else if (btnThoat.isMouseHover())
-                    {
-                        setfillstyle(1, BLACK);
-                        bar(1005, 0, 1600, 765);
-                        themMaMon.content = "";
-                        themTenMon.content = "";
-                        MenuThemMon = true;
-                        Sleep(100);
-                        DrawThemMonHoc();
-                        break;
-                    }
-                    else if (themMaMon.isMouseHover())
-                    {
-                        Edit = &themMaMon;
-                    }
-                    else if (themTenMon.isMouseHover())
-                    {
-                        Edit = &themTenMon;
-                    }
-                    else if (btnQuaylai.isMouseHover())
-                    {
-                        curMenu = DISPLAY_GIAOVIEN;
-                        drawGV();
-                        Edit = nullptr;
-                        themMaMon.content = "";
-                        themTenMon.content = "";
-                        timKiemMon.content = "";
-                        soTrangMon = 1;
-                        break;
-                    }
                 }
-                Sleep(75);
             }
         }
-
-
     }
     else
     {
-        // khoi phuc item
         if (PreLuaChon != -1 && PreLuaChon < listviewDS.size)
         {
-            settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
             setcolor(WHITE);
             setfillstyle(1, BLACK);
             setbkcolor(BLACK);
-            bar(xDsMon[0] + 5, yDsMon[0] + 20 + PreLuaChon * 50 - 10, xDsMon[2] - 5, yDsMon[0] + 20 + PreLuaChon * 50 + 30);
-            outtextxy(xDsMon[0] + 80, yDsMon[0] + 20 + PreLuaChon * 50, &listMH.monHoc[listviewDS.idItem[PreLuaChon]]->MAMH[0]);
-            outtextxy(xDsMon[1] + 80, yDsMon[0] + 20 + PreLuaChon * 50, &listMH.monHoc[listviewDS.idItem[PreLuaChon]]->TENMH[0]);
+            bar(0, yDsCauHoi[0] + 20 + PreLuaChon * 50 - 10, xDsCauHoi[0] - 5, yDsCauHoi[0] + 20 + PreLuaChon * 50 + 30);
         }
         LuaChon = -1;
         PreLuaChon = -1;
-        setlinestyle(0, 0, 2);
         setcolor(WHITE);
-        line(300, 200, 300, 760);
     }
 }
 
-*/
-
-bool chucNangThemCauHoi = true;
-void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[])
+void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[], ListMonHoc listMH)
 {
 
     static int checkTimKiem = 0;
@@ -1479,6 +1683,8 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[])
     btnDapAnD.ButtonEffect();
     btnChonMaMon.ButtonEffect();
     btnXoaMaMon.ButtonEffect();
+
+    ClickItemCauHoi(rootCauHoi, listMH);
 
     if (GetAsyncKeyState(VK_LBUTTON))
     {
@@ -1518,36 +1724,48 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[])
             btnTien.click = false;
             btnLui.click = true;
         }
+        batSKnhapCauHoi();
     }
 
     if (chucNangThemCauHoi == true)
     {
         btnThemCauHoi.ButtonEffect();
-        if (GetAsyncKeyState(VK_LBUTTON))
+        if (GetAsyncKeyState(VK_LBUTTON) && btnThemCauHoi.isMouseHover() && kiemTraNhapCauHoi())
         {
-            if (edCauHoi.isMouseHover())
+
+            int id = arrID[countNodeCauHoi(rootCauHoi)];
+            CauHoi cauHoiMoi;
+            cauHoiMoi.id = id;
+            cauHoiMoi.NoiDung = edCauHoi.ToString();
+            cauHoiMoi.A = edDapAnA.ToString();
+            cauHoiMoi.B = edDapAnB.ToString();
+            cauHoiMoi.C = edDapAnC.ToString();
+            cauHoiMoi.D = edDapAnD.ToString();
+            cauHoiMoi.maMonHoc = edChonMaMon.ToString();
+            if (btnDapAnA.click == true)
             {
-                Edit = &edCauHoi;
+                cauHoiMoi.DapAn = 'A';
             }
-            else if (edDapAnA.isMouseHover())
+            else if (btnDapAnB.click == true)
             {
-                Edit = &edDapAnA;
+                cauHoiMoi.DapAn = 'B';
             }
-            else if (edDapAnB.isMouseHover())
+            else if (btnDapAnC.click == true)
             {
-                Edit = &edDapAnB;
+                cauHoiMoi.DapAn = 'C';
             }
-            else if (edDapAnC.isMouseHover())
+            else if (btnDapAnD.click == true)
             {
-                Edit = &edDapAnC;
+                cauHoiMoi.DapAn = 'D';
             }
-            else if (edDapAnD.isMouseHover())
+
+            if (!KiemTra_TrungDapAn(cauHoiMoi.A, cauHoiMoi.B, cauHoiMoi.C, cauHoiMoi.D) && !KiemTra_TrungNoiDung(rootCauHoi, id, cauHoiMoi.NoiDung))
             {
-                Edit = &edDapAnD;
-            }
-            else if (btnDapAnA.isMouseHover())
-            {
-                btnDapAnA.click = true;
+                rootCauHoi = Them_Cau_Hoi_Moi(rootCauHoi, id, cauHoiMoi);
+                Luu_File_Cau_Hoi(rootCauHoi);
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Them thanh cong", "Thong bao", MB_OK);
+                btnDapAnA.click = false;
                 btnDapAnB.click = false;
                 btnDapAnC.click = false;
                 btnDapAnD.click = false;
@@ -1555,150 +1773,21 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[])
                 btnDapAnB.draw();
                 btnDapAnC.draw();
                 btnDapAnD.draw();
-            }
-            else if (btnDapAnB.isMouseHover())
-            {
-                btnDapAnA.click = false;
-                btnDapAnB.click = true;
-                btnDapAnC.click = false;
-                btnDapAnD.click = false;
-                btnDapAnA.draw();
-                btnDapAnB.draw();
-                btnDapAnC.draw();
-                btnDapAnD.draw();
-            }
-            else if (btnDapAnC.isMouseHover())
-            {
-                btnDapAnA.click = false;
-                btnDapAnB.click = false;
-                btnDapAnC.click = true;
-                btnDapAnD.click = false;
-                btnDapAnA.draw();
-                btnDapAnB.draw();
-                btnDapAnC.draw();
-                btnDapAnD.draw();
-            }
-            else if (btnDapAnD.isMouseHover())
-            {
-                btnDapAnA.click = false;
-                btnDapAnB.click = false;
-                btnDapAnC.click = false;
-                btnDapAnD.click = true;
-                btnDapAnA.draw();
-                btnDapAnB.draw();
-                btnDapAnC.draw();
-                btnDapAnD.draw();
-            }
-            else if (btnChonMaMon.isMouseHover())
-            {
-                preMenu = curMenu;
-                curMenu = LUACHON_MON;
-                soTrangMon = 1;
-                drawList = true;
-                drawMonHoc();
-            }
-            else if (btnXoaMaMon.isMouseHover())
-            {
+
+                edDapAnA.content = "";
+                edCauHoi.content = "";
+                edDapAnB.content = "";
+                edDapAnC.content = "";
+                edDapAnD.content = "";
+                edCauHoi.content = "";
                 edChonMaMon.content = "";
+                edCauHoi.draw();
                 edChonMaMon.draw();
-            }
-            else if (btnThemCauHoi.isMouseHover())
-            {
-                if (!edCauHoi.content.size())
-                {
-                    AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Cau hoi khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-                }
-                else if (!edDapAnA.content.size())
-                {
-                    AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an A khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-                }
-                else if (!edDapAnB.content.size())
-                {
-                    AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an B khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-                }
-                else if (!edDapAnC.content.size())
-                {
-                    AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an C khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-                }
-                else if (!edDapAnD.content.size())
-                {
-                    AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an D khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-                }
-                else if (!btnDapAnA.click && !btnDapAnB.click && !btnDapAnC.click && !btnDapAnD.click)
-                {
-                    AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon 1 dap an dung", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-                }
-                else if (!edChonMaMon.content.size())
-                {
-                    AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ma mon khong duoc de trong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-                }
-                else
-                {
-
-                    int id = arrID[countNodeCauHoi(rootCauHoi)];
-                    CauHoi cauHoiMoi;
-                    cauHoiMoi.id = id;
-                    cauHoiMoi.NoiDung = edCauHoi.ToString();
-                    cauHoiMoi.A = edDapAnA.ToString();
-                    cauHoiMoi.B = edDapAnB.ToString();
-                    cauHoiMoi.C = edDapAnC.ToString();
-                    cauHoiMoi.D = edDapAnD.ToString();
-                    cauHoiMoi.maMonHoc = edChonMaMon.ToString();
-                    if (btnDapAnA.click == true)
-                    {
-                        cauHoiMoi.DapAn = 'A';
-                    }
-                    else if (btnDapAnB.click == true)
-                    {
-                        cauHoiMoi.DapAn = 'B';
-                    }
-                    else if (btnDapAnC.click == true)
-                    {
-                        cauHoiMoi.DapAn = 'C';
-                    }
-                    else if (btnDapAnD.click == true)
-                    {
-                        cauHoiMoi.DapAn = 'D';
-                    }
-
-                    if (!KiemTra_TrungDapAn(cauHoiMoi.A, cauHoiMoi.B, cauHoiMoi.C, cauHoiMoi.D) && !KiemTra_TrungNoiDung(rootCauHoi, id, cauHoiMoi.NoiDung))
-                    {
-                        rootCauHoi = Them_Cau_Hoi_Moi(rootCauHoi, id, cauHoiMoi);
-                        Luu_File_Cau_Hoi(rootCauHoi);
-                        AllocConsole();
-                        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Them thanh cong", "Thong bao", MB_OK);
-                        btnDapAnA.click = false;
-                        btnDapAnB.click = false;
-                        btnDapAnC.click = false;
-                        btnDapAnD.click = false;
-                        btnDapAnA.draw();
-                        btnDapAnB.draw();
-                        btnDapAnC.draw();
-                        btnDapAnD.draw();
-
-                        edDapAnA.content = "";
-                        edCauHoi.content = "";
-                        edDapAnB.content = "";
-                        edDapAnC.content = "";
-                        edDapAnD.content = "";
-                        edCauHoi.content = "";
-                        edChonMaMon.content = "";
-                        edCauHoi.draw();
-                        edChonMaMon.draw();
-                        edDapAnA.draw();
-                        edDapAnB.draw();
-                        edDapAnC.draw();
-                        edDapAnD.draw();
-                        drawList = true;
-                    }
-                }
+                edDapAnA.draw();
+                edDapAnB.draw();
+                edDapAnC.draw();
+                edDapAnD.draw();
+                drawList = true;
             }
         }
     }
