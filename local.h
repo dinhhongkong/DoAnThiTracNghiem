@@ -119,10 +119,7 @@ editText edsoCau(1075, 490, 450, 50, "SO CAU:", "So cau trong bai thi", 3);
 button btnVaoThi(1250, 625, 100, 50, "VAO THI");
 
 // THI
-// button btnChonA(70,225,70,50,"A:");
-// button btnChonB(70,375,70,50,"B:");
-// button btnChonC(70,525,70,50,"C:");
-// button btnChonD(70,675,70,50,"D:");
+button btnNopBai(1250, 390, 200, 50, "NOP BAI");
 radioButton rdChonA(105, 250, 30, "A.");
 radioButton rdChonB(105, 400, 30, "B.");
 radioButton rdChonC(105, 550, 30, "C.");

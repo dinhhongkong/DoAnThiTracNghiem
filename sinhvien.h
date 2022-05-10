@@ -147,6 +147,7 @@ bool ChinhSuaSinhVien(dslop DanhSachLop, listSV &DsSinhVien, nodeSV *&nodeHieuCh
 			}
 		}
 	}
+	string oldname = "DATA\\bai thi\\" + nodeHieuChinh->info.mssv + ".txt";
 	nodeSV *PreNodeHieuChinh = nullptr;
 	if (nodeHieuChinh != DsSinhVien.First)
 	{
@@ -238,6 +239,10 @@ bool ChinhSuaSinhVien(dslop DanhSachLop, listSV &DsSinhVien, nodeSV *&nodeHieuCh
 			node = node->pNext;
 		}
 	}
+	//rename(oldname, newname) // ham chinh sua ten file
+    string newname = "DATA\\bai thi\\" + nodeHieuChinh->info.mssv + ".txt";
+	cout << oldname << endl << newname << endl;
+	rename(&oldname[0], &newname[0]);
 	AllocConsole();
 	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thong tin sinh vien thanh cong", "Thong bao", MB_OK);
 	return true;

@@ -24,6 +24,31 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi arr, int soCau)
     return true;
 }
 
+bool taoBaiThiThu(Bai_Thi &baiThi, mangCauHoi arr, int soCau)
+{
+    int maxSoCau = arr.tongSoCau;
+
+    if (soCau > maxSoCau)
+    {
+        AllocConsole();
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "So luong cau hoi khong du", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        return false;
+    }
+    baiThi.slcht = soCau;
+    baiThi.arrCauHoi = new cauHoiThi[soCau];
+    for (int i = 0; i < maxSoCau; i++)
+    {
+        int vitri = randomNumber(0, maxSoCau);
+        swap(arr.arrCauHoiThi[i], arr.arrCauHoiThi[randomNumber(0, maxSoCau)]);
+    }
+
+    for (int i = 0; i < soCau; i++)
+    {
+        baiThi.arrCauHoi[i].cauHoiThi = arr.arrCauHoiThi[i]->info;
+    }
+    return true;
+}
+
 bool kiemTraDaThi(Danh_Sach_Diem_Thi listDT, string maMon)
 {
     Node_Diem_Thi *node = listDT.first;

@@ -151,63 +151,58 @@ NodeCauHoi* Tim_Kiem_Key(NodeCauHoi* root, int key) {
 }
 
 NodeCauHoi* Xoa_Cau_Hoi(NodeCauHoi*& root, int key) {
-	//Xoa nut nhu cay BST
 	if (root == nullptr) return root;
-	if (key < root->key) {
+	if (key < root->left->key) {
 		root->left = Xoa_Cau_Hoi(root->left, key);
 	}
-	else if (key > root->key) {
+	else if (key > root->right->key) {
 		root->right = Xoa_Cau_Hoi(root->right, key);
 	}
 	else {
-		//Truong hop nut co 1 nut con hoac khong co nut con
 		if (root->left == nullptr || root->right == nullptr) {
 			NodeCauHoi* tmp = (root->left == nullptr) ? root->right : root->left;
-			//Truong hop khong co nut con
-			if (tmp == nullptr) {
+			if (tmp == nullptr) { //Trường hợp nút gốc không có nút con
 				tmp = root;
 				root = nullptr;
 			}
-			else { //Truong hop co 1 nut con
+			else { //Trường hợp nút gốc có 1 nút con
 				*root = *tmp;
 			}
 			delete tmp;
 		}
-		else { //Truong hop nut co 2 nut con
-			//Tim nut cuc trai cua nhanh con phai
+		else { //Trường hợp nút gốc có 2 nút con
 			NodeCauHoi* tmp = Node_Cuc_Trai(root->right);
-			//Copy thong tin tu nut tmp sang nut xoa
 			root->key = tmp->key;
 			root->info = tmp->info;
-			//Xoa nut cuc trai
 			root->right = Xoa_Cau_Hoi(root->right, tmp->key);
 		}
 	}
-	//Truong hop cay chi co 1 nut
+	//Trường hợp cây chỉ có 1 nút
 	if (root == nullptr) return root;
-	//Cap nhat chieu sau
+	//Cập nhật chỉ số chiều sâu
 	root->height = Max(ChiSo_ChieuSau(root->left), ChiSo_ChieuSau(root->right)) + 1;
-	//Kiem tra chi so can bang
+	//Kiểm tra chỉ số cân bằng
 	int bf = ChiSo_CanBang(root);
-		//Truong hop trai trai
+	//Kiểm tra tình trạng cân bằng của nút
+		//Trường hợp trái trái
 	if (bf > 1 && ChiSo_CanBang(root->left) >= 0) {
 		return Xoay_Phai(root);
 	}
-		//Truong hop trai phai
+		//Trường hợp phải phải
+	if (bf < -1 && ChiSo_CanBang(root->right) <= 0) {
+		return Xoay_Trai(root);
+	}
+		//Trường hơp trái phải
 	if (bf > 1 && ChiSo_CanBang(root->left) < 0) {
 		root->left = Xoay_Trai(root->left);
 		return Xoay_Phai(root);
 	}
-		//Truong hop phai phai
-	if (bf < -1 && ChiSo_CanBang(root->right) <= 0) {
-		return Xoay_Trai(root);
-	}
-		//Truong hop phai trai
+		//Trường hợp phải trái
 	if (bf < -1 && ChiSo_CanBang(root->right) > 0) {
 		root->right = Xoay_Phai(root->right);
 		return Xoay_Trai(root);
 	}
-		//Truong hop khong mat can bang
+		//Trường hợp không mất cân bằng
 	return root;
 }
 
@@ -308,6 +303,21 @@ void giaiPhongArrCauHoi(mangCauHoi &dsCauHoi) {
 	dsCauHoi.tongSoCau = 0;
     delete []dsCauHoi.arrCauHoiThi;
 
+}
+
+void demSoCauTheoMaMon(NodeCauHoi *rootCauHoi, string maMon, int &dem)
+{
+
+    // duyet LNR
+    if (rootCauHoi != nullptr)
+    {
+        if (rootCauHoi->info.maMonHoc == maMon)
+        {
+            dem++;
+        }
+        demSoCauTheoMaMon(rootCauHoi->left, maMon , dem);
+        demSoCauTheoMaMon(rootCauHoi->right, maMon, dem);
+    }
 }
 
 void taoMangCauHoi(NodeCauHoi *rootCauHoi, mangCauHoi &dsCauHoi, string maMon)

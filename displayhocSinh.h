@@ -111,7 +111,7 @@ void displayDoiMK(listSV &dsSinhVien, string &mk, string maLop)
     }
 }
 
-void ClickItemMonThi(ListMonHoc &listMH)
+void ClickItemMonThi(NodeCauHoi *root,ListMonHoc &listMH)
 {
     int x = -1, y = -1;
     x = mousex();
@@ -156,6 +156,19 @@ void ClickItemMonThi(ListMonHoc &listMH)
             edChonMonThi.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH;
             outtextTenMon = listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH;
             edChonMonThi.draw();
+
+            setfillstyle(WIDE_DOT_FILL, CYAN);
+            bar(1052, 250, 1550, 300);
+            setcolor(YELLOW);
+            settextstyle(0, 0, 2);
+            outtextxy(1300 - textwidth(&outtextTenMon[0])/2, 260, &outtextTenMon[0]);
+            setfillstyle(1, BLACK);
+            bar(1052,540, 1550,600);
+            int dem = 0;
+            demSoCauTheoMaMon(root,listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH,dem);
+            string tongSoCau = "So cau hoi hien co: " + to_string(dem);
+            settextstyle(10, 0, 3);
+            outtextxy(1300 - textwidth(&tongSoCau[0])/2, 560, &tongSoCau[0]);
         }
     }
     else
@@ -209,7 +222,7 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCa
         checkTimKiem -= 2;
         drawList = true;
     }
-    ClickItemMonThi(listMH);
+    ClickItemMonThi(root,listMH);
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         if (btnQuaylai.isMouseHover())
@@ -224,6 +237,7 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCa
             edTimeThi.content = "";
             edsoCau.content = "";
             timKiemMon.content = "";
+            outtextTenMon = "";
             drawHocSinh();
             soTrangMon = 1;
         }
@@ -390,6 +404,10 @@ void displayDiemSV(sinhVien SV, ListMonHoc listMH, string Lop)
     btnQuaylai.ButtonEffect();
     btnTien_L1.ButtonEffect();
     btnLui_L.ButtonEffect();
+    if (drawList) {
+        drawList = false;
+        drawDsDiemSV(SV.listDT,listMH);
+    }
     ClickItemXemBai(SV, listMH, Lop);
     if (GetAsyncKeyState(VK_LBUTTON))
     {
@@ -407,9 +425,14 @@ void displayDiemSV(sinhVien SV, ListMonHoc listMH, string Lop)
 
         else if (btnTien_L1.isMouseHover())
         {
+            drawList = true;
+            btnTien_L1.click = true;
         }
         else if (btnLui_L.isMouseHover())
         {
+            drawList = true;
+            btnLui_L.click = true;
+
         }
     }
 }
@@ -484,6 +507,13 @@ void dipslayHocSinhThi(Bai_Thi &baiThisv)
         {
             btnLui.click = true;
             drawBaiLam(baiThisv.arrCauHoi);
+        }
+        else if (btnNopBai.isMouseHover())
+        {
+            AllocConsole();
+            if ( MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thoi gian van con, ban co chac muon nop bai som", "Thong bao", MB_ICONASTERISK | MB_OKCANCEL) == IDOK ) {
+                btnNopBai.click = true;
+            }
         }
     }
 }

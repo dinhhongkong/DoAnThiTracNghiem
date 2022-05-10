@@ -187,6 +187,18 @@ void ClickItemMonHoc(NodeCauHoi *root, ListMonHoc &listMH)
             edChonMonThi.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH;
             outtextTenMon = listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH;
             edChonMonThi.draw();
+            setfillstyle(WIDE_DOT_FILL, CYAN);
+            bar(1052, 250, 1550, 300);
+            setcolor(YELLOW);
+            settextstyle(0, 0, 2);
+            outtextxy(1300 - textwidth(&outtextTenMon[0])/2, 260, &outtextTenMon[0]);
+            setfillstyle(1, BLACK);
+            bar(1052,540, 1550,600);
+            int dem = 0;
+            demSoCauTheoMaMon(root,listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH,dem);
+            string tongSoCau = "So cau hoi hien co: " + to_string(dem);
+            settextstyle(10, 0, 3);
+            outtextxy(1300 - textwidth(&tongSoCau[0])/2, 560, &tongSoCau[0]);
         }
         else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == DISPLAY_DIEMMON)
         {
@@ -200,7 +212,7 @@ void ClickItemMonHoc(NodeCauHoi *root, ListMonHoc &listMH)
         {
             curMenu = CHUCNANG_CAUHOI;
             edChonMaMon.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH;
-            outtextTenMon = listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH;
+            outtextTenMon = "Mon: "+ listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH;
             drawCauHoi();
             if (chucNangThemCauHoi)
             {
@@ -208,7 +220,7 @@ void ClickItemMonHoc(NodeCauHoi *root, ListMonHoc &listMH)
             }
             else
             {
-                drawHieuChinhCauHoi();
+                drawHieuChinhCauHoi(Truy_Xuat_Ten_Mon(listMH, listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH));
             }
 
             drawList = true;
@@ -1094,7 +1106,7 @@ void displaySinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
 
 //------------------------------------------CHON 1 MON HOAC 1 LOP KHI THUC HIEN CHUC NANG KHAC------------------------------------------
 
-void displayLuaChonMon(ListMonHoc listMH)
+void displayLuaChonMon( ListMonHoc listMH)
 {
     btnQuaylai.ButtonEffect();
     btnTien.ButtonEffect();
@@ -1150,13 +1162,11 @@ void displayLuaChonMon(ListMonHoc listMH)
         }
         else if (btnTien.isMouseHover())
         {
-            cout << "ao that day 1" << endl;
             drawList = true;
             btnTien.click = true;
         }
         else if (btnLui.isMouseHover())
         {
-            cout << "ao that day 2" << endl;
             drawList = true;
             btnLui.click = true;
         }
@@ -1287,7 +1297,7 @@ void ClickItemDsDiemGV(listSV dsSinhVien, string maMon, string tenLop)
             {
                 while (nodeDiem != nullptr)
                 {
-                
+
                     if (nodeDiem->info.MAMH == maMon)
                     {
                         break;
@@ -1301,7 +1311,8 @@ void ClickItemDsDiemGV(listSV dsSinhVien, string maMon, string tenLop)
                 AllocConsole();
                 MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Sinh vien chua thi mon nay", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
-            else {
+            else
+            {
                 cauHoiSo = 1;
                 drawXemBaiThi(nodesv->info, nodeDiem->info, tenLop);
                 drawXemLaiBaiLam(nodeDiem->info.baithi.arrCauHoi, nodeDiem->info.baithi.slcht);
@@ -1312,16 +1323,20 @@ void ClickItemDsDiemGV(listSV dsSinhVien, string maMon, string tenLop)
                 btnTien.ButtonEffect();
                 btnLui.ButtonEffect();
                 btnQuaylai.ButtonEffect();
-                if (GetAsyncKeyState(VK_LBUTTON)) {
-                    if ( btnTien.isMouseHover()) {
+                if (GetAsyncKeyState(VK_LBUTTON))
+                {
+                    if (btnTien.isMouseHover())
+                    {
                         btnTien.click = true;
-                        drawXemLaiBaiLam(nodeDiem->info.baithi.arrCauHoi,nodeDiem->info.baithi.slcht);
+                        drawXemLaiBaiLam(nodeDiem->info.baithi.arrCauHoi, nodeDiem->info.baithi.slcht);
                     }
-                    else if (btnLui.isMouseHover() ) {
+                    else if (btnLui.isMouseHover())
+                    {
                         btnLui.click = true;
                         drawXemLaiBaiLam(nodeDiem->info.baithi.arrCauHoi, nodeDiem->info.baithi.slcht);
                     }
-                    else if ( btnQuaylai.isMouseHover() ) {
+                    else if (btnQuaylai.isMouseHover())
+                    {
                         break;
                     }
                 }
@@ -1608,7 +1623,8 @@ void ClickItemCauHoi(NodeCauHoi *&root, ListMonHoc listMH)
             edDapAnC.content = node->info.C;
             edDapAnD.content = node->info.D;
             edChonMaMon.content = node->info.maMonHoc;
-            drawHieuChinhCauHoi();
+
+            drawHieuChinhCauHoi( Truy_Xuat_Ten_Mon(listMH, node->info.maMonHoc));
 
             while (!chucNangThemCauHoi)
             {
@@ -1816,6 +1832,7 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[], ListMonHoc list
             edChonMaMon.content = "";
             MenuThemMon = true;
             soTrangMon = 1;
+            outtextTenMon = "";
             drawGV();
             Sleep(100);
         }
@@ -1938,7 +1955,7 @@ void displayThietLapThiThu(ListMonHoc listMH, NodeCauHoi *rootCayCauHoi, mangCau
         drawList = true;
     }
 
-    ClickItemMonHoc(nullptr, listMH);
+    ClickItemMonHoc(rootCayCauHoi, listMH);
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         if (btnQuaylai.isMouseHover())
@@ -1951,6 +1968,7 @@ void displayThietLapThiThu(ListMonHoc listMH, NodeCauHoi *rootCayCauHoi, mangCau
             edTimeThi.content = "";
             edsoCau.content = "";
             timKiemMon.content = "";
+            outtextTenMon = "";
             Sleep(100);
         }
         else if (timKiemMon.isMouseHover())
@@ -1978,9 +1996,7 @@ void displayThietLapThiThu(ListMonHoc listMH, NodeCauHoi *rootCayCauHoi, mangCau
         else if (btnVaoThi.isMouseHover())
         {
             arrCauHoi.arrCauHoiThi = new NodeCauHoi *[countNodeCauHoi(rootCayCauHoi)];
-            cout << "bug 1" << endl;
             taoMangCauHoi(rootCayCauHoi, arrCauHoi, edChonMonThi.ToString());
-            cout << "bug 2" << endl;
             if (edChonMonThi.content.size() == 0)
             {
                 AllocConsole();
@@ -1996,7 +2012,7 @@ void displayThietLapThiThu(ListMonHoc listMH, NodeCauHoi *rootCayCauHoi, mangCau
                 AllocConsole();
                 MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon dien so cau", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
-            else if (taoBaiThi(gvThiThu, arrCauHoi, edsoCau.toInt()))
+            else if (taoBaiThiThu(gvThiThu, arrCauHoi, edsoCau.toInt()))
             {
                 curMenu = VAO_THITHU;
                 int giay = edTimeThi.toInt() * 60;
@@ -2085,6 +2101,14 @@ void displayThiThu(Bai_Thi &gvThiThu)
         {
             btnLui.click = true;
             drawBaiLam(gvThiThu.arrCauHoi);
+        }
+        else if (btnNopBai.isMouseHover())
+        {
+            AllocConsole();
+            if (MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thoi gian van con, ban co chac muon nop bai som", "Thong bao", MB_ICONASTERISK | MB_OKCANCEL) == IDOK)
+            {
+                btnNopBai.click = true;
+            }
         }
     }
 

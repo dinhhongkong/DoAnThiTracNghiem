@@ -38,6 +38,7 @@ void docFileRandom(int arr[])
     ifstream fileIn;
     fileIn.open("DATA\\Random.txt", ios_base::in);
     
+    // neu doc that bai, hay ko có file random thì tạo file random
     if ( !fileIn.is_open() ) {
         fileIn.close();
         RandomArrNumber(arr);
