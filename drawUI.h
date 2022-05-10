@@ -675,6 +675,8 @@ void drawHieuChinhSV()
 
 //-------------------------------------------------------MAN HINH IN BANG DIEM-------------------------------------------------
 
+
+
 // dung cho gv
 void drawDsDiem(string maMon, lop lh)
 {
@@ -1160,6 +1162,76 @@ void drawThi(string ho = "", string ten = "", string mssv = "", string Lop = "",
     outtextxy(1130, 400, &tg[0]);
 }
 
+void drawXemBaiThi(sinhVien SV ,Diem_Thi diem ,string Lop = "")
+{
+    setbkcolor(BLACK);
+    cleardevice();
+    btnTien.draw();
+    btnLui.draw();
+    rdChonA.draw();
+    rdChonB.draw();
+    rdChonC.draw();
+    rdChonD.draw();
+    btnQuaylai.draw();
+
+    setcolor(RED);
+    rectangle(1100, 1, 1600, 900);
+    line(1100, 450, 1600, 450);
+    line(1100, 550, 1600, 550);
+    line(1100, 70, 1600, 70);
+
+    setbkcolor(GREEN);
+    setfillstyle(WIDE_DOT_FILL, RED);
+    bar(1100, 0, 1600, 70);
+    bar(1100, 450, 1600, 550);
+
+    setcolor(YELLOW);
+    rectangle(50, 100, 1000, 760);
+    settextstyle(10, 0, 3);
+    line(50, 200, 1000, 200);
+
+    settextstyle(0, 0, 4);
+    outtextxy(1350 - textwidth("DIEM") / 2, 485, "DIEM");
+    
+
+    outtextxy(1150, 20, "THONG TIN SV");
+    settextstyle(10, 0, 3);
+    setbkcolor(BLACK);
+    setcolor(YELLOW);
+
+    string ho = "Ho va Ten: " + SV.Ho + " " + SV.Ten;
+    string mssv = "MSSV: " + SV.mssv;
+    Lop = "Lop: " + Lop;
+    outtextTenMon = "Mon: " + outtextTenMon;
+    string SoCau = "So cau hoi: " + to_string(diem.baithi.slcht);
+    setcolor(WHITE);
+    outtextxy(1130, 100, &ho[0]);
+    outtextxy(1130, 160, &mssv[0]);
+    outtextxy(1130, 220, &Lop[0]);
+    outtextxy(1130, 280, &outtextTenMon[0]);
+    outtextxy(1130, 340, &SoCau[0]);
+
+    setbkcolor(BLACK);
+    settextstyle(0, 0, 10);
+    string Textdiem = to_string(diem.Diem);
+    for ( int i = Textdiem.size() -1; i >= 0; i--) {
+        if ( Textdiem[i] == '0') {
+            Textdiem.pop_back();
+        }
+        else if ( Textdiem[i] == '.') {
+            Textdiem.pop_back();
+            break;
+        }
+        else {
+            break;
+        }
+    }
+    setcolor(YELLOW);
+    outtextxy(1350 - textwidth(&Textdiem[0]) / 2, 680, &Textdiem[0]);
+    settextstyle(10, 0, 3);
+    setcolor(WHITE);
+
+}
 
 void drawBaiLam(cauHoiThi arrCauHoi[])
 {
@@ -1239,6 +1311,97 @@ void drawBaiLam(cauHoiThi arrCauHoi[])
     rdChonC.drawEffect();
     rdChonD.drawEffect();
 }
+
+void drawXemLaiBaiLam(cauHoiThi arrCauHoi[], int soCau)
+{
+    if (btnTien.click && soCau > cauHoiSo)
+    {
+        btnTien.click = false;
+        cauHoiSo++;
+    }
+    else if (btnLui.click && cauHoiSo > 1)
+    {
+        btnLui.click = false;
+        cauHoiSo--;
+    }
+    else if (btnTien.click || btnLui.click)
+    {
+        btnTien.click = false;
+        btnLui.click = false;
+        return;
+    }
+
+    setbkcolor(BLACK);
+    setfillstyle(1, BLACK);
+    bar(53, 105, 998, 198);
+    bar(178, 205, 998, 758);
+
+    setcolor(YELLOW);
+    settextstyle(10, 0, 3);
+    string cauSo = "CAU " + to_string(cauHoiSo) + ":";
+    outtextxy(70, 140, &cauSo[0]);
+    settextstyle(10, 0, 3);
+    setcolor(WHITE);
+    outtextxy(180, 140, &arrCauHoi[cauHoiSo -1].cauHoiThi.NoiDung[0]);
+    outtextxy(180, 240, &arrCauHoi[cauHoiSo -1].cauHoiThi.A[0]);
+    outtextxy(180, 390, &arrCauHoi[cauHoiSo -1].cauHoiThi.B[0]);
+    outtextxy(180, 540, &arrCauHoi[cauHoiSo -1].cauHoiThi.C[0]);
+    outtextxy(180, 690, &arrCauHoi[cauHoiSo -1].cauHoiThi.D[0]);
+    if (arrCauHoi[cauHoiSo -1].luaChon == 'A')
+    {
+        rdChonA.click = true;
+        rdChonB.click = false;
+        rdChonC.click = false;
+        rdChonD.click = false;
+    }
+    else if (arrCauHoi[cauHoiSo -1].luaChon == 'B')
+    {
+        rdChonA.click = false;
+        rdChonB.click = true;
+        rdChonC.click = false;
+        rdChonD.click = false;
+    }
+    else if (arrCauHoi[cauHoiSo -1].luaChon == 'C')
+    {
+        rdChonA.click = false;
+        rdChonB.click = false;
+        rdChonC.click = true;
+        rdChonD.click = false;
+    }
+    else if (arrCauHoi[cauHoiSo -1].luaChon == 'D')
+    {
+        rdChonA.click = false;
+        rdChonB.click = false;
+        rdChonC.click = false;
+        rdChonD.click = true;
+    }
+    else {
+        rdChonA.click = false;
+        rdChonB.click = false;
+        rdChonC.click = false;
+        rdChonD.click = false;
+    }
+    if (arrCauHoi[cauHoiSo -1].cauHoiThi.DapAn == 'A') {
+        outtextxy(515 - textwidth("DAP AN DUNG: A")/2, 825, "DAP AN DUNG: A");
+    }
+    else if (arrCauHoi[cauHoiSo -1].cauHoiThi.DapAn == 'B') {
+        outtextxy(515 - textwidth("DAP AN DUNG: B")/2, 825, "DAP AN DUNG: B");
+    }
+    else if (arrCauHoi[cauHoiSo -1].cauHoiThi.DapAn == 'C') {
+        outtextxy(515 - textwidth("DAP AN DUNG: C")/2, 825, "DAP AN DUNG: C");
+    }
+    else if (arrCauHoi[cauHoiSo -1].cauHoiThi.DapAn == 'D') {
+        outtextxy(515 - textwidth("DAP AN DUNG: D")/2, 825, "DAP AN DUNG: D");
+    }
+    
+
+    rdChonA.drawEffect();
+    rdChonB.drawEffect();
+    rdChonC.drawEffect();
+    rdChonD.drawEffect();
+}
+
+
 
 // ve cai chon so cau, chon thoi gian
 void drawThietLapThi()

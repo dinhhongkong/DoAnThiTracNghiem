@@ -275,6 +275,7 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCa
                 nodeDiemSV->info = diemThiSV;
                 if (taoBaiThi( nodeDiemSV->info.baithi, arrCauHoi, edsoCau.toInt()))
                 {
+                    Luu_File_Cau_Hoi(root);
                     Them_Diem_Vao_Dau(sv.listDT,nodeDiemSV);
                     curMenu = DISPLAY_HSTHI;
                     int giay = edTimeThi.toInt() * 60;

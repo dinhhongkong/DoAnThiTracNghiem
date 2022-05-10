@@ -86,6 +86,7 @@ button btnResetMK(1150, 710, 300,50,"RESET MAT KHAU MAC DINH");
 
 // chuc nang xem diem tai man hinh giao vien
 int xDsDiem[5] = {350,550,900,1100,1250};
+int yDsDiem[2] = {250,750};
 editText edtimKiemSV_R(500,100,600,50,"TIM KIEM: ","Nhap MA hoac TEN sinh vien muon tim",100);
 button btnLui_L(370, 820, 100,50,"PRE");
 button btnTien_L1(1120, 820, 100,50,"NEXT");

@@ -332,8 +332,8 @@ void DocDsSinhVien(listSV &dsSinhVien, string maLop)
 		fileIn >> sv.gioiTinh;
 		fileIn.ignore();
 		getline(fileIn, sv.Pass, '\n');
-		AddLast(dsSinhVien, CreateNodeSV(sv));
 		docBaiThi(sv.mssv, sv.listDT);
+		AddLast(dsSinhVien, CreateNodeSV(sv));
 	}
 	fileIn.close();
 }

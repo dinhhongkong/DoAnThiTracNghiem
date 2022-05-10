@@ -58,7 +58,6 @@ void chamBai(Diem_Thi &chamThi)
         }
     }
     chamThi.Diem = ceilf(tongDiem * 100) / 100;
-    
 }
 
 void luuBaiThi(string mssv, Danh_Sach_Diem_Thi dsDiem)
@@ -89,14 +88,15 @@ void luuBaiThi(string mssv, Danh_Sach_Diem_Thi dsDiem)
     fileOut.close();
 }
 
-void docBaiThi(string mssv, Danh_Sach_Diem_Thi &dsDiem)
+bool docBaiThi(string mssv, Danh_Sach_Diem_Thi &dsDiem)
 {
     ifstream fileIn;
     string fileName = "DATA\\bai thi\\" + mssv + ".txt";
     fileIn.open(fileName, ios_base::in);
     if (!fileIn.is_open())
     {
-        return;
+        dsDiem.first = nullptr;
+        return false;
     }
 
     Diem_Thi diemthi;
@@ -105,35 +105,28 @@ void docBaiThi(string mssv, Danh_Sach_Diem_Thi &dsDiem)
         fileIn >> diemthi.Diem;
         fileIn >> diemthi.baithi.slcht;
         diemthi.baithi.arrCauHoi = new cauHoiThi[diemthi.baithi.slcht];
-        cout << diemthi.MAMH << endl << diemthi.Diem << endl << diemthi.baithi.slcht<< endl;
+        cout << diemthi.MAMH << endl
+             << diemthi.Diem << endl
+             << diemthi.baithi.slcht << endl;
         for (int i = 0; i < diemthi.baithi.slcht; i++)
         {
             fileIn >> diemthi.baithi.arrCauHoi[i].cauHoiThi.id;
             fileIn.ignore();
             cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.id << endl;
-            getline(fileIn,diemthi.baithi.arrCauHoi[i].cauHoiThi.NoiDung, '\n');
-            getline(fileIn,diemthi.baithi.arrCauHoi[i].cauHoiThi.A, '\n');
-            getline(fileIn,diemthi.baithi.arrCauHoi[i].cauHoiThi.B, '\n');
-            getline(fileIn,diemthi.baithi.arrCauHoi[i].cauHoiThi.C, '\n');
-            getline(fileIn,diemthi.baithi.arrCauHoi[i].cauHoiThi.D, '\n');
+            getline(fileIn, diemthi.baithi.arrCauHoi[i].cauHoiThi.NoiDung, '\n');
+            getline(fileIn, diemthi.baithi.arrCauHoi[i].cauHoiThi.A, '\n');
+            getline(fileIn, diemthi.baithi.arrCauHoi[i].cauHoiThi.B, '\n');
+            getline(fileIn, diemthi.baithi.arrCauHoi[i].cauHoiThi.C, '\n');
+            getline(fileIn, diemthi.baithi.arrCauHoi[i].cauHoiThi.D, '\n');
             fileIn >> diemthi.baithi.arrCauHoi[i].cauHoiThi.DapAn;
             fileIn >> diemthi.baithi.arrCauHoi[i].luaChon;
             fileIn.ignore();
-            Node_Diem_Thi *nodeDiemSV = new Node_Diem_Thi;
-            nodeDiemSV->info = diemthi;
-            Them_Diem_Vao_Cuoi(dsDiem, nodeDiemSV);
-
-
-            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.NoiDung << endl;
-            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.A << endl;
-            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.B << endl;
-            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.C << endl;
-            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.D << endl;
-            // cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.DapAn << endl;
-            // cout << diemthi.baithi.arrCauHoi[i].luaChon << endl;
         }
-        // addlasst ()
-        // nodeDiemThi = nodeDiemThi->DTnext;
+        Node_Diem_Thi *nodeDiemSV = new Node_Diem_Thi;
+        nodeDiemSV->info = diemthi;
+        nodeDiemSV->DTnext = nullptr;
+        Them_Diem_Vao_Cuoi(dsDiem, nodeDiemSV);
     }
     fileIn.close();
+    return true;
 }
