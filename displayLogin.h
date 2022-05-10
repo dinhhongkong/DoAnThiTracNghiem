@@ -57,7 +57,7 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, int arrID[], NodeCauHoi
                                 }
                                 else if (curMenu == DISPLAY_DIEMSV)
                                 {
-                                    displayDiemSV();
+                                    displayDiemSV(node->info, listMH,DanhSachLop.arrLop[i].MALOP );
                                     if (btnQuaylai.click)
                                     {
                                         btnQuaylai.click = false;

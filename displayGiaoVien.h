@@ -513,7 +513,7 @@ void ClickItemLop(dslop &DanhSachLop, string maMon = "", string tenMon = "")
             drawDsDiem(maMon, DanhSachLop.arrLop[listviewDS.idItem[LuaChon]]);
             curMenu = DISPLAY_DSDIEMGV;
             luaChonLop = listviewDS.idItem[LuaChon];
-            Sleep(1000);
+            Sleep(100);
         }
     }
     else
