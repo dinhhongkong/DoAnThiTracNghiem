@@ -1172,7 +1172,7 @@ void drawThoiGian(int giay)
         settextstyle(10, 0, 3);
 
         outtextxy(1350 - textwidth(&thoiGian[0]) / 2, 680, &thoiGian[0]);
-        Sleep(100);
+        Sleep(1000);
         giay--;
         thoiGian = to_string(giay);
         setcolor(WHITE);
@@ -1302,6 +1302,80 @@ void drawXemBaiThi(sinhVien SV, Diem_Thi diem, string Lop = "")
     outtextxy(1130, 160, &mssv[0]);
     outtextxy(1130, 220, &Lop[0]);
     outtextxy(1130, 280, &outtextTenMon[0]);
+    outtextxy(1130, 340, &SoCau[0]);
+
+    setbkcolor(BLACK);
+    settextstyle(0, 0, 10);
+    string Textdiem = to_string(diem.Diem);
+    for (int i = Textdiem.size() - 1; i >= 0; i--)
+    {
+        if (Textdiem[i] == '0')
+        {
+            Textdiem.pop_back();
+        }
+        else if (Textdiem[i] == '.')
+        {
+            Textdiem.pop_back();
+            break;
+        }
+        else
+        {
+            break;
+        }
+    }
+    setcolor(YELLOW);
+    outtextxy(1350 - textwidth(&Textdiem[0]) / 2, 680, &Textdiem[0]);
+    settextstyle(10, 0, 3);
+    setcolor(WHITE);
+}
+
+void drawXemBaiThiThu( Diem_Thi diem, string TenMon)
+{
+    setbkcolor(BLACK);
+    cleardevice();
+    btnTien.draw();
+    btnLui.draw();
+    rdChonA.draw();
+    rdChonB.draw();
+    rdChonC.draw();
+    rdChonD.draw();
+    btnQuaylai.draw();
+
+    setcolor(RED);
+    rectangle(1100, 1, 1600, 900);
+    line(1100, 450, 1600, 450);
+    line(1100, 550, 1600, 550);
+    line(1100, 70, 1600, 70);
+
+    setbkcolor(GREEN);
+    setfillstyle(WIDE_DOT_FILL, RED);
+    bar(1100, 0, 1600, 70);
+    bar(1100, 450, 1600, 550);
+
+    setcolor(YELLOW);
+    rectangle(50, 100, 1000, 760);
+    settextstyle(10, 0, 3);
+    line(50, 200, 1000, 200);
+
+    settextstyle(0, 0, 4);
+    outtextxy(1350 - textwidth("DIEM") / 2, 485, "DIEM");
+
+    outtextxy(1150, 20, "THONG TIN SV");
+    settextstyle(10, 0, 3);
+    setbkcolor(BLACK);
+    setcolor(YELLOW);
+
+    string ho = "Ho va Ten: ";
+    string mssv = "MSSV: " ;
+    string Lop = "Lop: ";
+    TenMon = "Mon: " + TenMon;
+    cout << TenMon << endl;
+    string SoCau = "So cau hoi: " + to_string(diem.baithi.slcht);
+    setcolor(WHITE);
+    outtextxy(1130, 100, &ho[0]);
+    outtextxy(1130, 160, &mssv[0]);
+    outtextxy(1130, 220, &Lop[0]);
+    outtextxy(1130, 280, &TenMon[0]);
     outtextxy(1130, 340, &SoCau[0]);
 
     setbkcolor(BLACK);
@@ -1521,6 +1595,9 @@ void drawThietLapThi()
     edTimeThi.draw();
     edsoCau.draw();
     btnVaoThi.draw();
+    if (curMenu == DISPLAY_THITHU) {
+        btnXemBaiThiThu.draw();
+    }
 
     edTimeThi.setNext(&edsoCau);
     edsoCau.setNext(&edTimeThi);

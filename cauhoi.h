@@ -296,14 +296,6 @@ int countNodeCauHoi(NodeCauHoi *root)
 }
 
 
-void giaiPhongArrCauHoi(mangCauHoi &dsCauHoi) {
-	for ( int i = 0 ; i < dsCauHoi.tongSoCau; i++) {
-        dsCauHoi.arrCauHoiThi[i] = nullptr;
-    }
-	dsCauHoi.tongSoCau = 0;
-    delete []dsCauHoi.arrCauHoiThi;
-
-}
 
 void demSoCauTheoMaMon(NodeCauHoi *rootCauHoi, string maMon, int &dem)
 {

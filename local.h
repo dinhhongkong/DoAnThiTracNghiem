@@ -117,6 +117,7 @@ editText edChonMonThi(1075, 350, 450, 50, "MA MON THI:", "Chon mon thi trong dan
 editText edTimeThi(1075, 420, 450, 50, "T/G LAM BAI:", "Tinh theo phut", 3);
 editText edsoCau(1075, 490, 450, 50, "SO CAU:", "So cau trong bai thi", 3);
 button btnVaoThi(1250, 625, 100, 50, "VAO THI");
+button btnXemBaiThiThu(1180, 100, 240, 50, "XEM LAI BAI THI THU");
 
 // THI
 button btnNopBai(1250, 390, 200, 50, "NOP BAI");

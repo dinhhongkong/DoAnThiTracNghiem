@@ -191,14 +191,14 @@ void ClickItemMonHoc(NodeCauHoi *root, ListMonHoc &listMH)
             bar(1052, 250, 1550, 300);
             setcolor(YELLOW);
             settextstyle(0, 0, 2);
-            outtextxy(1300 - textwidth(&outtextTenMon[0])/2, 260, &outtextTenMon[0]);
+            outtextxy(1300 - textwidth(&outtextTenMon[0]) / 2, 260, &outtextTenMon[0]);
             setfillstyle(1, BLACK);
-            bar(1052,540, 1550,600);
+            bar(1052, 540, 1550, 600);
             int dem = 0;
-            demSoCauTheoMaMon(root,listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH,dem);
+            demSoCauTheoMaMon(root, listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH, dem);
             string tongSoCau = "So cau hoi hien co: " + to_string(dem);
             settextstyle(10, 0, 3);
-            outtextxy(1300 - textwidth(&tongSoCau[0])/2, 560, &tongSoCau[0]);
+            outtextxy(1300 - textwidth(&tongSoCau[0]) / 2, 560, &tongSoCau[0]);
         }
         else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == DISPLAY_DIEMMON)
         {
@@ -212,7 +212,7 @@ void ClickItemMonHoc(NodeCauHoi *root, ListMonHoc &listMH)
         {
             curMenu = CHUCNANG_CAUHOI;
             edChonMaMon.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH;
-            outtextTenMon = "Mon: "+ listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH;
+            outtextTenMon = "Mon: " + listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH;
             drawCauHoi();
             if (chucNangThemCauHoi)
             {
@@ -1106,7 +1106,7 @@ void displaySinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
 
 //------------------------------------------CHON 1 MON HOAC 1 LOP KHI THUC HIEN CHUC NANG KHAC------------------------------------------
 
-void displayLuaChonMon( ListMonHoc listMH)
+void displayLuaChonMon(ListMonHoc listMH)
 {
     btnQuaylai.ButtonEffect();
     btnTien.ButtonEffect();
@@ -1624,7 +1624,7 @@ void ClickItemCauHoi(NodeCauHoi *&root, ListMonHoc listMH)
             edDapAnD.content = node->info.D;
             edChonMaMon.content = node->info.maMonHoc;
 
-            drawHieuChinhCauHoi( Truy_Xuat_Ten_Mon(listMH, node->info.maMonHoc));
+            drawHieuChinhCauHoi(Truy_Xuat_Ten_Mon(listMH, node->info.maMonHoc));
 
             while (!chucNangThemCauHoi)
             {
@@ -1923,12 +1923,13 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[], ListMonHoc list
 
 //---------------------------------------------------CAI DAT CHUC NANG THI----------------------------------------------------
 
-void displayThietLapThiThu(ListMonHoc listMH, NodeCauHoi *rootCayCauHoi, mangCauHoi &arrCauHoi, Bai_Thi &gvThiThu)
+void displayThietLapThiThu(ListMonHoc listMH, NodeCauHoi *rootCayCauHoi, mangCauHoi &arrCauHoi, Diem_Thi &gvThiThu)
 {
     btnQuaylai.ButtonEffect();
     btnTien.ButtonEffect();
     btnLui.ButtonEffect();
     btnVaoThi.ButtonEffect();
+    btnXemBaiThiThu.ButtonEffect();
     // tim kiem theo nhap tu ban phim, xuat ra man hinh luon
     static int checkTimKiem = 0;
     if (drawList == true)
@@ -1969,6 +1970,7 @@ void displayThietLapThiThu(ListMonHoc listMH, NodeCauHoi *rootCayCauHoi, mangCau
             edsoCau.content = "";
             timKiemMon.content = "";
             outtextTenMon = "";
+            soTrangMon = 1;
             Sleep(100);
         }
         else if (timKiemMon.isMouseHover())
@@ -1993,10 +1995,30 @@ void displayThietLapThiThu(ListMonHoc listMH, NodeCauHoi *rootCayCauHoi, mangCau
             drawList = true;
             btnLui.click = true;
         }
+        else if (btnXemBaiThiThu.isMouseHover())
+        {
+            if (gvThiThu.MAMH.size())
+            {
+                drawXemBaiThiThu(gvThiThu, Truy_Xuat_Ten_Mon(listMH, gvThiThu.MAMH));
+                drawXemLaiBaiLam(gvThiThu.baithi.arrCauHoi, gvThiThu.baithi.slcht);
+                curMenu = XEMBAI_THUTHU;
+            }
+            else
+            {
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong co bai thi thu", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+            }
+        }
         else if (btnVaoThi.isMouseHover())
         {
-            arrCauHoi.arrCauHoiThi = new NodeCauHoi *[countNodeCauHoi(rootCayCauHoi)];
-            taoMangCauHoi(rootCayCauHoi, arrCauHoi, edChonMonThi.ToString());
+            int soLuongCauHoi = 0;
+            if (edChonMonThi.content.size() && edTimeThi.content.size()  && edsoCau.content.size())
+            {
+                demSoCauTheoMaMon(rootCayCauHoi, edChonMonThi.ToString(), soLuongCauHoi);
+                arrCauHoi.arrCauHoiThi = new NodeCauHoi *[soLuongCauHoi];
+                taoMangCauHoi(rootCayCauHoi, arrCauHoi, edChonMonThi.ToString());
+            }
+
             if (edChonMonThi.content.size() == 0)
             {
                 AllocConsole();
@@ -2015,22 +2037,19 @@ void displayThietLapThiThu(ListMonHoc listMH, NodeCauHoi *rootCayCauHoi, mangCau
             else if (taoBaiThiThu(gvThiThu, arrCauHoi, edsoCau.toInt()))
             {
                 curMenu = VAO_THITHU;
+                gvThiThu.MAMH = edChonMonThi.ToString();
                 int giay = edTimeThi.toInt() * 60;
                 drawThi();
-                drawBaiLam(gvThiThu.arrCauHoi);
+                drawBaiLam(gvThiThu.baithi.arrCauHoi);
                 Edit = nullptr;
                 Sleep(100);
                 timer = thread(drawThoiGian, giay);
-            }
-            else
-            {
-                giaiPhongArrCauHoi(arrCauHoi);
             }
         }
     }
 }
 
-void displayThiThu(Bai_Thi &gvThiThu)
+void displayThiThu(Diem_Thi &gvThiThu)
 {
     rdChonA.RadioEffect();
     rdChonB.RadioEffect();
@@ -2042,7 +2061,7 @@ void displayThiThu(Bai_Thi &gvThiThu)
     {
         if (rdChonA.isMouseHover())
         {
-            gvThiThu.arrCauHoi[cauHoiSo - 1].luaChon = 'A';
+            gvThiThu.baithi.arrCauHoi[cauHoiSo - 1].luaChon = 'A';
             rdChonA.click = true;
             rdChonB.click = false;
             rdChonC.click = false;
@@ -2055,7 +2074,7 @@ void displayThiThu(Bai_Thi &gvThiThu)
         }
         else if (rdChonB.isMouseHover())
         {
-            gvThiThu.arrCauHoi[cauHoiSo - 1].luaChon = 'B';
+            gvThiThu.baithi.arrCauHoi[cauHoiSo - 1].luaChon = 'B';
             rdChonA.click = false;
             rdChonB.click = true;
             rdChonC.click = false;
@@ -2068,7 +2087,7 @@ void displayThiThu(Bai_Thi &gvThiThu)
         }
         else if (rdChonC.isMouseHover())
         {
-            gvThiThu.arrCauHoi[cauHoiSo - 1].luaChon = 'C';
+            gvThiThu.baithi.arrCauHoi[cauHoiSo - 1].luaChon = 'C';
             rdChonA.click = false;
             rdChonB.click = false;
             rdChonC.click = true;
@@ -2081,7 +2100,7 @@ void displayThiThu(Bai_Thi &gvThiThu)
         }
         else if (rdChonD.isMouseHover())
         {
-            gvThiThu.arrCauHoi[cauHoiSo - 1].luaChon = 'D';
+            gvThiThu.baithi.arrCauHoi[cauHoiSo - 1].luaChon = 'D';
             rdChonA.click = false;
             rdChonB.click = false;
             rdChonC.click = false;
@@ -2095,12 +2114,12 @@ void displayThiThu(Bai_Thi &gvThiThu)
         else if (btnTien.isMouseHover())
         {
             btnTien.click = true;
-            drawBaiLam(gvThiThu.arrCauHoi);
+            drawBaiLam(gvThiThu.baithi.arrCauHoi);
         }
         else if (btnLui.isMouseHover())
         {
             btnLui.click = true;
-            drawBaiLam(gvThiThu.arrCauHoi);
+            drawBaiLam(gvThiThu.baithi.arrCauHoi);
         }
         else if (btnNopBai.isMouseHover())
         {
@@ -2113,4 +2132,32 @@ void displayThiThu(Bai_Thi &gvThiThu)
     }
 
     // timer.join()
+}
+
+void displayXemBaiThiThu(Diem_Thi gvThiThu)
+{
+    btnTien.ButtonEffect();
+    btnLui.ButtonEffect();
+    btnQuaylai.ButtonEffect();
+    if (GetAsyncKeyState(VK_LBUTTON))
+    {
+        if (btnTien.isMouseHover())
+        {
+            btnTien.click = true;
+            drawXemLaiBaiLam(gvThiThu.baithi.arrCauHoi, gvThiThu.baithi.slcht);
+        }
+        else if (btnLui.isMouseHover())
+        {
+            btnLui.click = true;
+            drawXemLaiBaiLam(gvThiThu.baithi.arrCauHoi, gvThiThu.baithi.slcht);
+        }
+        else if (btnQuaylai.isMouseHover())
+        {
+            outtextTenMon = "";
+            cauHoiSo = 1;
+            drawList = true;
+            curMenu = DISPLAY_GIAOVIEN;
+            drawGV();
+        }
+    }
 }

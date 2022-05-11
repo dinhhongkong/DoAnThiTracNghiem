@@ -62,7 +62,8 @@ int main()
 
     mangCauHoi arrCauHoi;
 
-    Bai_Thi gvThiThu;
+    // Bai_Thi gvThiThu;
+    Diem_Thi gvThiThu;
     drawLogin();
     while (true)
     {
@@ -103,9 +104,13 @@ int main()
         else if ( curMenu == VAO_THITHU) {
             displayThiThu(gvThiThu);
         }
+        else if ( curMenu == XEMBAI_THUTHU) {
+            displayXemBaiThiThu(gvThiThu);
+        }
+
         if ( preMenu == VAO_THITHU) {
             timer.join();
-            giaiPhongArrCauHoi(arrCauHoi);
+            chamBai(gvThiThu);
             preMenu = -1;
         }
         Sleep(75);

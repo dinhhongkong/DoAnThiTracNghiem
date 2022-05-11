@@ -1,4 +1,13 @@
-bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi arr, int soCau)
+void giaiPhongArrCauHoi(mangCauHoi &dsCauHoi) {
+	for ( int i = 0 ; i < dsCauHoi.tongSoCau; i++) {
+        dsCauHoi.arrCauHoiThi[i] = nullptr;
+    }
+	dsCauHoi.tongSoCau = 0;
+    delete []dsCauHoi.arrCauHoiThi;
+
+}
+
+bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi &arr, int soCau)
 {
     int maxSoCau = arr.tongSoCau;
 
@@ -21,21 +30,30 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi arr, int soCau)
         baiThi.arrCauHoi[i].cauHoiThi = arr.arrCauHoiThi[i]->info;
         arr.arrCauHoiThi[i]->info.used = true;
     }
+    cout << "tao bai thi xong giai phong" << endl;
+    giaiPhongArrCauHoi(arr);
     return true;
 }
 
-bool taoBaiThiThu(Bai_Thi &baiThi, mangCauHoi arr, int soCau)
+bool taoBaiThiThu(Diem_Thi &gvThiThu, mangCauHoi &arr, int soCau)
 {
     int maxSoCau = arr.tongSoCau;
 
     if (soCau > maxSoCau)
     {
+        cout << "ko tao dc bai thi xong giai phong" << endl;
+        giaiPhongArrCauHoi(arr);
         AllocConsole();
         MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "So luong cau hoi khong du", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
         return false;
     }
-    baiThi.slcht = soCau;
-    baiThi.arrCauHoi = new cauHoiThi[soCau];
+    
+    if (gvThiThu.MAMH.size()) {
+        delete []gvThiThu.baithi.arrCauHoi;
+    }
+
+    gvThiThu.baithi.slcht = soCau;
+    gvThiThu.baithi.arrCauHoi = new cauHoiThi[soCau];
     for (int i = 0; i < maxSoCau; i++)
     {
         int vitri = randomNumber(0, maxSoCau);
@@ -44,8 +62,10 @@ bool taoBaiThiThu(Bai_Thi &baiThi, mangCauHoi arr, int soCau)
 
     for (int i = 0; i < soCau; i++)
     {
-        baiThi.arrCauHoi[i].cauHoiThi = arr.arrCauHoiThi[i]->info;
+        gvThiThu.baithi.arrCauHoi[i].cauHoiThi = arr.arrCauHoiThi[i]->info;
     }
+    cout <<"giai phong" << endl;
+    giaiPhongArrCauHoi(arr);
     return true;
 }
 
