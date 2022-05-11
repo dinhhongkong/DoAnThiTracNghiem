@@ -261,7 +261,6 @@ void Doc_File_Cau_Hoi(NodeCauHoi*& root) {
 		filein >> cauHoiFile->info.DapAn;
 		filein.ignore();
 		Them_Cau_Hoi_File(root, cauHoiFile);
-		cout << "them thanh cong " << endl;
 	}
 }
 

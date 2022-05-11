@@ -15,7 +15,7 @@ void Luu_File_Mon_Hoc(ListMonHoc listMH);
 void Doc_File_Mon_Hoc(ListMonHoc &listMH)
 {
 	ifstream filein;
-	filein.open("DATA\\DANHSACHMONHOC.txt", ios_base::in);
+	filein.open("DATA\\FileDSMon.txt", ios_base::in);
 	if (!filein.is_open())
 		return;
 
@@ -35,7 +35,7 @@ void Doc_File_Mon_Hoc(ListMonHoc &listMH)
 void Luu_File_Mon_Hoc(ListMonHoc listMH)
 {
 	ofstream fileout;
-	fileout.open("DATA\\DANHSACHMONHOC.txt", ios_base::out);
+	fileout.open("DATA\\FileDSMon.txt", ios_base::out);
 	fileout << listMH.slmh << endl; // bo xung
 	for (int i = 0; i < listMH.slmh; i++)
 	{

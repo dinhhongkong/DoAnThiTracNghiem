@@ -180,7 +180,6 @@ void ghiFileDSlop(dslop DanhSachLop)
     fileOut.open("DATA\\FileDSLop.txt", ios_base::out);
     if (!fileOut.is_open())
     {
-        cout << "Failed to open FileDSLop.txt file!" << endl;
         return;
     }
 

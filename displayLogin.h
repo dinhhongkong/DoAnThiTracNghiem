@@ -70,7 +70,6 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, int arrID[], NodeCauHoi
                                 if (btndangxuat.click == true)
                                 {
                                     btndangxuat.click = false;
-                                    cout << curMenu << endl;
                                     return;
                                 }
                                 if (preMenu == DISPLAY_HSTHI)

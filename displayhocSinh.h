@@ -269,7 +269,6 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCa
             int soLuongCauHoi = 0;
             if (edChonMonThi.content.size() && edTimeThi.content.size() && edsoCau.content.size())
             {
-                cout << "cap phat" << endl;
                 demSoCauTheoMaMon(root, edChonMonThi.ToString(), soLuongCauHoi);
                 arrCauHoi.arrCauHoiThi = new NodeCauHoi *[soLuongCauHoi];
                 taoMangCauHoi(root, arrCauHoi, edChonMonThi.ToString());

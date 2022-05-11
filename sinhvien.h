@@ -241,7 +241,6 @@ bool ChinhSuaSinhVien(dslop DanhSachLop, listSV &DsSinhVien, nodeSV *&nodeHieuCh
 	}
 	//rename(oldname, newname) // ham chinh sua ten file
     string newname = "DATA\\bai thi\\" + nodeHieuChinh->info.mssv + ".txt";
-	cout << oldname << endl << newname << endl;
 	rename(&oldname[0], &newname[0]);
 	AllocConsole();
 	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thong tin sinh vien thanh cong", "Thong bao", MB_OK);
@@ -355,6 +354,5 @@ void ghiFileDsSinhVien(listSV &dsSinhVien, string maLop)
 		
 		temp = temp->pNext;
 	}
-	cout << "ghi thanh cong sv" << endl;
 	fileOut.close();
 }

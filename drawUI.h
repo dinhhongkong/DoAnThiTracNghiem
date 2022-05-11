@@ -1012,7 +1012,6 @@ void drawDsCauHoi(NodeCauHoi *rootCauHoi)
     {
         soTrangCauHoi--;
     }
-    cout << "so trang cau hoi:" << soTrangCauHoi << endl;
     btnTien.click = false;
     btnLui.click = false;
     setbkcolor(BLACK);
@@ -1369,7 +1368,6 @@ void drawXemBaiThiThu( Diem_Thi diem, string TenMon)
     string mssv = "MSSV: " ;
     string Lop = "Lop: ";
     TenMon = "Mon: " + TenMon;
-    cout << TenMon << endl;
     string SoCau = "So cau hoi: " + to_string(diem.baithi.slcht);
     setcolor(WHITE);
     outtextxy(1130, 100, &ho[0]);

@@ -1284,7 +1284,6 @@ void ClickItemDsDiemGV(listSV dsSinhVien, string maMon, string tenLop)
             Node_Diem_Thi *nodeDiem = nullptr;
             for (int i = 0; i < listviewDS.idItem[LuaChon]; i++)
             {
-                cout << "bug 2" << endl;
                 if (nodesv == nullptr)
                 {
                     break;

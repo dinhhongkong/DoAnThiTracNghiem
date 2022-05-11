@@ -30,7 +30,6 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi &arr, int soCau)
         baiThi.arrCauHoi[i].cauHoiThi = arr.arrCauHoiThi[i]->info;
         arr.arrCauHoiThi[i]->info.used = true;
     }
-    cout << "tao bai thi xong giai phong" << endl;
     giaiPhongArrCauHoi(arr);
     return true;
 }
@@ -41,7 +40,6 @@ bool taoBaiThiThu(Diem_Thi &gvThiThu, mangCauHoi &arr, int soCau)
 
     if (soCau > maxSoCau)
     {
-        cout << "ko tao dc bai thi xong giai phong" << endl;
         giaiPhongArrCauHoi(arr);
         AllocConsole();
         MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "So luong cau hoi khong du", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
@@ -64,7 +62,6 @@ bool taoBaiThiThu(Diem_Thi &gvThiThu, mangCauHoi &arr, int soCau)
     {
         gvThiThu.baithi.arrCauHoi[i].cauHoiThi = arr.arrCauHoiThi[i]->info;
     }
-    cout <<"giai phong" << endl;
     giaiPhongArrCauHoi(arr);
     return true;
 }
@@ -150,14 +147,11 @@ bool docBaiThi(string mssv, Danh_Sach_Diem_Thi &dsDiem)
         fileIn >> diemthi.Diem;
         fileIn >> diemthi.baithi.slcht;
         diemthi.baithi.arrCauHoi = new cauHoiThi[diemthi.baithi.slcht];
-        cout << diemthi.MAMH << endl
-             << diemthi.Diem << endl
-             << diemthi.baithi.slcht << endl;
+
         for (int i = 0; i < diemthi.baithi.slcht; i++)
         {
             fileIn >> diemthi.baithi.arrCauHoi[i].cauHoiThi.id;
             fileIn.ignore();
-            cout << diemthi.baithi.arrCauHoi[i].cauHoiThi.id << endl;
             getline(fileIn, diemthi.baithi.arrCauHoi[i].cauHoiThi.NoiDung, '\n');
             getline(fileIn, diemthi.baithi.arrCauHoi[i].cauHoiThi.A, '\n');
             getline(fileIn, diemthi.baithi.arrCauHoi[i].cauHoiThi.B, '\n');
