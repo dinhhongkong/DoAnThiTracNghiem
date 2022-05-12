@@ -29,6 +29,7 @@ void displayHocSinh(ListMonHoc listMH, listSV &dsSinhVien, sinhVien &sv, string 
         {
             curMenu = DISPLAY_DIEMSV;
             drawDiemSV();
+            listviewDS.size = 0;
             drawDsDiemSV(sv.listDT, listMH);
         }
     }

@@ -1,7 +1,7 @@
 // const int w  = 1600;
 // const int h  = 900;
 
-void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, int arrID[], NodeCauHoi *root ,mangCauHoi arrCauHoi)
+void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, NodeCauHoi *root ,mangCauHoi arrCauHoi)
 {
     dangnhap.ButtonEffect();
     if (GetAsyncKeyState(VK_LBUTTON))

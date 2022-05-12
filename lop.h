@@ -113,8 +113,8 @@ bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop)
 
     }
     //rename(oldname, newname) // ham chinh sua ten file
-    string oldname = "DATA\\" + ds.arrLop[viTri].MALOP + ".txt";
-    string newname = "DATA\\" + maLop + ".txt";
+    string oldname = "DATA\\FileDSSinhVien\\" + ds.arrLop[viTri].MALOP + ".txt";
+    string newname = "DATA\\FileDSSinhVien" + maLop + ".txt";
     rename(&oldname[0], &newname[0]);
     ds.arrLop[viTri].MALOP = maLop;
     ds.arrLop[viTri].TENLOP = tenLop;

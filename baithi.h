@@ -21,8 +21,8 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi &arr, int soCau)
     baiThi.arrCauHoi = new cauHoiThi[soCau];
     for (int i = 0; i < maxSoCau; i++)
     {
-        int vitri = randomNumber(0, maxSoCau);
-        swap(arr.arrCauHoiThi[i], arr.arrCauHoiThi[randomNumber(0, maxSoCau)]);
+        int vitri = Random(0, maxSoCau -1);
+        swap(arr.arrCauHoiThi[i], arr.arrCauHoiThi[vitri]);
     }
 
     for (int i = 0; i < soCau; i++)
@@ -54,8 +54,8 @@ bool taoBaiThiThu(Diem_Thi &gvThiThu, mangCauHoi &arr, int soCau)
     gvThiThu.baithi.arrCauHoi = new cauHoiThi[soCau];
     for (int i = 0; i < maxSoCau; i++)
     {
-        int vitri = randomNumber(0, maxSoCau);
-        swap(arr.arrCauHoiThi[i], arr.arrCauHoiThi[randomNumber(0, maxSoCau)]);
+        int vitri = Random(0, maxSoCau -1);
+        swap(arr.arrCauHoiThi[i], arr.arrCauHoiThi[vitri]);
     }
 
     for (int i = 0; i < soCau; i++)
@@ -105,7 +105,7 @@ void chamBai(Diem_Thi &chamThi)
 void luuBaiThi(string mssv, Danh_Sach_Diem_Thi dsDiem)
 {
     ofstream fileOut;
-    string fileName = "DATA\\bai thi\\" + mssv + ".txt";
+    string fileName = "DATA\\FileDSDiem\\" + mssv + ".txt";
     fileOut.open(fileName, ios_base::out);
 
     Node_Diem_Thi *nodeDiemThi = dsDiem.first;
@@ -133,7 +133,7 @@ void luuBaiThi(string mssv, Danh_Sach_Diem_Thi dsDiem)
 bool docBaiThi(string mssv, Danh_Sach_Diem_Thi &dsDiem)
 {
     ifstream fileIn;
-    string fileName = "DATA\\bai thi\\" + mssv + ".txt";
+    string fileName = "DATA\\FileDSDiem\\" + mssv + ".txt";
     fileIn.open(fileName, ios_base::in);
     if (!fileIn.is_open())
     {

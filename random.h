@@ -1,55 +1,60 @@
+struct IDRandom {
+	int ID;
+	IDRandom* next;
+};
 
-// random [a, b)
-int randomNumber(int a, int b) {
-    return rand() % (b-a) + a;
+IDRandom* Tao_IDNode(int ID) {
+	IDRandom* Node = new IDRandom;
+	Node->ID = ID;
+	Node->next = nullptr;
+	return Node;
 }
 
-void RandomArrNumber(int arr[])
-{
-    for (int i = 0; i < MAX_RANDOM; i++)
-    {
-        arr[i] = i;
-    }
-
-    int temp;
-    for (int i = 0; i < MAX_RANDOM; i++)
-    {
-        temp = rand() % MAX_RANDOM ;
-        swap(arr[i], arr[temp]);
-    }
+//Gọi hàm này vào đầu chương trình
+void Tao_MIN_MAX(IDRandom*& first, int ID) {
+	IDRandom* ptr = Tao_IDNode(ID);
+	if (first == nullptr) {
+		first = ptr;
+	}
+	else {
+		first->next = ptr;
+	}
 }
 
-void ghiFileRandom(int arr[])
-{
-    ofstream fileOut;
-    fileOut.open("DATA\\Random.txt", ios_base::out);
-   
-
-    for (int i = 0; i < MAX_RANDOM; i++)
-    {
-        fileOut << arr[i] << " ";
-    }
-
-    fileOut.close();
+//Gọi hàm này khi đọc file câu hỏi
+void Them_ID(IDRandom*& first, int ID) {
+	IDRandom* ptr = first;
+	while (ptr->next->ID < ID) ptr = ptr->next;
+	IDRandom* Node = Tao_IDNode(ID);
+	Node->next = ptr->next;
+	ptr->next = Node;
 }
 
-void docFileRandom(int arr[])
-{
-    ifstream fileIn;
-    fileIn.open("DATA\\Random.txt", ios_base::in);
-    
-    // neu doc that bai, hay ko có file random thì tạo file random
-    if ( !fileIn.is_open() ) {
-        fileIn.close();
-        RandomArrNumber(arr);
-        ghiFileRandom(arr);
-        return;
-    }
-
-    for (int i = 0; i < MAX_RANDOM ; i++)
-    {
-        fileIn >> arr[i] ;
-    }
-    fileIn.close();
+//Gọi hàm này khi xóa câu hỏi
+void Xoa_ID(IDRandom*& first, int ID) {
+	IDRandom* ptr = first;
+	while (ptr->next->ID != ID) ptr = ptr->next;
+	IDRandom* tmp = ptr->next;
+	ptr->next = tmp->next;
+	delete tmp;
 }
 
+
+// [min max]
+int Random(int Min, int Max) {
+	return Min + rand() % (Max + 1 - Min);
+}
+
+//Dùng hàm này khi cấp phát ID
+int Cap_ID(IDRandom* first) {
+	IDRandom* ptr = first;
+	while (ptr->next != nullptr && ptr->next->ID - ptr->ID == 1) ptr = ptr->next;
+	if (ptr->next == nullptr) {
+		return 0; //Hệ thống câu hỏi đã đầy, không thể thêm câu hỏi
+	}
+	else {
+		int ID = Random(ptr->ID + 1, ptr->next->ID - 1); //Lấy trong đoạn (Min ; Max)
+		Them_ID(first, ID);
+		return ID;
+	}
+}

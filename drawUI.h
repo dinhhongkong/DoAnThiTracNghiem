@@ -74,7 +74,7 @@ void drawDsDiemSV(Danh_Sach_Diem_Thi listDT, ListMonHoc listMH)
         soLuong++;
         nodeDiem = nodeDiem->DTnext;
     }
-
+    listviewDS.size = 0;
     setbkcolor(BLACK);
 
     if (soLuong <= 10)
@@ -101,7 +101,7 @@ void drawDsDiemSV(Danh_Sach_Diem_Thi listDT, ListMonHoc listMH)
     bar(760, 825, 850, 850);
     setcolor(WHITE);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
-    outtextxy(w /2 + textwidth(&textTrang[0]) -20,825,&textTrang[0]) ;  
+    outtextxy(w / 2 + textwidth(&textTrang[0]) - 20, 825, &textTrang[0]);
     nodeDiem = listDT.first;
     if (nodeDiem != nullptr)
     {
@@ -990,6 +990,32 @@ void outTextCauHoi(NodeCauHoi *rootCauHoi, int &i, int &j)
     }
 }
 
+void outTextTimKiemCauHoi(NodeCauHoi *rootCauHoi, int &i)
+{
+    if (i == 10)
+    {
+        return;
+    }
+
+    // duyet LNR
+    if (rootCauHoi != nullptr)
+    {
+        if ( rootCauHoi->info.id == timKiemCauHoi.toInt() || FIND(rootCauHoi->info.NoiDung,timKiemCauHoi.ToSearch()) || FIND(rootCauHoi->info.maMonHoc, timKiemCauHoi.ToSearch()) )
+        {
+            listviewDS.idItem[i] = rootCauHoi->key;
+            listviewDS.size++;
+            string Key = to_string(rootCauHoi->key);
+            outtextxy(xDsCauHoi[0] + 15, yDsCauHoi[0] + 20 + i * 50, &Key[0]);
+            outtextxy(xDsCauHoi[1] + 25, yDsCauHoi[0] + 20 + i * 50, &rootCauHoi->info.maMonHoc[0]);
+            outtextxy(xDsCauHoi[2] + 10, yDsCauHoi[0] + 20 + i * 50, &rootCauHoi->info.NoiDung[0]);
+            i++;
+        }
+
+        outTextTimKiemCauHoi(rootCauHoi->left, i);
+        outTextTimKiemCauHoi(rootCauHoi->right, i);
+    }
+}
+
 void drawDsCauHoi(NodeCauHoi *rootCauHoi)
 {
     setfillstyle(1, BLACK);
@@ -1029,6 +1055,11 @@ void drawDsCauHoi(NodeCauHoi *rootCauHoi)
         outTextCauHoi(rootCauHoi, i, j);
         outtextxy(400, 825, &textTrang[0]);
     }
+    else if (timKiemCauHoi.content.size())
+    {
+        int i = 0;
+        outTextTimKiemCauHoi(rootCauHoi, i);
+    }
 }
 
 void drawThemCauHoi()
@@ -1043,9 +1074,9 @@ void drawThemCauHoi()
     // outtextxy(1140, 230, "XEM CAU HOI");
     settextstyle(0, 0, 3);
     setcolor(YELLOW);
-    outtextxy(1200 - textwidth("THEM CAU HOI") /2, 220, "THEM CAU HOI");
+    outtextxy(1200 - textwidth("THEM CAU HOI") / 2, 220, "THEM CAU HOI");
     settextstyle(0, 0, 2);
-    outtextxy(1200 - textwidth(&outtextTenMon[0]) /2, 260, &outtextTenMon[0]);
+    outtextxy(1200 - textwidth(&outtextTenMon[0]) / 2, 260, &outtextTenMon[0]);
 
     edCauHoi.draw();
     edDapAnA.draw();
@@ -1077,11 +1108,11 @@ void drawHieuChinhCauHoi(string tenMon)
     outtextTenMon = "";
     settextstyle(0, 0, 3);
     setcolor(YELLOW);
-    outtextxy(1200 - textwidth("HIEU CHINH CAU HOI") /2, 220, "HIEU CHINH CAU HOI");
+    outtextxy(1200 - textwidth("HIEU CHINH CAU HOI") / 2, 220, "HIEU CHINH CAU HOI");
 
     settextstyle(0, 0, 2);
     tenMon = "Mon: " + tenMon;
-    outtextxy(1200 - textwidth(&tenMon[0]) /2, 260, &tenMon[0]);
+    outtextxy(1200 - textwidth(&tenMon[0]) / 2, 260, &tenMon[0]);
 
     edCauHoi.draw();
     edDapAnA.draw();
@@ -1328,7 +1359,7 @@ void drawXemBaiThi(sinhVien SV, Diem_Thi diem, string Lop = "")
     setcolor(WHITE);
 }
 
-void drawXemBaiThiThu( Diem_Thi diem, string TenMon)
+void drawXemBaiThiThu(Diem_Thi diem, string TenMon)
 {
     setbkcolor(BLACK);
     cleardevice();
@@ -1365,7 +1396,7 @@ void drawXemBaiThiThu( Diem_Thi diem, string TenMon)
     setcolor(YELLOW);
 
     string ho = "Ho va Ten: ";
-    string mssv = "MSSV: " ;
+    string mssv = "MSSV: ";
     string Lop = "Lop: ";
     TenMon = "Mon: " + TenMon;
     string SoCau = "So cau hoi: " + to_string(diem.baithi.slcht);
@@ -1583,7 +1614,7 @@ void drawThietLapThi()
     bar(1050, 200, 1550, 300);
     setcolor(YELLOW);
     settextstyle(0, 0, 3);
-    outtextxy(1300 - textwidth( "MON THI")/2, 220, "MON THI");
+    outtextxy(1300 - textwidth("MON THI") / 2, 220, "MON THI");
 
     rectangle(1050, 200, 1550, 700);
     line(1050, 300, 1550, 300);
@@ -1593,7 +1624,8 @@ void drawThietLapThi()
     edTimeThi.draw();
     edsoCau.draw();
     btnVaoThi.draw();
-    if (curMenu == DISPLAY_THITHU) {
+    if (curMenu == DISPLAY_THITHU)
+    {
         btnXemBaiThiThu.draw();
     }
 

@@ -12,7 +12,8 @@ const int h  = 900;
 //     5 = Purple      D = Light Purple
 //     6 = Yellow      E = Light Yellow
 //     7 = White       F = Bright White
-#define MAX_RANDOM 5000
+#define MAX_ID 5001
+#define MIN_ID 0
 // #define MAX_CAUHOI 1000
 
 

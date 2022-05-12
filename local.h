@@ -27,7 +27,7 @@ editText matKhauMoi(500, 400, 600, 50, "Mat khau moi: ", "Nhan chu, so, ki tu da
 editText nhapLaiMatKhau(500, 500, 600, 50, "Nhap lai MK: ", "Nhan chu, so, ki tu dac biet (chu y CapsLock)", 20, 1);
 button btnDoiMKMoi(700, 600, 200, 50, "DOI MAT KHAU");
 
-int xDsDiemSV[4] = {350, 550, 1100, 1250} ;
+int xDsDiemSV[4] = {350, 550, 1100, 1250};
 int yDsDiemSV[2] = {250, 750};
 
 // man hinh giao vien
@@ -109,7 +109,7 @@ button btnThemCauHoi(1100, 695, 200, 50, "THEM CAU HOI");
 button btnHieuChinhCauHoi(950, 695, 200, 50, "HIEU CHINH");
 button btnThoatHieuChinhCH(850, 20, 220, 50, "< THOAT HIEU CHINH");
 button btnXoaCauHoi(1250, 695, 200, 50, "XOA");
-editText timKiemCauHoi(100, 100, 600, 50, "TIM KIEM: ", "Nhap cau hoi muon tim", 100);
+editText timKiemCauHoi(100, 100, 600, 50, "TIM KIEM: ", "Nhap ma mon hoac cau hoi muon tim", 100);
 
 // chuc nang tuy chon truoc khi thi
 string outtextTenMon;
@@ -276,7 +276,6 @@ void ClearStream()
     }
 }
 
-
 // xoa so thap phan bi du, VD: 10.0000000 -> 10
 void xoaSoThapPhan(string &s)
 {
@@ -296,5 +295,33 @@ void xoaSoThapPhan(string &s)
             break;
         }
     }
-    
+}
+
+bool FIND(string ChuoiCanTim, string timkiem)
+{
+    if (timkiem.size() > ChuoiCanTim.size())
+    {
+        return false;
+    }
+
+    for (int i = 0; i < ChuoiCanTim.size(); i++)
+    {
+        int j = 0;
+        if (ChuoiCanTim[i] == timkiem[j])
+        {
+            int k = i;
+            while (ChuoiCanTim[i] == timkiem[j] && j < timkiem.size())
+            {
+                j++;
+                i++;
+            }
+            if (j == timkiem.size()) {
+                return true;
+            }
+            else {
+                i = k;
+            }
+        }
+    }
+    return false;
 }

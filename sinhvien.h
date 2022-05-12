@@ -321,7 +321,7 @@ int SizeListSV(listSV l)
 void DocDsSinhVien(listSV &dsSinhVien, string maLop)
 {
 	ifstream fileIn;
-	string nameFILE = "DATA\\" + maLop + ".txt";
+	string nameFILE = "DATA\\FileDSSinhVien\\" + maLop + ".txt";
 	fileIn.open(nameFILE, ios_base::in);
 	if (!fileIn.is_open())
 	{
@@ -345,7 +345,7 @@ void DocDsSinhVien(listSV &dsSinhVien, string maLop)
 void ghiFileDsSinhVien(listSV &dsSinhVien, string maLop)
 {
 	ofstream fileOut;
-	string nameFILE = "DATA\\" + maLop + ".txt";
+	string nameFILE = "DATA\\FileDSSinhVien\\" + maLop + ".txt";
 	fileOut.open(nameFILE, ios_base::out);
 	nodeSV *temp = dsSinhVien.First;
 	while (temp != nullptr)

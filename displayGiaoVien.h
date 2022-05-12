@@ -1552,7 +1552,7 @@ void batSKnhapCauHoi()
     }
 }
 
-void ClickItemCauHoi(NodeCauHoi *&root, ListMonHoc listMH)
+void ClickItemCauHoi(NodeCauHoi *&root, ListMonHoc listMH, IDRandom *&listID)
 {
     int x = -1, y = -1;
     x = mousex();
@@ -1683,7 +1683,7 @@ void ClickItemCauHoi(NodeCauHoi *&root, ListMonHoc listMH)
                                 btnDapAnB.click = false;
                                 btnDapAnC.click = false;
                                 btnDapAnD.click = false;
-                                timKiemCauHoi.content = "";
+                                //timKiemCauHoi.content = "";
                                 edDapAnA.content = "";
                                 edCauHoi.content = "";
                                 edDapAnB.content = "";
@@ -1697,7 +1697,7 @@ void ClickItemCauHoi(NodeCauHoi *&root, ListMonHoc listMH)
                         else if (btnXoaCauHoi.isMouseHover())
                         {
                             AllocConsole();
-                            if (MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ban cho chac chan muon xoa", "Thong bao", MB_ICONQUESTION | MB_OK) == IDOK)
+                            if (MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ban cho chac chan muon xoa", "Thong bao", MB_ICONQUESTION | MB_OKCANCEL) == IDOK)
                             {
                                 NodeCauHoi *xoaNode = Tim_Kiem_Key(root, listviewDS.idItem[LuaChon]);
                                 if (xoaNode->info.used)
@@ -1707,17 +1707,21 @@ void ClickItemCauHoi(NodeCauHoi *&root, ListMonHoc listMH)
                                 }
                                 else
                                 {
-                                    Xoa_Cau_Hoi(root, listviewDS.idItem[LuaChon]);
+
+                                    root = Xoa_Cau_Hoi(root, listviewDS.idItem[LuaChon]);
+                                    Xoa_ID(listID,listviewDS.idItem[LuaChon]);
                                     Luu_File_Cau_Hoi(root);
                                     AllocConsole();
                                     MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Xoa thanh cong", "Thong bao", MB_OK);
+                                    setfillstyle(1,BLACK);
+                                    bar(0, yDsCauHoi[0] + 20 + PreLuaChon * 50 - 10, xDsCauHoi[0] - 5, yDsCauHoi[0] + 20 + PreLuaChon * 50 + 30);
                                     drawList = true;
                                     chucNangThemCauHoi = true;
                                     btnDapAnA.click = false;
                                     btnDapAnB.click = false;
                                     btnDapAnC.click = false;
                                     btnDapAnD.click = false;
-                                    timKiemCauHoi.content = "";
+                                    //timKiemCauHoi.content = "";
                                     edDapAnA.content = "";
                                     edCauHoi.content = "";
                                     edDapAnB.content = "";
@@ -1734,13 +1738,13 @@ void ClickItemCauHoi(NodeCauHoi *&root, ListMonHoc listMH)
                         {
                             setfillstyle(1, BLACK);
                             bar(850, 20, 1070, 70);
-                            drawList = true;
+                            // drawList = true;
                             chucNangThemCauHoi = true;
                             btnDapAnA.click = false;
                             btnDapAnB.click = false;
                             btnDapAnC.click = false;
                             btnDapAnD.click = false;
-                            timKiemCauHoi.content = "";
+                            // timKiemCauHoi.content = "";
                             edDapAnA.content = "";
                             edCauHoi.content = "";
                             edDapAnB.content = "";
@@ -1771,7 +1775,7 @@ void ClickItemCauHoi(NodeCauHoi *&root, ListMonHoc listMH)
     }
 }
 
-void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[], ListMonHoc listMH)
+void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi,IDRandom *&listID, ListMonHoc listMH)
 {
 
     static int checkTimKiem = 0;
@@ -1810,7 +1814,7 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[], ListMonHoc list
     btnChonMaMon.ButtonEffect();
     btnXoaMaMon.ButtonEffect();
 
-    ClickItemCauHoi(rootCauHoi, listMH);
+    ClickItemCauHoi(rootCauHoi, listMH, listID);
 
     if (GetAsyncKeyState(VK_LBUTTON))
     {
@@ -1860,7 +1864,7 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[], ListMonHoc list
         if (GetAsyncKeyState(VK_LBUTTON) && btnThemCauHoi.isMouseHover() && kiemTraNhapCauHoi())
         {
 
-            int id = arrID[countNodeCauHoi(rootCauHoi)];
+            int id = Cap_ID(listID);
             CauHoi cauHoiMoi;
             cauHoiMoi.id = id;
             cauHoiMoi.NoiDung = edCauHoi.ToString();
@@ -1896,11 +1900,7 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[], ListMonHoc list
                 btnDapAnB.click = false;
                 btnDapAnC.click = false;
                 btnDapAnD.click = false;
-                btnDapAnA.draw();
-                btnDapAnB.draw();
-                btnDapAnC.draw();
-                btnDapAnD.draw();
-
+                outtextTenMon = "";
                 edDapAnA.content = "";
                 edCauHoi.content = "";
                 edDapAnB.content = "";
@@ -1908,12 +1908,7 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, int arrID[], ListMonHoc list
                 edDapAnD.content = "";
                 edCauHoi.content = "";
                 edChonMaMon.content = "";
-                edCauHoi.draw();
-                edChonMaMon.draw();
-                edDapAnA.draw();
-                edDapAnB.draw();
-                edDapAnC.draw();
-                edDapAnD.draw();
+                drawThemCauHoi();
                 drawList = true;
             }
         }
