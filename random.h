@@ -1,8 +1,3 @@
-struct IDRandom {
-	int ID;
-	IDRandom* next;
-};
-
 IDRandom* Tao_IDNode(int ID) {
 	IDRandom* Node = new IDRandom;
 	Node->ID = ID;

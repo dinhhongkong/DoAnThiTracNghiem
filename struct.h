@@ -127,6 +127,11 @@ struct dslop
     lop arrLop[MAXLOP]; // danh sach tuyen tinh
 };
 
+//-----------------------------------CAU TRUC RANDOM--------------------------
+struct IDRandom {
+	int ID;
+	IDRandom* next;
+};
 
 
 

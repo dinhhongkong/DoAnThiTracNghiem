@@ -9,7 +9,7 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
 
         if (dangnhap.isMouseHover())
         {
-            if (taiKhoan.ToString() == "GV" || matKhau.content == "GV")
+            if (taiKhoan.ToString() == "GV" && matKhau.content == "GV")
             {
                 curMenu = DISPLAY_GIAOVIEN;
                 drawGV();
