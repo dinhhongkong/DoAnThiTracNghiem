@@ -18,8 +18,7 @@ public:
 		this->title = title;
 	}
 
-
-	// vẽ cái nút
+	//Ve nut
 	void draw()
 	{
 		setfillstyle(SOLID_FILL, click ? BG_BUTTON_CLICK : (isHover ? BG_BUTTON_SELECT : BG_BUTTON_DEFAULT));
@@ -45,7 +44,7 @@ public:
 		return false;
 	}
 
-	// hiệu ứng khi lướt chuột qua đổi màu
+	//Hieu ung doi mau khi luot chuot qua
 	void ButtonEffect()
 	{
 		if (isMouseHover())
@@ -66,73 +65,3 @@ public:
 		}
 	}
 };
-
-// test code
-
-// button a(1, 100, 100, 200, 100, "cau a");
-// button b(2, 400, 100, 200, 100, "cau b");
-// button c(2, 100, 300, 200, 100, "cau c");
-// button d(2, 400, 300, 200, 100, "cau d");
-
-// void DeleteClickAnswer(button &a, button &b, button &c)
-// {
-// 	a.click = false;
-// 	b.click = false;
-// 	c.click = false;
-// 	a.draw();
-// 	b.draw();
-// 	c.draw();
-// }
-
-// void MenuEvent()
-// {
-// 	a.ButtonEffect();
-// 	b.ButtonEffect();
-// 	c.ButtonEffect();
-// 	d.ButtonEffect();
-// 	if (GetAsyncKeyState(VK_LBUTTON))
-// 	{
-// 		if (a.isMouseHover())
-// 		{
-// 			a.click = true;
-// 			cout << "hello " << endl;
-// 			DeleteClickAnswer(b,c,d);
-// 		}
-// 		if (b.isMouseHover())
-// 		{
-// 			b.click = true;
-// 			cout << "cau b ne" << endl;
-// 			DeleteClickAnswer(a,c,d);
-// 		}
-// 		if (c.isMouseHover()) {
-// 			c.click = true;
-// 			cout << "cau c ne" << endl;
-// 			DeleteClickAnswer(b,a,d);
-// 		}
-// 		if (d.isMouseHover()) {
-// 			d.click = true;
-// 			cout << "cau d ne" << endl;
-// 			DeleteClickAnswer(b,c,a);
-// 		}
-
-// 	}
-// }
-
-// int main()
-// {
-
-// 	initwindow(1000, 800, "man hinh do hoa");
-// 	a.draw();
-// 	b.draw();
-// 	c.draw();
-// 	d.draw();
-	
-// 	while (true)
-// 	{
-
-// 		MenuEvent();
-// 		Sleep(100);
-// 	}
-
-// 	getch();
-// }

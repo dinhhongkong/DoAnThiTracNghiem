@@ -1,3 +1,12 @@
+//--------------------------------- NGUYEN MAU HAM ---------------------------------
+IDRandom* Tao_IDNode(int ID);
+void Tao_MIN_MAX(IDRandom*& first, int ID); //Call this function when the program starts
+void Them_ID(IDRandom*& first, int ID); //Call this function when read FileDSCauHoi.txt
+void Xoa_ID(IDRandom*& first, int ID); //Call this function when delete a question
+int Random(int Min, int Max); //Get a random number between Min and Max
+int Cap_ID(IDRandom* first); //Call this function when create an ID for a question
+
+//--------------------------------- DINH NGHIA HAM ---------------------------------
 IDRandom* Tao_IDNode(int ID) {
 	IDRandom* Node = new IDRandom;
 	Node->ID = ID;
@@ -5,7 +14,6 @@ IDRandom* Tao_IDNode(int ID) {
 	return Node;
 }
 
-//Gọi hàm này vào đầu chương trình
 void Tao_MIN_MAX(IDRandom*& first, int ID) {
 	IDRandom* ptr = Tao_IDNode(ID);
 	if (first == nullptr) {
@@ -16,7 +24,6 @@ void Tao_MIN_MAX(IDRandom*& first, int ID) {
 	}
 }
 
-//Gọi hàm này khi đọc file câu hỏi
 void Them_ID(IDRandom*& first, int ID) {
 	IDRandom* ptr = first;
 	while (ptr->next->ID < ID) ptr = ptr->next;
@@ -25,7 +32,6 @@ void Them_ID(IDRandom*& first, int ID) {
 	ptr->next = Node;
 }
 
-//Gọi hàm này khi xóa câu hỏi
 void Xoa_ID(IDRandom*& first, int ID) {
 	IDRandom* ptr = first;
 	while (ptr->next->ID != ID) ptr = ptr->next;
@@ -34,21 +40,18 @@ void Xoa_ID(IDRandom*& first, int ID) {
 	delete tmp;
 }
 
-
-// [min max]
 int Random(int Min, int Max) {
 	return Min + rand() % (Max + 1 - Min);
 }
 
-//Dùng hàm này khi cấp phát ID
 int Cap_ID(IDRandom* first) {
 	IDRandom* ptr = first;
 	while (ptr->next != nullptr && ptr->next->ID - ptr->ID == 1) ptr = ptr->next;
 	if (ptr->next == nullptr) {
-		return 0; //Hệ thống câu hỏi đã đầy, không thể thêm câu hỏi
+		return 0; //The list is full. Can't add more
 	}
 	else {
-		int ID = Random(ptr->ID + 1, ptr->next->ID - 1); //Lấy trong đoạn (Min ; Max)
+		int ID = Random(ptr->ID + 1, ptr->next->ID - 1);
 		Them_ID(first, ID);
 		return ID;
 	}

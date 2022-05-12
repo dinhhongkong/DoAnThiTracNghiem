@@ -1,17 +1,13 @@
-// // --------------------------- CHUC NANG PHU ------------------------------
-// void Chuan_Hoa_MAMH(string& maMH);
-// void Chuan_Hoa_TENMH(string& tenMH);
-// int Tim_Kiem_MAMH(ListMonHoc listMH, string maMH);
-// int Tim_Kiem_TENMH(ListMonHoc listMH, string tenMH);
-
-// // --------------------------- CHUC NANG CHINH -----------------------------
+//--------------------------------- NGUYEN MAU HAM ---------------------------------
 bool Them_Mon_Hoc(ListMonHoc &listMH, Mon_Hoc mh);
-void Xuat_Danh_Sach_Mon_Hoc(ListMonHoc listMH);
 void Xoa_Mon_Hoc(ListMonHoc &listMH, string maMH);
 void Hieu_Chinh_Mon_Hoc(ListMonHoc &listMH, string maMH);
 void Doc_File_Mon_Hoc(ListMonHoc &listMH);
 void Luu_File_Mon_Hoc(ListMonHoc listMH);
+string Truy_Xuat_Ten_Mon(ListMonHoc listMH, string maMonHoc);
+bool KiemTra_MH_TonTai_CH(NodeCauHoi *r, string maMonHoc);
 
+//--------------------------------- DINH NGHIA HAM ---------------------------------
 void Doc_File_Mon_Hoc(ListMonHoc &listMH)
 {
 	ifstream filein;
@@ -36,7 +32,7 @@ void Luu_File_Mon_Hoc(ListMonHoc listMH)
 {
 	ofstream fileout;
 	fileout.open("DATA\\FileDSMon.txt", ios_base::out);
-	fileout << listMH.slmh << endl; // bo xung
+	fileout << listMH.slmh << endl;
 	for (int i = 0; i < listMH.slmh; i++)
 	{
 		fileout << listMH.monHoc[i]->MAMH << "," << listMH.monHoc[i]->TENMH << endl;
@@ -46,7 +42,6 @@ void Luu_File_Mon_Hoc(ListMonHoc listMH)
 
 bool Them_Mon_Hoc(ListMonHoc &listMH, Mon_Hoc mh)
 {
-	// bat trung ten hoac ma
 	for (int i = 0; i < listMH.slmh; i++)
 	{
 		if (mh.MAMH == listMH.monHoc[i]->MAMH || mh.TENMH == listMH.monHoc[i]->TENMH)
@@ -95,7 +90,7 @@ bool Them_Mon_Hoc(ListMonHoc &listMH, Mon_Hoc mh)
 		}
 	}
 	AllocConsole();
-	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Them mon hoc thanh cong", "Thong bao", MB_OK);
+	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Them thanh cong", "Thong bao", MB_OK);
 	return true;
 }
 
@@ -117,20 +112,18 @@ bool Hieu_Chinh_Mon_Hoc(NodeCauHoi *r , ListMonHoc &listMH, int index, string ma
 	if (maMon == listMH.monHoc[index]->MAMH && tenMon == listMH.monHoc[index]->TENMH)
 	{
 		AllocConsole();
-		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong chinh sua, do MA MON vs TEN MON nhap vao van giu nguyen ", "Thong bao", MB_OK);
+		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long thay doi thong tin mon hoc khi thuc hien hieu chinh!", "Thong bao", MB_OK);
 		return false;
 	}
 
 	if (KiemTra_MH_TonTai_CH(r,listMH.monHoc[index]->MAMH) ) {
 		AllocConsole();
-		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong chinh sua MA MON, do co cau hoi", "Thong bao", MB_OK);
+		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Mon hoc ton tai cau hoi thi. Khong the thay doi thong tin MA MON!", "Thong bao", MB_OK);
 		return false;
 	}
-
 	Mon_Hoc mh;
 	mh.MAMH = maMon;
 	mh.TENMH = tenMon;
-	// --------------------------------------
 	for (int i = 0; i < listMH.slmh; i++)
 	{
 		if (i == index)
@@ -169,13 +162,9 @@ bool Hieu_Chinh_Mon_Hoc(NodeCauHoi *r , ListMonHoc &listMH, int index, string ma
 		}
 	}
 	AllocConsole();
-	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thanh cong", "Thong bao", MB_OK);
+	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Hieu chinh thanh cong", "Thong bao", MB_OK);
 	return true;
 }
-
-
-
-
 
 bool Xoa_Mon_Hoc(NodeCauHoi *r, ListMonHoc &listMH, int index)
 {
@@ -194,7 +183,7 @@ bool Xoa_Mon_Hoc(NodeCauHoi *r, ListMonHoc &listMH, int index)
 	delete ptr;
 	listMH.slmh--;
 	AllocConsole();
-	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Xoa mon hoc thanh cong", "Thong bao", MB_OK);
+	MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Xoa thanh cong", "Thong bao", MB_OK);
 	return true;
 }
 

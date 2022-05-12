@@ -1,5 +1,5 @@
 void drawThemLop();
-// ve man hinh login
+//Ve giao dien LOGIN
 void drawLogin()
 {
     cleardevice();
@@ -18,7 +18,7 @@ void drawLogin()
     matKhau.setNext(&taiKhoan);
 }
 
-// Ve man hinh chuc nang hoc sinh
+//Ve giao dien chuc nang sinh vien
 void drawHocSinh(string HO = "", string TEN = "", string MSSV = "", int GIOITINH = 0, string tenlop = "")
 {
     cleardevice();
@@ -27,7 +27,6 @@ void drawHocSinh(string HO = "", string TEN = "", string MSSV = "", int GIOITINH
     btnDoiMK.draw();
     btndangxuat.draw();
     setlinestyle(0, 0, 3);
-    // setcolor(WHITE);
     setcolor(YELLOW);
     rectangle(325, 200, 1275, 700);
     line(325, 325, 1275, 325);
@@ -46,7 +45,7 @@ void drawHocSinh(string HO = "", string TEN = "", string MSSV = "", int GIOITINH
     if (HO.size())
     {
         hoTen = "Ho va Ten: " + HO + " " + TEN;
-        mssv = "Mssv: " + MSSV;
+        mssv = "MSSV: " + MSSV;
         gioiTinh = "Gioi tinh: " + temp;
     }
     if (tenlop.size())
@@ -60,7 +59,6 @@ void drawHocSinh(string HO = "", string TEN = "", string MSSV = "", int GIOITINH
     outtextxy(430, 475, &mssv[0]);
     outtextxy(430, 550, &tenLop[0]);
     outtextxy(430, 625, &gioiTinh[0]);
-    // setlinestyle(, 0, 2);
 }
 
 int trangDiemSV = 1;
@@ -87,7 +85,6 @@ void drawDsDiemSV(Danh_Sach_Diem_Thi listDT, ListMonHoc listMH)
     }
     else if (btnLui_L.click && trangDiemSV > 1)
     {
-
         trangDiemSV--;
     }
 
@@ -155,11 +152,11 @@ void drawDiemSV()
     btnTien_L1.draw();
     setcolor(LIGHTGREEN);
     rectangle(350, 200, 1250, 760);
-    // ve ma mon
+    //Ve MA MON
     line(550, 200, 550, 760);
-    // ve ten mon
+    //Ve TEN MON
     line(1100, 200, 1100, 760);
-    // ve gach ngang
+    //Ve gach ngang
     line(350, 250, 1250, 250);
     setcolor(WHITE);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
@@ -195,7 +192,7 @@ void drawDoiMk()
     nhapLaiMatKhau.setPre(&matKhauMoi);
 }
 
-// ve man hinh chuc nang giao vien
+//Ve giao dien chuc nang giang vien
 void drawGV()
 {
     cleardevice();
@@ -208,14 +205,17 @@ void drawGV()
     btnCauHoiThi.draw();
     btnThiThu.draw();
     btnDangXuat.draw();
+    readimagefile(iconChuotTrai, 50, 820, 100, 870);
+    outtextxy(120, 835, "CHON THAO TAC");
+    readimagefile(iconChuotPhai, 100 + textwidth("CHON THAO TAC") + 50, 820, 100 + textwidth("CHON THAO TAC") + 100, 870);
+    outtextxy(100 + textwidth("CHON THAO TAC") + 120, 835, "CHON CHUC NANG");
 }
 
-//-----------------------------------------------------CHUC NANG MON HOC-------------------------------------------------------
-
+//---------------------------------------------------- CHUC NANG MON HOC ------------------------------------------------------
 void DrawThemMonHoc()
 {
     setfillstyle(1, BLACK);
-    bar(1005, 0, 1600, 765); // 75 tai y neu thay menu
+    bar(1005, 0, 1600, 765); 
     setfillstyle(WIDE_DOT_FILL, CYAN);
     bar(1050, 200, 1550, 300);
     setcolor(YELLOW);
@@ -254,10 +254,6 @@ void drawMonHoc()
     }
     btnQuaylai.draw();
     timKiemMon.draw();
-    // if (curMenu == DISPLAY_DSMON)
-    // {
-    //     btnMenuThemMon.draw();
-    // }
     btnLui.draw();
     btnTien.draw();
     line(1000, 0, 1000, 900);
@@ -274,7 +270,6 @@ int soTrangMon = 1;
 void drawDSMonHoc(ListMonHoc listMH)
 {
     setfillstyle(1, BLACK);
-    // setfillstyle(2, WHITE);
     bar(xDsMon[0] + 5, yDsMon[0] + 5, xDsMon[1] - 5, 760 - 5);
     bar(xDsMon[1] + 5, yDsMon[0] + 5, 950 - 5 - 5, 760 - 5);
     if (listMH.slmh <= 10)
@@ -325,8 +320,7 @@ void drawDSMonHoc(ListMonHoc listMH)
             {
                 break;
             }
-
-            if (listMH.monHoc[i]->MAMH.find(timKiemMon.ToSearch()) != string::npos || listMH.monHoc[i]->TENMH.find(timKiemMon.ToSearch()) != string::npos)
+            if (FIND(listMH.monHoc[i]->MAMH, timKiemMon.ToSearch()) || FIND(listMH.monHoc[i]->TENMH, timKiemMon.ToSearch()))
             {
                 listviewDS.size++;
                 listviewDS.idItem[j] = i;
@@ -357,8 +351,8 @@ void drawHieuChinhMonHoc()
     btnXoaVinhVien.draw();
     btnThoat.draw();
 }
-//--------------------------------------------------------CHUC NANG LOP-------------------------------------------------------
 
+//---------------------------------------------------- CHUC NANG LOP HOC ------------------------------------------------------
 void drawLop()
 {
     setbkcolor(BLACK);
@@ -379,16 +373,15 @@ void drawLop()
         outtextxy(200, 20, "VUI LONG CHON 1 LOP");
     }
     btnQuaylai.draw();
-    // timKiemMon.draw();
     btnLui.draw();
     btnTien.draw();
     timKiemLop.draw();
     line(1000, 0, 1000, 900);
 
     rectangle(50, 200, 950, 760);
-    // ve ma lop
+    //Ve MA LOP
     line(350, 200, 350, 760);
-    // ve gach ngang
+    //Ve gach ngang
     line(50, 250, 950, 250);
     outtextxy(xDsLop[0] + 80, 215, "MA LOP");
     outtextxy(xDsLop[1] + 225, 215, "TEN LOP");
@@ -474,8 +467,7 @@ void drawDSLop(dslop DanhSachLop)
             {
                 break;
             }
-
-            if (DanhSachLop.arrLop[i].MALOP.find(timKiemLop.ToSearch()) != string::npos || DanhSachLop.arrLop[i].TENLOP.find(timKiemLop.ToSearch()) != string::npos)
+            if (FIND(DanhSachLop.arrLop[i].MALOP, timKiemLop.ToSearch()) || FIND(DanhSachLop.arrLop[i].TENLOP, timKiemLop.ToSearch()))
             {
                 listviewDS.size++;
                 listviewDS.idItem[j] = i;
@@ -491,7 +483,7 @@ void drawDSLop(dslop DanhSachLop)
 void drawHieuChinhLop()
 {
     setfillstyle(1, BLACK);
-    bar(1005, 0, 1600, 765); // 75 tai y neu thay menu
+    bar(1005, 0, 1600, 765); 
     setfillstyle(WIDE_DOT_FILL, CYAN);
     bar(1050, 200, 1550, 300);
     setcolor(YELLOW);
@@ -507,8 +499,7 @@ void drawHieuChinhLop()
     btnThoat.draw();
 }
 
-//------------------------------------------------------CHUC NANG SINH VIEN--------------------------------------------
-
+///--------------------------------------------------- CHUC NANG SINH VIEN ----------------------------------------------------
 void drawSinhVien(string tenlop)
 {
     setbkcolor(BLACK);
@@ -588,7 +579,6 @@ void drawDsSinhVien(listSV danhSachSV)
         return;
     }
 
-    // static nodeSV *node = nullptr;
     nodeSV *node = nullptr;
 
     if (listviewDS.click || btnThem.click || btnHieuChinh.click || btnXoaVinhVien.click || edtimKiemSV.isChoose == false || (edtimKiemSV.isChoose == true && edtimKiemSV.content.size() == 0))
@@ -601,11 +591,6 @@ void drawDsSinhVien(listSV danhSachSV)
         btnThem.click = false;
         soTrangSV = 1;
     }
-    // if (btnThem.click == true) {
-    //     btnThem.click = false;
-    //     node = danhSachSV.First;
-    //     soTrangSV =1;
-    // }
     setbkcolor(BLACK);
 
     if (soLuongSV <= 10)
@@ -618,14 +603,9 @@ void drawDsSinhVien(listSV danhSachSV)
     }
     else if (btnLui.click && edtimKiemSV.content.size() == 0)
     {
-        // node = danhSachSV.First;
         if (soTrangSV > 1)
         {
             soTrangSV--;
-            // for (int i = 0; i < 10 * (soTrangSV - 1); i++)
-            // {
-            //     node = node->pNext;
-            // }
         }
     }
 
@@ -701,7 +681,7 @@ void drawDsSinhVien(listSV danhSachSV)
                 break;
             }
             string HoTen = node->info.Ho + " " + node->info.Ten;
-            if (node->info.mssv.find(edtimKiemSV.ToSearch()) != string::npos || /* node->info.Ho.find(edtimKiemSV.ToSearch()) != string::npos || node->info.Ten.find(edtimKiemSV.ToSearch()) != string::npos || */ HoTen.find(edtimKiemSV.ToSearch()) != string::npos)
+            if (FIND(node->info.mssv, edtimKiemSV.ToSearch()) || FIND(HoTen, edtimKiemSV.ToSearch()))
             {
                 listviewDS.size++;
                 listviewDS.idItem[j] = i;
@@ -728,7 +708,7 @@ void drawDsSinhVien(listSV danhSachSV)
 void drawHieuChinhSV()
 {
     setfillstyle(1, BLACK);
-    bar(1005, 0, 1600, 765); // 75 tai y neu thay menu
+    bar(1005, 0, 1600, 765); 
     setfillstyle(WIDE_DOT_FILL, CYAN);
     bar(1050, 200, 1550, 300);
     setcolor(YELLOW);
@@ -751,7 +731,7 @@ void drawHieuChinhSV()
     btnResetMK.draw();
 }
 
-//-------------------------------------------------------MAN HINH IN BANG DIEM-------------------------------------------------
+//------------------------------------------------ GIAO DIEN IN BANG DIEM --------------------------------------------------
 
 // dung cho gv
 void drawDsDiem(string maMon, lop lh)
@@ -866,7 +846,7 @@ void drawDsDiem(string maMon, lop lh)
                 break;
             }
             string HoTen = node->info.Ho + " " + node->info.Ten;
-            if (node->info.mssv.find(edtimKiemSV_R.ToSearch()) != string::npos || HoTen.find(edtimKiemSV_R.ToSearch()) != string::npos)
+            if (FIND(node->info.mssv, edtimKiemSV_R.ToSearch()) || FIND(HoTen, edtimKiemSV_R.ToSearch()))
             {
                 listviewDS.size++;
                 listviewDS.idItem[j] = i;
@@ -888,11 +868,12 @@ void drawDsDiem(string maMon, lop lh)
                         check = true;
                         break;
                     }
-                    if (check == false)
-                    {
-                        outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + j * 50, "CHUA THI");
-                    }
                 }
+                if (check == false)
+                {
+                    outtextxy(xDsDiem[3] + 30, yDsSV[0] + 20 + j * 50, "CHUA THI");
+                }
+
                 j++;
             }
             i++;
@@ -907,7 +888,6 @@ void drawBangDiem(string tenMon, string tenlop)
     cleardevice();
     settextstyle(BOLD_FONT, 0, 6);
     setcolor(YELLOW);
-    // outtextxy(250, 20, "DANH SACH DIEM SINH VIEN");
     outtextxy(450, 20, "DANH SACH DIEM SINH VIEN");
     settextstyle(BOLD_FONT, 0, 3);
     string TenDeMuc = "Lop: " + tenlop + "          Mon: " + tenMon;
@@ -933,7 +913,7 @@ void drawBangDiem(string tenMon, string tenlop)
     outtextxy(xDsDiem[3] + 50, 215, "DIEM");
 }
 
-//----------------------------------------------------MAN HINH THEM SUA XOA CAU HOI--------------------------------------
+//---------------------------------------------- GIAO DIEN SUA & XOA CAU HOI ------------------------------------------------
 void drawXemCauHoi()
 {
     setfillstyle(1, BLACK);
@@ -943,7 +923,6 @@ void drawXemCauHoi()
     rectangle(850, 200, 1550, 760);
     line(850, 300, 1550, 300);
     line(850, 650, 1550, 650);
-    // outtextxy(1140, 230, "XEM CAU HOI");
     settextstyle(0, 0, 3);
     setcolor(YELLOW);
     outtextxy(1080, 230, "XEM CAU HOI");
@@ -1000,7 +979,7 @@ void outTextTimKiemCauHoi(NodeCauHoi *rootCauHoi, int &i)
     // duyet LNR
     if (rootCauHoi != nullptr)
     {
-        if ( rootCauHoi->info.id == timKiemCauHoi.toInt() || FIND(rootCauHoi->info.NoiDung,timKiemCauHoi.ToSearch()) || FIND(rootCauHoi->info.maMonHoc, timKiemCauHoi.ToSearch()) )
+        if (rootCauHoi->info.id == timKiemCauHoi.toInt() || FIND(rootCauHoi->info.NoiDung, timKiemCauHoi.ToSearch()))
         {
             listviewDS.idItem[i] = rootCauHoi->key;
             listviewDS.size++;
@@ -1065,13 +1044,12 @@ void drawDsCauHoi(NodeCauHoi *rootCauHoi)
 void drawThemCauHoi()
 {
     setfillstyle(1, BLACK);
-    bar(849, 75, 1600, 761);
+    bar(849, 0, 1600, 761);
     setfillstyle(WIDE_DOT_FILL, CYAN);
     bar(850, 200, 1550, 300);
     rectangle(850, 200, 1550, 760);
     line(850, 300, 1550, 300);
     line(850, 680, 1550, 680);
-    // outtextxy(1140, 230, "XEM CAU HOI");
     settextstyle(0, 0, 3);
     setcolor(YELLOW);
     outtextxy(1200 - textwidth("THEM CAU HOI") / 2, 220, "THEM CAU HOI");
@@ -1143,16 +1121,12 @@ void drawCauHoi()
     setcolor(YELLOW);
     outtextxy(250, 20, "NGAN HANG CAU HOI");
     settextstyle(BOLD_FONT, 0, 3);
-    // string TenDeMuc = maMon +" : " + tenMon;
-    // outtextxy(250, 65, &TenDeMuc[0]);
     btnQuaylai.draw();
     timKiemCauHoi.draw();
     btnLui.draw();
     btnTien_L.draw();
-    // line(1000, 0, 1000, 900);
-    // line(800, 0, 800, 900);
-    rectangle(50, 200, 800, 760);
-    line(50, 250, 800, 250);
+    rectangle(50, 200, 825, 760);
+    line(50, 250, 825, 250);
     line(125, 200, 125, 760);
     line(250, 200, 250, 760);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
@@ -1173,7 +1147,7 @@ void drawCauHoi()
     edDapAnD.setPre(&edDapAnC);
 }
 
-//-----------------------------------------------------CHUC NANG THI THU----------------------------------------------
+//--------------------------------------------------- CHUC NANG THI THU -----------------------------------------------------
 int cauHoiSo = 1;
 void drawThoiGian(int giay)
 {
@@ -1261,29 +1235,25 @@ void drawThi(string ho = "", string ten = "", string mssv = "", string Lop = "",
     line(50, 200, 1000, 200);
 
     settextstyle(0, 0, 4);
-    // string cauHoithi = "Cau 1: ";
     outtextxy(1200, 485, "THOI GIAN:");
 
     outtextxy(1150, 20, "THONG TIN SV");
     settextstyle(10, 0, 3);
     setbkcolor(BLACK);
     setcolor(YELLOW);
-    // outtextxy(70, 140, &cauHoithi[0]);
 
     ho = "Ho va Ten: " + ho + " " + ten;
     mssv = "MSSV: " + mssv;
     Lop = "Lop: " + Lop;
     outtextTenMon = "Mon: " + outtextTenMon;
-    string SoCau = "So cau: " + edsoCau.ToString();
-    // string SoCauvsTg = "So cau: " + edsoCau.ToString() + " Thoi gian: " + edTimeThi.ToString() + " phut";
-    //  string tg = "Thoi gian: " + edTimeThi.ToString() + " phut";
+    int temp = edsoCau.toInt();
+    string SoCau = "So cau: " + to_string(temp);
     setcolor(WHITE);
     outtextxy(1130, 100, &ho[0]);
     outtextxy(1130, 160, &mssv[0]);
     outtextxy(1130, 220, &Lop[0]);
     outtextxy(1130, 280, &outtextTenMon[0]);
     outtextxy(1130, 340, &SoCau[0]);
-    // outtextxy(1130, 400, &tg[0]);
 }
 
 void drawXemBaiThi(sinhVien SV, Diem_Thi diem, string Lop = "")
@@ -1502,10 +1472,6 @@ void drawBaiLam(cauHoiThi arrCauHoi[])
         rdChonC.click = false;
         rdChonD.click = false;
     }
-    // bar(725, 825, 800, 850);
-    // string textTrang = to_string(cauHoiSo);
-    // outtextxy(750, 825, &textTrang[0]);
-
     rdChonA.drawEffect();
     rdChonB.drawEffect();
     rdChonC.drawEffect();
@@ -1605,7 +1571,7 @@ void drawXemLaiBaiLam(cauHoiThi arrCauHoi[], int soCau)
     rdChonD.drawEffect();
 }
 
-// ve cai chon so cau, chon thoi gian
+//Ve chuc nang chon THOI GIAN, SO CAU HOI THI
 void drawThietLapThi()
 {
     setfillstyle(1, BLACK);

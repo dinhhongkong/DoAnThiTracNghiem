@@ -1,16 +1,25 @@
+//--------------------------------- NGUYEN MAU HAM ---------------------------------
+void giaiPhongArrCauHoi(mangCauHoi &dsCauHoi);
+bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi &arr, int soCau);
+bool taoBaiThiThu(Diem_Thi &gvThiThu, mangCauHoi &arr, int soCau);
+bool kiemTraDaThi(Danh_Sach_Diem_Thi listDT, string maMon);
+void lamBaiThi(cauHoiThi &lamBai, char chonDapAn);
+void chamBai(Diem_Thi &chamThi);
+void luuBaiThi(string mssv, Danh_Sach_Diem_Thi dsDiem);
+bool docBaiThi(string mssv, Danh_Sach_Diem_Thi &dsDiem);
+
+//--------------------------------- DINH NGHIA HAM ---------------------------------
 void giaiPhongArrCauHoi(mangCauHoi &dsCauHoi) {
 	for ( int i = 0 ; i < dsCauHoi.tongSoCau; i++) {
         dsCauHoi.arrCauHoiThi[i] = nullptr;
     }
 	dsCauHoi.tongSoCau = 0;
     delete []dsCauHoi.arrCauHoiThi;
-
 }
 
 bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi &arr, int soCau)
 {
     int maxSoCau = arr.tongSoCau;
-
     if (soCau > maxSoCau)
     {
         AllocConsole();
@@ -24,7 +33,6 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi &arr, int soCau)
         int vitri = Random(0, maxSoCau -1);
         swap(arr.arrCauHoiThi[i], arr.arrCauHoiThi[vitri]);
     }
-
     for (int i = 0; i < soCau; i++)
     {
         baiThi.arrCauHoi[i].cauHoiThi = arr.arrCauHoiThi[i]->info;
@@ -37,7 +45,6 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi &arr, int soCau)
 bool taoBaiThiThu(Diem_Thi &gvThiThu, mangCauHoi &arr, int soCau)
 {
     int maxSoCau = arr.tongSoCau;
-
     if (soCau > maxSoCau)
     {
         giaiPhongArrCauHoi(arr);
@@ -45,11 +52,9 @@ bool taoBaiThiThu(Diem_Thi &gvThiThu, mangCauHoi &arr, int soCau)
         MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "So luong cau hoi khong du", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
         return false;
     }
-    
     if (gvThiThu.MAMH.size()) {
         delete []gvThiThu.baithi.arrCauHoi;
     }
-
     gvThiThu.baithi.slcht = soCau;
     gvThiThu.baithi.arrCauHoi = new cauHoiThi[soCau];
     for (int i = 0; i < maxSoCau; i++)
@@ -57,7 +62,6 @@ bool taoBaiThiThu(Diem_Thi &gvThiThu, mangCauHoi &arr, int soCau)
         int vitri = Random(0, maxSoCau -1);
         swap(arr.arrCauHoiThi[i], arr.arrCauHoiThi[vitri]);
     }
-
     for (int i = 0; i < soCau; i++)
     {
         gvThiThu.baithi.arrCauHoi[i].cauHoiThi = arr.arrCauHoiThi[i]->info;
@@ -90,16 +94,15 @@ void lamBaiThi(cauHoiThi &lamBai, char chonDapAn)
 
 void chamBai(Diem_Thi &chamThi)
 {
-    float diemMoiCau = 10.0 / (float)chamThi.baithi.slcht;
     float tongDiem = 0;
     for (int i = 0; i < chamThi.baithi.slcht; i++)
     {
         if (chamThi.baithi.arrCauHoi[i].cauHoiThi.DapAn == chamThi.baithi.arrCauHoi[i].luaChon)
         {
-            tongDiem += diemMoiCau;
+            tongDiem++;
         }
     }
-    chamThi.Diem = ceilf(tongDiem * 100) / 100;
+    chamThi.Diem = ceilf(((tongDiem * 10) /chamThi.baithi.slcht) * 100) / 100;
 }
 
 void luuBaiThi(string mssv, Danh_Sach_Diem_Thi dsDiem)

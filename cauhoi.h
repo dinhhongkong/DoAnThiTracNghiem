@@ -1,4 +1,4 @@
-//----------------- NGUYEN MAU HAM -----------------
+//--------------------------------- NGUYEN MAU HAM ---------------------------------
 bool KiemTra_TrungDapAn(string A, string B, string C, string D);
 bool KiemTra_TrungNoiDung(NodeCauHoi *root, int key, string NoiDung);
 int Max(int a, int b);
@@ -16,15 +16,17 @@ void Doc_File_Cau_Hoi(NodeCauHoi *&root, IDRandom *&first);
 void Duyet_Luu_Cau_Hoi(NodeCauHoi *p, ofstream &fileout);
 void Luu_File_Cau_Hoi(NodeCauHoi *root);
 void In_Danh_Sach_Cau_Hoi(NodeCauHoi *ptr);
+int countNodeCauHoi(NodeCauHoi *root);
+void demSoCauTheoMaMon(NodeCauHoi *rootCauHoi, string maMon, int &dem);
+void taoMangCauHoi(NodeCauHoi *rootCauHoi, mangCauHoi &dsCauHoi, string maMon);
 
-//----------------- DINH NGHIA HAM -----------------
-
+//--------------------------------- DINH NGHIA HAM ---------------------------------
 bool KiemTra_TrungDapAn(string A, string B, string C, string D)
 {
 	if (A == B || A == C || A == D || B == C || B == D || C == D)
 	{
 		AllocConsole();
-		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Dap an khong duoc trung nhau", "Thong bao", MB_ICONASTERISK | MB_OK);
+		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong the ton tai cac dap an giong nhau!", "Thong bao", MB_ICONASTERISK | MB_OK);
 		return true;
 	}
 	return false;
@@ -52,8 +54,8 @@ NodeCauHoi *Tao_Node_Cau_Hoi(int key, CauHoi cauHoiMoi)
 {
 	NodeCauHoi *ptr = new NodeCauHoi;
 	ptr->key = key;
-	// ptr->left = nullptr;
-	// ptr->right = nullptr;
+	ptr->left = nullptr;
+	ptr->right = nullptr;
 	ptr->height = 1;
 	ptr->info = cauHoiMoi;
 	return ptr;
@@ -87,41 +89,36 @@ NodeCauHoi *Node_Cuc_Trai(NodeCauHoi *root)
 
 NodeCauHoi *Xoay_Trai(NodeCauHoi *&root)
 {
-	// Thuc hien xoay
 	NodeCauHoi *ptr = root;
 	if (root != nullptr && root->right != nullptr)
 	{
 		ptr = root->right;
 		root->right = ptr->left;
 		ptr->left = root;
-		// Cap nhat chieu sau
+		
 		root->height = Max(ChiSo_ChieuSau(root->left), ChiSo_ChieuSau(root->right)) + 1;
 		ptr->height = Max(ChiSo_ChieuSau(ptr->left), ChiSo_ChieuSau(ptr->right)) + 1;
 	}
-	// Tra ve goc moi
 	return ptr;
 }
 
 NodeCauHoi *Xoay_Phai(NodeCauHoi *&root)
 {
-	// Thuc hien xoay
 	NodeCauHoi *ptr = root;
 	if (root != nullptr && root->left != nullptr)
 	{
 		ptr = root->left;
 		root->left = ptr->right;
 		ptr->right = root;
-		// Cap nhat chieu sau
+		
 		root->height = Max(ChiSo_ChieuSau(root->left), ChiSo_ChieuSau(root->right)) + 1;
 		ptr->height = Max(ChiSo_ChieuSau(ptr->left), ChiSo_ChieuSau(ptr->right)) + 1;
 	}
-	// Tra ve goc moi
 	return ptr;
 }
 
 NodeCauHoi *Them_Cau_Hoi_Moi(NodeCauHoi *&root, int key, CauHoi cauHoiMoi)
 {
-	// Them nut moi
 	if (root == nullptr)
 		return Tao_Node_Cau_Hoi(key, cauHoiMoi);
 	if (key < root->key)
@@ -132,33 +129,33 @@ NodeCauHoi *Them_Cau_Hoi_Moi(NodeCauHoi *&root, int key, CauHoi cauHoiMoi)
 	{
 		root->right = Them_Cau_Hoi_Moi(root->right, key, cauHoiMoi);
 	}
-	// Cap nhat chieu sau
+
 	root->height = Max(ChiSo_ChieuSau(root->left), ChiSo_ChieuSau(root->right)) + 1;
-	// Kiem tra chi so can bang
+	
 	int bf = ChiSo_CanBang(root);
-	// Truong hop trai trai
+	//Left Left case
 	if (bf > 1 && key < root->left->key)
 	{
 		return Xoay_Phai(root);
 	}
-	// Truong hop phai phai
+	//Right Right case
 	if (bf < -1 && key > root->right->key)
 	{
 		return Xoay_Trai(root);
 	}
-	// Truong hop trai phai
+	//Left Right case
 	if (bf > 1 && key > root->left->key)
 	{
 		root->left = Xoay_Trai(root->left);
 		return Xoay_Phai(root);
 	}
-	// Truong hop phai trai
+	//Right Left case
 	if (bf < -1 && key < root->right->key)
 	{
 		root->right = Xoay_Phai(root->right);
 		return Xoay_Trai(root);
 	}
-	// Truong hop khong mat can bang
+	//Balance case
 	return root;
 }
 
@@ -179,7 +176,6 @@ NodeCauHoi *Tim_Kiem_Key(NodeCauHoi *root, int key)
 }
 
 NodeCauHoi* Xoa_Cau_Hoi(NodeCauHoi*& root, int key) {
-	//Xoa nut nhu cay BST
 	if (root == nullptr) return root;
 	if (key < root->key) {
 		root->left = Xoa_Cau_Hoi(root->left, key);
@@ -188,65 +184,60 @@ NodeCauHoi* Xoa_Cau_Hoi(NodeCauHoi*& root, int key) {
 		root->right = Xoa_Cau_Hoi(root->right, key);
 	}
 	else {
-		//Truong hop nut co 1 nut con hoac khong co nut con
 		if (root->left == nullptr || root->right == nullptr) {
 			NodeCauHoi* tmp = (root->left == nullptr) ? root->right : root->left;
-			//Truong hop khong co nut con
+			//No child case
 			if (tmp == nullptr) {
 				tmp = root;
 				root = nullptr;
 			}
-			else { //Truong hop co 1 nut con
+			else { //One child case
 				*root = *tmp;
 			}
 			delete tmp;
 		}
-		else { //Truong hop nut co 2 nut con
-			//Tim nut cuc trai cua nhanh con phai
+		else { //Two children case
 			NodeCauHoi* tmp = Node_Cuc_Trai(root->right);
-			//Copy thong tin tu nut tmp sang nut xoa
 			root->key = tmp->key;
 			root->info = tmp->info;
-			//Xoa nut cuc trai
 			root->right = Xoa_Cau_Hoi(root->right, tmp->key);
 		}
 	}
-	//Truong hop cay chi co 1 nut
+	//One node case
 	if (root == nullptr) return root;
-	//Cap nhat chieu sau
+	
 	root->height = Max(ChiSo_ChieuSau(root->left), ChiSo_ChieuSau(root->right)) + 1;
-	//Kiem tra chi so can bang
+	
 	int bf = ChiSo_CanBang(root);
-		//Truong hop trai trai
+	//Left Left case
 	if (bf > 1 && ChiSo_CanBang(root->left) >= 0) {
 		return Xoay_Phai(root);
 	}
-		//Truong hop trai phai
+	//Left Right case
 	if (bf > 1 && ChiSo_CanBang(root->left) < 0) {
 		root->left = Xoay_Trai(root->left);
 		return Xoay_Phai(root);
 	}
-		//Truong hop phai phai
+	//Right Right case
 	if (bf < -1 && ChiSo_CanBang(root->right) <= 0) {
 		return Xoay_Trai(root);
 	}
-		//Truong hop phai trai
+	//Right Left case	
 	if (bf < -1 && ChiSo_CanBang(root->right) > 0) {
 		root->right = Xoay_Phai(root->right);
 		return Xoay_Trai(root);
 	}
-		//Truong hop khong mat can bang
+	//Balance case
 	return root;
 }
 
 bool Hieu_Chinh_Cau_Hoi(NodeCauHoi *&root, int key, CauHoi cauHoiHieuChinh)
 {
 	NodeCauHoi *ptr = Tim_Kiem_Key(root, key);
-
 	if (cauHoiHieuChinh.maMonHoc == ptr->info.maMonHoc && cauHoiHieuChinh.NoiDung == ptr->info.NoiDung && cauHoiHieuChinh.A == ptr->info.A && cauHoiHieuChinh.B == ptr->info.B && cauHoiHieuChinh.C == ptr->info.C && cauHoiHieuChinh.D == ptr->info.D && cauHoiHieuChinh.DapAn == ptr->info.DapAn)
 	{
 		AllocConsole();
-		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thong tin cau hoi khong thay doi. Khong the thuc hien hieu chinh!", "Thong bao", MB_ICONASTERISK | MB_OK);
+		MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long thay doi thong tin cau hoi khi thuc hien hieu chinh!", "Thong bao", MB_ICONASTERISK | MB_OK);
 		return false;
 	}
 	else if (!KiemTra_TrungNoiDung(root, key, cauHoiHieuChinh.NoiDung) && !KiemTra_TrungDapAn(cauHoiHieuChinh.A, cauHoiHieuChinh.B, cauHoiHieuChinh.C, cauHoiHieuChinh.D))
@@ -330,8 +321,6 @@ void Luu_File_Cau_Hoi(NodeCauHoi *root)
 	Duyet_Luu_Cau_Hoi(root, fileout);
 }
 
-// tinh nang phu
-
 int countNodeCauHoi(NodeCauHoi *root)
 {
 	if (root == nullptr)
@@ -346,7 +335,7 @@ int countNodeCauHoi(NodeCauHoi *root)
 
 void demSoCauTheoMaMon(NodeCauHoi *rootCauHoi, string maMon, int &dem)
 {
-	// duyet LNR
+	//Duyet LNR
 	if (rootCauHoi != nullptr)
 	{
 		if (rootCauHoi->info.maMonHoc == maMon)
@@ -360,8 +349,7 @@ void demSoCauTheoMaMon(NodeCauHoi *rootCauHoi, string maMon, int &dem)
 
 void taoMangCauHoi(NodeCauHoi *rootCauHoi, mangCauHoi &dsCauHoi, string maMon)
 {
-
-	// duyet LNR
+	// Duyet LNR
 	if (rootCauHoi != nullptr)
 	{
 		if (rootCauHoi->info.maMonHoc == maMon)
@@ -373,25 +361,3 @@ void taoMangCauHoi(NodeCauHoi *rootCauHoi, mangCauHoi &dsCauHoi, string maMon)
 		taoMangCauHoi(rootCauHoi->right, dsCauHoi, maMon);
 	}
 }
-
-// int TreeToArray(NodeCauHoi *rootCauHoi, NodeCauHoi *arrCauHoi[], int i)
-// {
-//     if (rootCauHoi == nullptr)
-//     {
-//         return i;
-//     }
-
-//     arrCauHoi[i] = rootCauHoi;
-//     i++;
-//     if (rootCauHoi->left != nullptr)
-//     {
-//         i = TreeToArray(rootCauHoi->left, arrCauHoi, i);
-//     }
-
-//     if (rootCauHoi->right != nullptr)
-//     {
-//         i = TreeToArray(rootCauHoi->right, arrCauHoi, i);
-//     }
-
-//     return i;
-// }

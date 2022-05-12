@@ -16,7 +16,7 @@ public:
 		this->r = r;
 		this->title = title;
 	}
-	// vẽ cái nút
+	//Ve nut
 	void draw()
 	{
 		setcolor(GREEN);
@@ -34,7 +34,7 @@ public:
 		setcolor(DRAW_COLOR);
 	}
 
-	// chi ve cai nut, ko ve content
+	//Chi ve nut & Khong ve content
 	void drawEffect()
 	{
 		setfillstyle(SOLID_FILL, click ? RADIO_BUTTON_CLICK : (isHover ? RADIO_BUTTON_SELECT : RADIO_BUTTON_DEFAULT));
@@ -55,7 +55,7 @@ public:
 		return false;
 	}
 
-	// // hiệu ứng khi lướt chuột qua đổi màu
+	//Hieu ung luot chuot doi mau
 	void RadioEffect()
 	{
 		if (isMouseHover())

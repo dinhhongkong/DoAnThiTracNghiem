@@ -1,3 +1,12 @@
+//--------------------------------- NGUYEN MAU HAM ---------------------------------
+bool CheckMaLopTenLop(dslop ds, string maLop, string tenlop);
+bool ThemVaoDanhSach(dslop &ds, string maLop, string tenLop);
+void xoaLop(dslop &ds, int viTri);
+bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop);
+void docFileDsLop(dslop &DanhSachLop);
+void ghiFileDSlop(dslop DanhSachLop);
+
+//--------------------------------- DINH NGHIA HAM ---------------------------------
 bool CheckMaLopTenLop(dslop ds, string maLop, string tenlop)
 {
     for (int i = 0; i < ds.solop; i++)
@@ -17,14 +26,14 @@ bool ThemVaoDanhSach(dslop &ds, string maLop, string tenLop)
     if (!CheckMaLopTenLop(ds, maLop, tenLop))
     {
         AllocConsole();
-        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "MA LOP hoac TEN LOP bi trung", "Thong bao", MB_ICONASTERISK | MB_OK);
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "MA LOP hoac TEN LOP da ton tai!", "Thong bao", MB_ICONASTERISK | MB_OK);
         return false;
     }
 
     if (ds.solop == MAXLOP)
     {
         AllocConsole();
-        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Danh sach lop day", "Thong bao", MB_ICONASTERISK | MB_OK);
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Danh sach lop day!", "Thong bao", MB_ICONASTERISK | MB_OK);
         return false;
     }
 
@@ -47,7 +56,6 @@ bool ThemVaoDanhSach(dslop &ds, string maLop, string tenLop)
             }
         }
     }
-    //--------------------------------------test---------------------------
     for (int j = ds.solop; j > i; j--)
     {
         ds.arrLop[j].MALOP = ds.arrLop[j - 1].MALOP;
@@ -57,7 +65,7 @@ bool ThemVaoDanhSach(dslop &ds, string maLop, string tenLop)
     ds.arrLop[i].MALOP = maLop;
     ds.solop++;
     AllocConsole();
-    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "THEM VAO DANH SACH THANH CONG", "Thong bao", MB_OK);
+    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Them thanh cong", "Thong bao", MB_OK);
     return true;
 }
 
@@ -66,7 +74,7 @@ void xoaLop(dslop &ds, int viTri)
     if (ds.arrLop[viTri].dsSinhVien.First != nullptr)
     {
         AllocConsole();
-        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Lop co sinh vien, khong the XOA", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Lop hoc co sinh vien. Khong the xoa!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
     }
     else
     {
@@ -85,21 +93,18 @@ void xoaLop(dslop &ds, int viTri)
 
 
         AllocConsole();
-        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "XOA lop thanh cong", "Thong bao", MB_OK);
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Xoa thanh cong", "Thong bao", MB_OK);
     }
 }
 
-// Chinh sua nhung ko lam mat thu tu
 bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop)
 {
-    // Kiem tra xem co can thiet chinh sua hay ko
     if ( ds.arrLop[viTri].MALOP == maLop && ds.arrLop[viTri].TENLOP == tenLop) {
         AllocConsole();
-        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong chinh sua, do MA LOP vs TEN LOP nhap vao van giu nguyen", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long thay doi thong tin lop hoc khi thuc hien hieu chinh!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
         return false;
     }
 
-    // kiem tra no co ton tai truoc do khong
     for ( int i  = 0 ; i < ds.solop ;i++) {
         if (i == viTri ) {
             continue;
@@ -107,12 +112,11 @@ bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop)
         if (ds.arrLop[i].MALOP == maLop || ds.arrLop[i].TENLOP == tenLop)
         {
             AllocConsole();
-            MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Ten hoac Ma lop da ton tai", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+            MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "MA LOP hoac TEN LOP da ton tai!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             return false;
         }
 
     }
-    //rename(oldname, newname) // ham chinh sua ten file
     string oldname = "DATA\\FileDSSinhVien\\" + ds.arrLop[viTri].MALOP + ".txt";
     string newname = "DATA\\FileDSSinhVien" + maLop + ".txt";
     rename(&oldname[0], &newname[0]);
@@ -122,7 +126,7 @@ bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop)
     if (ds.solop == 1 || ( viTri == 0 && ds.arrLop[0].MALOP > ds.arrLop[1].MALOP ) || ( viTri == ds.solop -1 && ds.arrLop[ds.solop -1].MALOP <  ds.arrLop[ds.solop -2].MALOP ) )
     {
         AllocConsole();
-        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thanh cong", "Thong bao", MB_OK);
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Hieu chinh thanh cong", "Thong bao", MB_OK);
         return true;;
     }
 
@@ -151,7 +155,7 @@ bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop)
         }
     }
     AllocConsole();
-    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Chinh sua thanh cong", "Thong bao", MB_OK);
+    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Hieu chinh thanh cong", "Thong bao", MB_OK);
     return true;
 
 }
@@ -165,11 +169,9 @@ void docFileDsLop(dslop &DanhSachLop)
     fileIn.ignore();
     for (int i = 0; i < DanhSachLop.solop; i++)
     {
-        // DanhSachLop.arrLop[i] = new lop;
         getline(fileIn, DanhSachLop.arrLop[i].MALOP, ',');
         getline(fileIn, DanhSachLop.arrLop[i].TENLOP, '\n');
         DocDsSinhVien(DanhSachLop.arrLop[i].dsSinhVien, DanhSachLop.arrLop[i].MALOP);
-        // DocFileDiem1Lop(dsl.l[i]);
     }
     fileIn.close();
 }
@@ -187,8 +189,6 @@ void ghiFileDSlop(dslop DanhSachLop)
     for (int i = 0; i < DanhSachLop.solop; i++)
     {
         fileOut << DanhSachLop.arrLop[i].MALOP << ',' << DanhSachLop.arrLop[i].TENLOP << '\n';
-        // GhiFileLop(dsl.l[i], dsl.l[i].MALOP + ".txt");
-        // GhiFileDiem(dsl.l[i],"DiemThi"+dsl.l[i].MALOP+".txt",dsch);
     }
 
     fileOut.close();

@@ -1,6 +1,3 @@
-// const int w  = 1600;
-// const int h  = 900;
-
 void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, NodeCauHoi *root ,mangCauHoi arrCauHoi)
 {
     dangnhap.ButtonEffect();
@@ -14,7 +11,7 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
                 curMenu = DISPLAY_GIAOVIEN;
                 drawGV();
                 Edit = nullptr;
-                // de nguoi dung nha chuot ra
+                //De nguoi dung nha chuot ra
                 Sleep(500);
             }
             else if (taiKhoan.content.size() && matKhau.content.size())
@@ -40,7 +37,7 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
                                 }
                                 else if (curMenu == DISPLAY_DOIMK)
                                 {
-                                    displayDoiMK(DanhSachLop.arrLop[i].dsSinhVien, node->info.mssv, DanhSachLop.arrLop[i].MALOP);
+                                    displayDoiMK(DanhSachLop.arrLop[i].dsSinhVien, node->info.Pass, DanhSachLop.arrLop[i].MALOP);
                                     if (btnQuaylai.click)
                                     {
                                         btnQuaylai.click = false;
@@ -65,8 +62,6 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
                                     }
                                 }
 
-
-
                                 if (btndangxuat.click == true)
                                 {
                                     btndangxuat.click = false;
@@ -85,11 +80,11 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
                         else if (taiKhoan.ToString() == node->info.mssv && matKhau.content != node->info.Pass)
                         {
                             AllocConsole();
-                            MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Tai khoan hoac Mat khau khong chinh xac", "Thong bao", MB_ICONASTERISK | MB_OK);
+                            MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "TAI KHOAN hoac MAT KHAU khong chinh xac!", "Thong bao", MB_ICONASTERISK | MB_OK);
                             checkThoat = false;
                             return;
                         }
-                        // neu tim thay tai khoan, mat khau lai sai, thoat ra luon
+                        //Neu tim thay TAI KHOAN nhung MAT KHAU sai thi THOAT
                         if (checkThoat == false)
                         {
                             break;
@@ -98,16 +93,15 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
                     }
                 }
                 AllocConsole();
-                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Tai khoan hoac Mat khau khong chinh xac", "Thong bao", MB_ICONASTERISK | MB_OK);
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "TAI KHOAN hoac MAT KHAU khong chinh xac!", "Thong bao", MB_ICONASTERISK | MB_OK);
                 Sleep(500);
             }
             else
             {
                 AllocConsole();
-                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Tai khoan hoac Mat khau khong chinh xac", "Thong bao", MB_ICONASTERISK | MB_OK);
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "TAI KHOAN hoac MAT KHAU khong chinh xac!", "Thong bao", MB_ICONASTERISK | MB_OK);
             }
         }
-
         else if (taiKhoan.isMouseHover())
         {
             Edit = &taiKhoan;

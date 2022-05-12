@@ -5,8 +5,8 @@ private:
 	int width, height;
 	string title, hint;
 	bool isHover;
-	string cursor = "_"; // khong dung char dc, vi loi, da test
-	int i = 0;			 // toa do cua content
+	string cursor = "_"; //Khong dung char duoc (Vi loi & Da test)
+	int i = 0;			 //Toa do cua content
 	string pass;
 
 public:
@@ -31,7 +31,7 @@ public:
 		this->pre = nullptr;
 	}
 
-	// them nhap tuy chon nhap mat khau o cuoi (true la nhap mk)
+	//Them nhap tuy chon nhap mat khau o cuoi (true la nhap mk)
 	editText(int x, int y, int width, int heigh, string title, string hint, int textSize, bool inputPass)
 	{
 		this->x = x;
@@ -47,18 +47,13 @@ public:
 		this->pre = nullptr;
 	}
 
-
 	void draw()
 	{
-		// vuot qua do dai text box thi tien len
+		//Vuot qua do dai TEXT BOX thi tien len
 		settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
 		if (textwidth(&content[i]) >= width - 170 - textwidth("_"))
 		{
 			i++;
-			// if (textwidth(&content[i]) >= width - 170 - textwidth("_"))
-			// {
-			// 	i++;
-			// }
 			while (textwidth(&content[i]) >= width - 170 - textwidth("_")) {
 				i++;
 			}
@@ -77,15 +72,15 @@ public:
 		}
 
 		setbkcolor(BG_COLOR);
-		// Ve tieu de
+		//Ve TITLE
 		setcolor(TEXT_EDIITEXT_TITLE_COLOR);
 		outtextxy(x, y + (height - textheight("TD")) / 2, &title[0]);
 
-		// Ve background
+		//Ve BACKGROUND
 		setfillstyle(SOLID_FILL, BG_EDITTEXT_COLOR);
 		bar(x + 150, y, x + width, y + height);
 
-		// click vo hien con tro
+		//Click vao hien con tro
 		if (isChoose == true && content.size() == 0)
 		{
 			setcolor(TEXT_EDITTEXT_COLOR);
@@ -94,14 +89,14 @@ public:
 		}
 		else if (content.size() == 0)
 		{
-			// Ve hint
+			//Ve HINT
 			setcolor(TEXT_EDIITEXT_HINT_COLOR);
 			setbkcolor(BG_EDITTEXT_COLOR);
 			outtextxy(x + 160, y + (height - textheight("H")) / 2, &hint[0]);
 		}
 		else
 		{
-			// Ve noi dung nguoi dung nhap vao
+			//Ve noi dung nguoi dung nhap vao
 			setcolor(TEXT_EDITTEXT_COLOR);
 			setbkcolor(BG_EDITTEXT_COLOR);
 			if (inputPass == false)
@@ -133,7 +128,7 @@ public:
 		setcolor(DRAW_COLOR);
 	}
 
-	// bat su kien chuot luot qua
+	//Bat su kien chuot luot qua
 	bool isMouseHover()
 	{
 		int mx = mousex();
@@ -177,4 +172,3 @@ public:
 		this->pre = a;
 	}
 };
-

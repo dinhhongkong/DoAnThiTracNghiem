@@ -59,45 +59,46 @@ void displayDoiMK(listSV &dsSinhVien, string &mk, string maLop)
             if (matKhauCu.content == "")
             {
                 AllocConsole();
-                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong duoc de trong mat khau cu", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Mat khau khong the trong!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
             else if (matKhauMoi.content == "")
             {
                 AllocConsole();
-                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long nhap mat khau moi", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long nhap mat khau moi!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
             else if (nhapLaiMatKhau.content == "")
             {
                 AllocConsole();
-                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long nhap lai mat khau moi", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long nhap lai mat khau moi!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
             else
             {
                 if (mk != matKhauCu.content)
                 {
                     AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Mat khau cu khong chinh xac", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Mat khau cu khong chinh xac!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
                 }
                 else if (matKhauMoi.content != nhapLaiMatKhau.content)
                 {
                     AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Mat khau moi khong trung nhau", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Mat khau nhap lai khong giong mat khau moi!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
                 }
                 else if (mk == matKhauMoi.content)
                 {
                     AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Mat khau moi trung voi mat khau cu", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Mat khau moi trung voi mat khau cu!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
                 }
                 else
                 {
                     mk = matKhauMoi.content;
                     ghiFileDsSinhVien(dsSinhVien, maLop);
                     AllocConsole();
-                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Doi mat khau thanh cong", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                    MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Doi mat khau thanh cong", "Thong bao", MB_OK);
                     matKhauCu.content = "";
                     matKhauMoi.content = "";
                     nhapLaiMatKhau.content = "";
                     btnQuaylai.click = true;
+                    curMenu = DISPLAY_HOCSINH;
                 }
             }
         }
@@ -117,14 +118,14 @@ void ClickItemMonThi(NodeCauHoi *root, ListMonHoc &listMH)
     int x = -1, y = -1;
     x = mousex();
     y = mousey();
-    static int LuaChon = -1; // cai thanh sang khi di chuot qua item
+    static int LuaChon = -1; //Thanh sang khi chuot di qua ITEAM
     static int PreLuaChon = -1;
 
     LuaChon = (y - yDsMon[0]) / 50;
 
     if (x > xDsMon[0] && x < xDsMon[2] && y > yDsMon[0] && y < yDsMon[1])
     {
-        // khoi phuc item
+        //Khoi phuc ITEAM
         settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
         if (PreLuaChon != -1 && PreLuaChon != LuaChon && PreLuaChon < listviewDS.size)
         {
@@ -137,7 +138,7 @@ void ClickItemMonThi(NodeCauHoi *root, ListMonHoc &listMH)
         }
 
         PreLuaChon = LuaChon;
-        // ve item hien tai
+        //Ve ITEAM hien tai
         if (PreLuaChon != -1 && LuaChon < listviewDS.size)
         {
             setcolor(LIGHTGREEN);
@@ -151,7 +152,7 @@ void ClickItemMonThi(NodeCauHoi *root, ListMonHoc &listMH)
         setcolor(WHITE);
         line(300, 200, 300, 760);
 
-        // bat su kien khi o man hinh danh sach mon thi
+        //Bat su kien o giao dien danh sach mon thi
         if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == LUACHON_THI_HS)
         {
             edChonMonThi.content = listMH.monHoc[listviewDS.idItem[LuaChon]]->MAMH;
@@ -174,7 +175,7 @@ void ClickItemMonThi(NodeCauHoi *root, ListMonHoc &listMH)
     }
     else
     {
-        // khoi phuc item
+        //Khoi phuc ITEAM
         if (PreLuaChon != -1 && PreLuaChon < listviewDS.size)
         {
             settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
@@ -274,22 +275,25 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCa
                 arrCauHoi.arrCauHoiThi = new NodeCauHoi *[soLuongCauHoi];
                 taoMangCauHoi(root, arrCauHoi, edChonMonThi.ToString());
             }
-            // arrCauHoi.arrCauHoiThi = new NodeCauHoi *[countNodeCauHoi(root)];
-            // taoMangCauHoi(root, arrCauHoi, edChonMonThi.ToString());
             if (edChonMonThi.content.size() == 0)
             {
                 AllocConsole();
-                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon 1 mon", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon 1 mon!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
             else if (edTimeThi.content.size() == 0)
             {
                 AllocConsole();
-                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon dien thoi gian thi", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long thiet lap thoi gian thi!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
             else if (edsoCau.content.size() == 0)
             {
                 AllocConsole();
-                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long chon dien so cau", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long thiet lap so cau thi!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+            }
+            else if (edTimeThi.toInt() == 0 || edsoCau.toInt() == 0)
+            {
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thoi gian va so cau thi la so nguyen duong!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
             else if (kiemTraDaThi(sv.listDT, edChonMonThi.ToString()))
             {
@@ -339,7 +343,7 @@ void ClickItemXemBai(sinhVien SV, ListMonHoc listMH, string Lop)
 
     if (x > xDsDiemSV[0] && x < xDsDiemSV[3] && y > yDsDiemSV[0] && y < yDsDiemSV[1])
     {
-        // khoi phuc item
+        //Khoi phuc ITEAM
         if (PreLuaChon != -1 && PreLuaChon != LuaChon && PreLuaChon < listviewDS.size)
         {
             setfillstyle(1, BLACK);
@@ -347,7 +351,7 @@ void ClickItemXemBai(sinhVien SV, ListMonHoc listMH, string Lop)
         }
 
         PreLuaChon = LuaChon;
-        // ve item hien tai
+        //Ve ITEAM hien tai
         if (PreLuaChon != -1 && LuaChon < listviewDS.size)
         {
             setcolor(LIGHTGREEN);
@@ -355,7 +359,7 @@ void ClickItemXemBai(sinhVien SV, ListMonHoc listMH, string Lop)
             readimagefile(troNgonTay, xDsDiemSV[0] - 100, yDsDiemSV[0] + 20 + PreLuaChon * 50 - 30, xDsDiemSV[0] - 5, yDsDiemSV[0] + 40 + PreLuaChon * 50 + 30);
         }
 
-        // bat su kien khi o man hinh danh sach mon ( co the them, hieu chinh)
+        //Bat su kien khi o giao dien danh sach mon (Co the them & hieu chinh)
         if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size)
         {
             nodeDiem = SV.listDT.first;
@@ -523,7 +527,7 @@ void dipslayHocSinhThi(Bai_Thi &baiThisv)
         else if (btnNopBai.isMouseHover())
         {
             AllocConsole();
-            if (MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thoi gian van con, ban co chac muon nop bai som", "Thong bao", MB_ICONASTERISK | MB_OKCANCEL) == IDOK)
+            if (MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thoi gian van con! Ban co chac muon nop bai?", "Thong bao", MB_ICONASTERISK | MB_OKCANCEL) == IDOK)
             {
                 btnNopBai.click = true;
             }

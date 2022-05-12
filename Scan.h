@@ -1,3 +1,4 @@
+//--------------------------------- NGUYEN MAU HAM ---------------------------------
 void ScanNumber(editText *&txt, char c);
 void ScanTextOnly(editText *&txt, char c);
 void ScanTextSpace(editText *&txt, char c);
@@ -7,6 +8,7 @@ void ScanMaLop(editText *&txt, char c);
 void ScanPass(editText *&txt, char c);
 void ScanAll(editText *&txt, char c);
 
+//--------------------------------- DINH NGHIA HAM ---------------------------------
 void Scan(editText *&txt, int maxn, ScanType type)
 {
 	if (txt == nullptr)
@@ -44,12 +46,12 @@ void Scan(editText *&txt, int maxn, ScanType type)
 			txt = txt->next;
 			return;
 		}
-		else if (c == NULL) // bat phim mui ten
+		else if (c == NULL) // Bat phim di chuyen
 		{
 			c = getch();
 			if (c == KEY_DOWN)
 			{
-				
+
 				txt->isChoose = false;
 				txt->draw();
 				txt = txt->next;
@@ -68,7 +70,6 @@ void Scan(editText *&txt, int maxn, ScanType type)
 			if (type == ONLY_NUMBER)
 			{
 				ScanNumber(txt, c);
-
 			}
 			else if (type == ONLY_TEXT)
 			{
@@ -86,13 +87,16 @@ void Scan(editText *&txt, int maxn, ScanType type)
 			{
 				ScanTextNumberNoSpace(txt, c);
 			}
-			else if (type == SCAN_MALOP) {
+			else if (type == SCAN_MALOP)
+			{
 				ScanMaLop(txt, c);
 			}
-			else if ( type == SCAN_PASS) {
+			else if (type == SCAN_PASS)
+			{
 				ScanPass(txt, c);
 			}
-			else if ( type == SCAN_ALL) {
+			else if (type == SCAN_ALL)
+			{
 				ScanAll(txt, c);
 			}
 		}
@@ -130,7 +134,6 @@ void ScanTextSpace(editText *&txt, char c)
 
 void ScanTextNumber(editText *&txt, char c)
 {
-	// Chu cai, so, dau cach
 	if (c == SPACE)
 	{
 		if (txt->content.size() > 0 && txt->content[txt->content.size() - 1] != ' ')
@@ -170,16 +173,17 @@ void ScanMaLop(editText *&txt, char c)
 	}
 }
 
-void ScanPass(editText *&txt, char c) {
-	
-	
-	if (c >= ' ' && c <= '~' ) 
+void ScanPass(editText *&txt, char c)
+{
+
+	if (c >= ' ' && c <= '~')
 	{
 		txt->content += c;
 	}
 }
 
-void ScanAll(editText *&txt, char c) {
+void ScanAll(editText *&txt, char c)
+{
 	if (c == SPACE)
 	{
 		if (txt->content.size() > 0 && txt->content[txt->content.size() - 1] != ' ')
@@ -189,12 +193,8 @@ void ScanAll(editText *&txt, char c) {
 	{
 		txt->content += toupper(c);
 	}
-	else if ( c!= SPACE)
+	else if (c != SPACE)
 	{
 		txt->content += toupper(c);
 	}
-	// else if ( (c >= '!' && c <= '@' ) || ( c >= '[' && c <= '`' ) ||   ( c >= '{' && c <= '~' ))
-	// {
-	// 	txt->content += c;
-	// }
 }
