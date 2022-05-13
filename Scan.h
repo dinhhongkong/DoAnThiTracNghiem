@@ -105,6 +105,9 @@ void Scan(editText *&txt, int maxn, ScanType type)
 
 void ScanNumber(editText *&txt, char c)
 {
+	if ( txt->content.size() == 0 && c == '0') {
+		return;
+	}
 	if (c >= '0' && c <= '9')
 	{
 		txt->content += c;

@@ -1,6 +1,5 @@
 //--------------------------------- NGUYEN MAU HAM ---------------------------------
 nodeSV *CreateNodeSV(sinhVien sv);
-void CreateList(listSV &l);
 void AddLast(listSV &l, nodeSV *sv);
 void AddFirst(listSV &l, nodeSV *sv);
 bool InsertNodeSV(dslop DanhSachLop, listSV &l, sinhVien sv);
@@ -18,12 +17,6 @@ nodeSV *CreateNodeSV(sinhVien sv)
 	a->info = sv;
 	a->pNext = nullptr;
 	return a;
-}
-
-void CreateList(listSV &l)
-{
-	l.First = nullptr;
-	l.Last = nullptr;
 }
 
 void AddLast(listSV &l, nodeSV *sv)

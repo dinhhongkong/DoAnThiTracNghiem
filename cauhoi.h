@@ -12,6 +12,7 @@ NodeCauHoi *Them_Cau_Hoi_Moi(NodeCauHoi *&root, int key, CauHoi cauHoiMoi);
 NodeCauHoi *Xoa_Cau_Hoi(NodeCauHoi *&root, int key);
 bool Hieu_Chinh_Cau_Hoi(NodeCauHoi *&root, int key, CauHoi cauHoiHieuChinh);
 void Them_Cau_Hoi_File(NodeCauHoi *&root, NodeCauHoi *cauHoiFile);
+NodeCauHoi *Tao_Node_Cau_Hoi_Tu_File(int h, CauHoi cauHoiMoi);
 void Doc_File_Cau_Hoi(NodeCauHoi *&root, IDRandom *&first);
 void Duyet_Luu_Cau_Hoi(NodeCauHoi *p, ofstream &fileout);
 void Luu_File_Cau_Hoi(NodeCauHoi *root);
@@ -95,7 +96,7 @@ NodeCauHoi *Xoay_Trai(NodeCauHoi *&root)
 		ptr = root->right;
 		root->right = ptr->left;
 		ptr->left = root;
-		
+
 		root->height = Max(ChiSo_ChieuSau(root->left), ChiSo_ChieuSau(root->right)) + 1;
 		ptr->height = Max(ChiSo_ChieuSau(ptr->left), ChiSo_ChieuSau(ptr->right)) + 1;
 	}
@@ -110,7 +111,7 @@ NodeCauHoi *Xoay_Phai(NodeCauHoi *&root)
 		ptr = root->left;
 		root->left = ptr->right;
 		ptr->right = root;
-		
+
 		root->height = Max(ChiSo_ChieuSau(root->left), ChiSo_ChieuSau(root->right)) + 1;
 		ptr->height = Max(ChiSo_ChieuSau(ptr->left), ChiSo_ChieuSau(ptr->right)) + 1;
 	}
@@ -131,31 +132,31 @@ NodeCauHoi *Them_Cau_Hoi_Moi(NodeCauHoi *&root, int key, CauHoi cauHoiMoi)
 	}
 
 	root->height = Max(ChiSo_ChieuSau(root->left), ChiSo_ChieuSau(root->right)) + 1;
-	
+
 	int bf = ChiSo_CanBang(root);
-	//Left Left case
+	// Left Left case
 	if (bf > 1 && key < root->left->key)
 	{
 		return Xoay_Phai(root);
 	}
-	//Right Right case
+	// Right Right case
 	if (bf < -1 && key > root->right->key)
 	{
 		return Xoay_Trai(root);
 	}
-	//Left Right case
+	// Left Right case
 	if (bf > 1 && key > root->left->key)
 	{
 		root->left = Xoay_Trai(root->left);
 		return Xoay_Phai(root);
 	}
-	//Right Left case
+	// Right Left case
 	if (bf < -1 && key < root->right->key)
 	{
 		root->right = Xoay_Phai(root->right);
 		return Xoay_Trai(root);
 	}
-	//Balance case
+	// Balance case
 	return root;
 }
 
@@ -175,59 +176,73 @@ NodeCauHoi *Tim_Kiem_Key(NodeCauHoi *root, int key)
 	return root;
 }
 
-NodeCauHoi* Xoa_Cau_Hoi(NodeCauHoi*& root, int key) {
-	if (root == nullptr) return root;
-	if (key < root->key) {
+NodeCauHoi *Xoa_Cau_Hoi(NodeCauHoi *&root, int key)
+{
+	if (root == nullptr)
+		return root;
+	if (key < root->key)
+	{
 		root->left = Xoa_Cau_Hoi(root->left, key);
 	}
-	else if (key > root->key) {
+	else if (key > root->key)
+	{
 		root->right = Xoa_Cau_Hoi(root->right, key);
 	}
-	else {
-		if (root->left == nullptr || root->right == nullptr) {
-			NodeCauHoi* tmp = (root->left == nullptr) ? root->right : root->left;
-			//No child case
-			if (tmp == nullptr) {
+	else
+	{
+		if (root->left == nullptr || root->right == nullptr)
+		{
+			NodeCauHoi *tmp = (root->left == nullptr) ? root->right : root->left;
+			// No child case
+			if (tmp == nullptr)
+			{
 				tmp = root;
 				root = nullptr;
 			}
-			else { //One child case
+			else
+			{ // One child case
 				*root = *tmp;
 			}
 			delete tmp;
 		}
-		else { //Two children case
-			NodeCauHoi* tmp = Node_Cuc_Trai(root->right);
+		else
+		{ // Two children case
+			NodeCauHoi *tmp = Node_Cuc_Trai(root->right);
 			root->key = tmp->key;
 			root->info = tmp->info;
 			root->right = Xoa_Cau_Hoi(root->right, tmp->key);
 		}
 	}
-	//One node case
-	if (root == nullptr) return root;
-	
+	// One node case
+	if (root == nullptr)
+		return root;
+
 	root->height = Max(ChiSo_ChieuSau(root->left), ChiSo_ChieuSau(root->right)) + 1;
-	
+
 	int bf = ChiSo_CanBang(root);
-	//Left Left case
-	if (bf > 1 && ChiSo_CanBang(root->left) >= 0) {
+	// Left Left case
+	if (bf > 1 && ChiSo_CanBang(root->left) >= 0)
+	{
 		return Xoay_Phai(root);
 	}
-	//Left Right case
-	if (bf > 1 && ChiSo_CanBang(root->left) < 0) {
+	// Left Right case
+	if (bf > 1 && ChiSo_CanBang(root->left) < 0)
+	{
 		root->left = Xoay_Trai(root->left);
 		return Xoay_Phai(root);
 	}
-	//Right Right case
-	if (bf < -1 && ChiSo_CanBang(root->right) <= 0) {
+	// Right Right case
+	if (bf < -1 && ChiSo_CanBang(root->right) <= 0)
+	{
 		return Xoay_Trai(root);
 	}
-	//Right Left case	
-	if (bf < -1 && ChiSo_CanBang(root->right) > 0) {
+	// Right Left case
+	if (bf < -1 && ChiSo_CanBang(root->right) > 0)
+	{
 		root->right = Xoay_Phai(root->right);
 		return Xoay_Trai(root);
 	}
-	//Balance case
+	// Balance case
 	return root;
 }
 
@@ -269,6 +284,17 @@ void Them_Cau_Hoi_File(NodeCauHoi *&ptr, NodeCauHoi *cauHoiFile)
 	}
 }
 
+NodeCauHoi *Tao_Node_Cau_Hoi_Tu_File(int h, CauHoi cauHoiMoi)
+{
+	NodeCauHoi *ptr = new NodeCauHoi;
+	ptr->key = cauHoiMoi.id;
+	ptr->left = nullptr;
+	ptr->right = nullptr;
+	ptr->height = h;
+	ptr->info = cauHoiMoi;
+	return ptr;
+}
+
 void Doc_File_Cau_Hoi(NodeCauHoi *&root, IDRandom *&first)
 {
 	ifstream filein;
@@ -280,22 +306,21 @@ void Doc_File_Cau_Hoi(NodeCauHoi *&root, IDRandom *&first)
 	string id, height, used;
 	while (getline(filein, id, ','))
 	{
-		NodeCauHoi *cauHoiFile = new NodeCauHoi;
-		cauHoiFile->key = cauHoiFile->info.id = stoi(id);
-		Them_ID(first, cauHoiFile->key);
-		getline(filein, cauHoiFile->info.maMonHoc, ',');
+		CauHoi cauHoiFile;
+		cauHoiFile.id = stoi(id);
+		Them_ID(first, cauHoiFile.id);
+		getline(filein, cauHoiFile.maMonHoc, ',');
 		getline(filein, height, ',');
-		cauHoiFile->height = stoi(height);
 		getline(filein, used, ',');
-		cauHoiFile->info.used = stoi(used);
-		getline(filein, cauHoiFile->info.NoiDung);
-		getline(filein, cauHoiFile->info.A);
-		getline(filein, cauHoiFile->info.B);
-		getline(filein, cauHoiFile->info.C);
-		getline(filein, cauHoiFile->info.D);
-		filein >> cauHoiFile->info.DapAn;
+		cauHoiFile.used = stoi(used);
+		getline(filein, cauHoiFile.NoiDung);
+		getline(filein, cauHoiFile.A);
+		getline(filein, cauHoiFile.B);
+		getline(filein, cauHoiFile.C);
+		getline(filein, cauHoiFile.D);
+		filein >> cauHoiFile.DapAn;
 		filein.ignore();
-		Them_Cau_Hoi_File(root, cauHoiFile);
+		Them_Cau_Hoi_File(root, Tao_Node_Cau_Hoi_Tu_File(stoi(height), cauHoiFile));
 	}
 }
 
@@ -335,7 +360,7 @@ int countNodeCauHoi(NodeCauHoi *root)
 
 void demSoCauTheoMaMon(NodeCauHoi *rootCauHoi, string maMon, int &dem)
 {
-	//Duyet LNR
+	// Duyet LNR
 	if (rootCauHoi != nullptr)
 	{
 		if (rootCauHoi->info.maMonHoc == maMon)

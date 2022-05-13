@@ -290,11 +290,6 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCa
                 AllocConsole();
                 MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Vui long thiet lap so cau thi!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
             }
-            else if (edTimeThi.toInt() == 0 || edsoCau.toInt() == 0)
-            {
-                AllocConsole();
-                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Thoi gian va so cau thi la so nguyen duong!", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
-            }
             else if (kiemTraDaThi(sv.listDT, edChonMonThi.ToString()))
             {
                 Diem_Thi diemThiSV;

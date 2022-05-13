@@ -22,6 +22,7 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi &arr, int soCau)
     int maxSoCau = arr.tongSoCau;
     if (soCau > maxSoCau)
     {
+        giaiPhongArrCauHoi(arr);
         AllocConsole();
         MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "So luong cau hoi khong du", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
         return false;

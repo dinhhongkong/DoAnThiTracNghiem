@@ -1,6 +1,6 @@
 //--------------------------------- NGUYEN MAU HAM ---------------------------------
 bool CheckMaLopTenLop(dslop ds, string maLop, string tenlop);
-bool ThemVaoDanhSach(dslop &ds, string maLop, string tenLop);
+bool ThemDanhSachLop(dslop &ds, string maLop, string tenLop);
 void xoaLop(dslop &ds, int viTri);
 bool chinhSuaLop(dslop &ds, int viTri, string maLop, string tenLop);
 void docFileDsLop(dslop &DanhSachLop);
@@ -20,7 +20,7 @@ bool CheckMaLopTenLop(dslop ds, string maLop, string tenlop)
     return true;
 }
 
-bool ThemVaoDanhSach(dslop &ds, string maLop, string tenLop)
+bool ThemDanhSachLop(dslop &ds, string maLop, string tenLop)
 {
 
     if (!CheckMaLopTenLop(ds, maLop, tenLop))

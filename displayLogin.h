@@ -72,6 +72,7 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
                                     timer.join();
                                     chamBai(node->info.listDT.first->info);
                                     luuBaiThi(node->info.mssv, node->info.listDT);
+                                    Luu_File_Cau_Hoi(root);
                                     preMenu = -1;
                                 }
                                 Sleep(75);
