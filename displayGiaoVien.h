@@ -1885,7 +1885,7 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, IDRandom *&listID, ListMonHo
                 cauHoiMoi.DapAn = 'D';
             }
 
-            if (!KiemTra_TrungDapAn(cauHoiMoi.A, cauHoiMoi.B, cauHoiMoi.C, cauHoiMoi.D) && !KiemTra_TrungNoiDung(rootCauHoi, id, cauHoiMoi.NoiDung))
+            if (!KiemTra_TrungDapAn(cauHoiMoi.A, cauHoiMoi.B, cauHoiMoi.C, cauHoiMoi.D) && !KiemTra_TrungNoiDung(rootCauHoi, id, cauHoiMoi.NoiDung) && id != 0)
             {
                 rootCauHoi = Them_Cau_Hoi_Moi(rootCauHoi, id, cauHoiMoi);
                 Luu_File_Cau_Hoi(rootCauHoi);
@@ -1905,6 +1905,10 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, IDRandom *&listID, ListMonHo
                 edChonMaMon.content = "";
                 drawThemCauHoi();
                 drawList = true;
+            }
+            else if ( id == 0 ) {
+                AllocConsole();
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong the them cau hoi, ID da day!", "Thong bao",MB_ICONASTERISK | MB_OK);
             }
         }
     }

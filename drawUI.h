@@ -196,8 +196,8 @@ void drawDoiMk()
 void drawGV()
 {
     cleardevice();
-    settextstyle(BOLD_FONT, 0, 7);
     setcolor(YELLOW);
+    settextstyle(BOLD_FONT, 0, 7);
     outtextxy((w - textwidth("QUAN TRI VIEN HE THONG THI")) / 2, 100, "QUAN TRI VIEN HE THONG THI");
     btnMonHoc.draw();
     btnDsLop.draw();
