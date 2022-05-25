@@ -294,6 +294,8 @@ void drawDSMonHoc(ListMonHoc listMH)
     setcolor(WHITE);
     settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
     listviewDS.size = 0;
+    setcolor(WHITE);
+    setbkcolor(BLACK);
 
     if (timKiemMon.content.size() == 0)
     {
@@ -732,6 +734,26 @@ void drawHieuChinhSV()
 }
 
 //------------------------------------------------ GIAO DIEN IN BANG DIEM --------------------------------------------------
+
+void drawChonXemDiem() {
+    HWND hWnd = FindWindowA(NULL,"Xem Diem");
+    HMENU hMenu = GetSystemMenu(hWnd, false);
+    DeleteMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
+    DeleteMenu(hMenu, SC_MINIMIZE, MF_BYCOMMAND);
+    DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
+    settextstyle(10,0,4);
+    setcolor(YELLOW);
+    setfillstyle(WIDE_DOT_FILL, CYAN);
+    bar(50,120,550,200);
+    rectangle(50,120, 550 ,450);
+    line(50,200,550,200);
+    outtextxy(300 - textwidth("CHON CHUC NANG XEM DIEM")/ 2, 145,"CHON CHUC NANG XEM DIEM");
+    btnDiemSV.draw();
+    btnDiemLop.draw();
+    btnQuaylai.draw();
+
+
+}
 
 // dung cho gv
 void drawDsDiem(string maMon, lop lh)
@@ -1295,7 +1317,7 @@ void drawXemBaiThi(sinhVien SV, Diem_Thi diem, string Lop = "")
     string ho = "Ho va Ten: " + SV.Ho + " " + SV.Ten;
     string mssv = "MSSV: " + SV.mssv;
     Lop = "Lop: " + Lop;
-    outtextTenMon = "Mon: " + outtextTenMon;
+    //outtextTenMon = "Mon: " + outtextTenMon;
     string SoCau = "So cau hoi: " + to_string(diem.baithi.slcht);
     setcolor(WHITE);
     outtextxy(1130, 100, &ho[0]);

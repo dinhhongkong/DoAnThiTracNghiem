@@ -1,6 +1,6 @@
 const int w = 1600;
-#define MIN_ID 0    // The minimum of quantity of questions
-#define MAX_ID 5001 // The maximum of quantity of questions
+#define MIN_ID 1    // The minimum of quantity of questions
+#define MAX_ID 5000 // The maximum of quantity of questions
 
 // Define button
 #define BG_BUTTON_DEFAULT           7
@@ -54,6 +54,7 @@ enum Display
     DISPLAY_DSLOP,
     DISPLAY_DSSV,
     DISPLAY_DIEMMON,
+    DISLPAY_DIEM_THEO_SV,
     DISPLAY_DSDIEMGV,
     LUACHON_LOP,
     LUACHON_MON,

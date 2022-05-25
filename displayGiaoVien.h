@@ -34,12 +34,48 @@ void displayGV()
         }
         else if (btnDiemThi.isMouseHover())
         {
-            preMenu = DISPLAY_GIAOVIEN;
-            curMenu = DISPLAY_DIEMMON;
-            MenuThemMon = false;
-            MenuThemLop = false;
-            drawMonHoc();
-            Sleep(150);
+            window1 = initwindow(600, 500, "Xem Diem",GetSystemMetrics(SM_CXSCREEN) /2 - 300,200);
+            setcurrentwindow(window1);
+            drawChonXemDiem();
+            while (true)
+            {
+                btnQuaylai.ButtonEffect();
+                btnDiemSV.ButtonEffect();
+                btnDiemLop.ButtonEffect();
+                if (GetAsyncKeyState(VK_LBUTTON))
+                {
+                    if (btnQuaylai.isMouseHover())
+                    {
+                        closegraph(CURRENT_WINDOW);
+                        setcurrentwindow(mainWindow);
+                        break;
+                    }
+                    else if (btnDiemLop.isMouseHover())
+                    {
+                        closegraph(CURRENT_WINDOW);
+                        setcurrentwindow(mainWindow);
+                        preMenu = DISPLAY_GIAOVIEN;
+                        curMenu = DISPLAY_DIEMMON;
+                        MenuThemMon = false;
+                        MenuThemLop = false;
+                        drawMonHoc();
+                        Sleep(150);
+                        break;
+                    }
+                    else if ( btnDiemSV.isMouseHover()) {
+                        closegraph(CURRENT_WINDOW);
+                        setcurrentwindow(mainWindow);
+                        preMenu = DISPLAY_GIAOVIEN;
+                        curMenu = DISLPAY_DIEM_THEO_SV;
+                        MenuThemMon = false;
+                        MenuThemLop = false;
+                        drawLop();
+                        Sleep(150);
+                        break;
+                    }
+                }
+                Sleep(75);
+            }
         }
         else if (btnCauHoiThi.isMouseHover())
         {
@@ -56,6 +92,248 @@ void displayGV()
         }
     }
 }
+
+// ------------------------------------- CHON SINH VIEN DE XEM DIEM (GV) ---------------------
+void displayChonSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop , ListMonHoc listMH);
+void ClickItemChonLop(dslop &DanhSachLop, ListMonHoc listMH)
+{
+    int x = -1, y = -1;
+    x = mousex();
+    y = mousey();
+    static int LuaChon = -1; // Thanh sang khi di chuot qua ITEAM
+    static int PreLuaChon = -1;
+
+    LuaChon = (y - yDsLop[0]) / 50;
+
+    if (x > xDsLop[0] && x < xDsLop[2] && y > yDsLop[0] && y < yDsLop[1])
+    {
+        // Khoi phuc ITEAM
+        settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+        if (PreLuaChon != -1 && PreLuaChon != LuaChon && PreLuaChon < listviewDS.size)
+        {
+            setcolor(WHITE);
+            setfillstyle(1, BLACK);
+            setbkcolor(BLACK);
+            bar(xDsLop[0] + 5, yDsLop[0] + 20 + PreLuaChon * 50 - 10, xDsLop[2] - 5, yDsLop[0] + 20 + PreLuaChon * 50 + 30);
+            outtextxy(xDsLop[0] + 80, yDsLop[0] + 20 + PreLuaChon * 50, &DanhSachLop.arrLop[listviewDS.idItem[PreLuaChon]].MALOP[0]);
+            outtextxy(xDsLop[1] + 80, yDsLop[0] + 20 + PreLuaChon * 50, &DanhSachLop.arrLop[listviewDS.idItem[PreLuaChon]].TENLOP[0]);
+        }
+
+        PreLuaChon = LuaChon;
+        // Ve ITEAM hien tai
+        if (PreLuaChon != -1 && LuaChon < listviewDS.size)
+        {
+            setcolor(LIGHTGREEN);
+            setfillstyle(1, RED);
+            setbkcolor(RED);
+            bar(xDsLop[0] + 5, yDsLop[0] + 20 + PreLuaChon * 50 - 10, xDsLop[2] - 5, yDsLop[0] + 20 + PreLuaChon * 50 + 30);
+            outtextxy(xDsLop[0] + 80, yDsLop[0] + 20 + LuaChon * 50, &DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].MALOP[0]);
+            outtextxy(xDsLop[1] + 80, yDsLop[0] + 20 + LuaChon * 50, &DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].TENLOP[0]);
+        }
+        setlinestyle(0, 0, 2);
+        setcolor(WHITE);
+        line(350, 200, 350, 760);
+
+        // Bat su kien khi click vao ITEAM, khi click chuot trai hoac chuot phai
+        if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == DISLPAY_DIEM_THEO_SV)
+        {
+            int viTri = listviewDS.idItem[LuaChon];
+            drawSinhVien(DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].TENLOP);
+            drawList = true;
+            while (true)
+            {
+                KbEvent();
+                displayChonSinhVien(DanhSachLop, DanhSachLop.arrLop[viTri].dsSinhVien, DanhSachLop.arrLop[viTri].MALOP,listMH);
+                if (btnQuaylai.click)
+                {
+                    btnQuaylai.click = false;
+                    break;
+                }
+                Sleep(75);
+            }
+        }
+
+    }
+    else
+    {
+        // Khoi phuc ITEAM
+        if (PreLuaChon != -1 && PreLuaChon < listviewDS.size)
+        {
+            settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+            setcolor(WHITE);
+            setfillstyle(1, BLACK);
+            setbkcolor(BLACK);
+            bar(xDsLop[0] + 5, yDsLop[0] + 20 + PreLuaChon * 50 - 10, xDsLop[2] - 5, yDsLop[0] + 20 + PreLuaChon * 50 + 30);
+            outtextxy(xDsLop[0] + 80, yDsLop[0] + 20 + PreLuaChon * 50, &DanhSachLop.arrLop[listviewDS.idItem[PreLuaChon]].MALOP[0]);
+            outtextxy(xDsLop[1] + 80, yDsLop[0] + 20 + PreLuaChon * 50, &DanhSachLop.arrLop[listviewDS.idItem[PreLuaChon]].TENLOP[0]);
+        }
+        LuaChon = -1;
+        PreLuaChon = -1;
+        setlinestyle(0, 0, 2);
+        setcolor(WHITE);
+        line(350, 200, 350, 760);
+    }
+    return;
+}
+
+void ClickChonSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop, ListMonHoc listMH)
+{
+    int x = -1, y = -1;
+    x = mousex();
+    y = mousey();
+    static int LuaChon = -1; // Thanh sang khi di chuot qua ITEAM
+    static int PreLuaChon = -1;
+    int soLuongSV = SizeListSV(danhSachSV);
+
+    LuaChon = (y - yDsSV[0]) / 50;
+    nodeSV *node = danhSachSV.First;
+
+    if (x > xDsSV[0] && x < xDsSV[4] && y > yDsSV[0] && y < yDsSV[1])
+    {
+        // Khoi phuc ITEAM
+        settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+        if (PreLuaChon != -1 && PreLuaChon != LuaChon && PreLuaChon < listviewDS.size)
+        {
+            setcolor(WHITE);
+            setfillstyle(1, BLACK);
+            setbkcolor(BLACK);
+            bar(0, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[0] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
+        }
+
+        PreLuaChon = LuaChon;
+        // Ve ITEAM hien tai
+        if (PreLuaChon != -1 && LuaChon < listviewDS.size)
+        {
+            setcolor(LIGHTGREEN);
+            setfillstyle(1, RED);
+            setbkcolor(RED);
+            readimagefile(troNgonTay, 0, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[0] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
+        }
+        setlinestyle(0, 0, 2);
+        setcolor(WHITE);
+        line(250, 200, 250, 760);
+        // Ve HO SV
+        line(600, 200, 600, 760);
+        // Ve TEN SV
+        line(800, 200, 800, 760);
+        // Bat su kien khi click vao ITEAM, khi click chuot trai hoac chuot phai
+    
+        if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size)
+        {
+            node = danhSachSV.First;
+            for (int i = 0; i < listviewDS.idItem[LuaChon]; i++)
+            {
+                if (node == nullptr)
+                {
+                    break;
+                }
+                node = node->pNext;
+            }
+            drawDiemSV();
+            listviewDS.size = 0;
+            drawDsDiemSV(node->info.listDT, listMH);
+            while (true)
+            {
+                displayDiemSV(node->info ,listMH, maLop);
+                if ( btnQuaylai.click) {
+                    Sleep(100);
+                    break;
+                }
+                Sleep(75);
+            }
+            
+
+        }
+    }
+    else
+    {
+        // Khoi phuc ITEAM
+        if (PreLuaChon != -1 && PreLuaChon < listviewDS.size)
+        {
+            settextstyle(SANS_SERIF_FONT, HORIZ_DIR, 2);
+            setcolor(WHITE);
+            setfillstyle(1, BLACK);
+            setbkcolor(BLACK);
+            setcolor(WHITE);
+            setfillstyle(1, BLACK);
+            setbkcolor(BLACK);
+            bar(0, yDsDiemSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[0] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
+        }
+        LuaChon = -1;
+        PreLuaChon = -1;
+        setlinestyle(0, 0, 2);
+        setcolor(WHITE);
+    }
+}
+
+
+void displayChonSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop , ListMonHoc listMH)
+{
+    static int checkTimKiem = 0;
+    if (drawList == true)
+    {
+        drawDsSinhVien(danhSachSV);
+        drawList = false;
+        if (checkTimKiem < 0)
+        {
+            checkTimKiem = 0;
+        }
+    }
+    if (edtimKiemSV.content.size() > checkTimKiem)
+    {
+        checkTimKiem++;
+        drawList = true;
+    }
+    else if (edtimKiemSV.content.size() == checkTimKiem)
+    {
+        drawList = false;
+    }
+    else if (edtimKiemSV.content.size() < checkTimKiem)
+    {
+        checkTimKiem -= 2;
+        drawList = true;
+    }
+
+    btnQuaylai.ButtonEffect();
+    btnLui.ButtonEffect();
+    btnTien.ButtonEffect();
+
+    ClickChonSinhVien(DanhSachLop, danhSachSV, maLop, listMH);
+    if ( btnQuaylai.click) {
+        drawSinhVien(maLop);
+        drawDsSinhVien(danhSachSV);
+        btnQuaylai.click = false;
+
+    }
+
+    if (GetAsyncKeyState(VK_LBUTTON))
+    {
+        if (btnQuaylai.isMouseHover())
+        {
+            curMenu = DISLPAY_DIEM_THEO_SV;
+            drawLop();
+            Sleep(200);
+            drawList = true;
+            Edit = nullptr;
+            btnQuaylai.click = true;
+            listviewDS.click = false;
+        }
+        else if (edtimKiemSV.isMouseHover())
+        {
+            Edit = &edtimKiemSV;
+        }
+        else if (btnTien.isMouseHover())
+        {
+            drawList = true;
+            btnTien.click = true;
+        }
+        else if (btnLui.isMouseHover())
+        {
+            drawList = true;
+            btnLui.click = true;
+        }
+    }
+} 
 
 //------------------------------------------------ CHUC NANG QUAN LI MON HOC ----------------------------------------
 void ClickItemMonHoc(NodeCauHoi *root, ListMonHoc &listMH)
@@ -215,7 +493,7 @@ void ClickItemMonHoc(NodeCauHoi *root, ListMonHoc &listMH)
             drawList = true;
             drawLop();
             luaChonMon = listviewDS.idItem[LuaChon];
-            outtextTenMon = listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH;
+            outtextTenMon = "Mon: " + listMH.monHoc[listviewDS.idItem[LuaChon]]->TENMH;
         }
         else if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size && curMenu == LUACHON_MON)
         {
@@ -525,8 +803,6 @@ void ClickItemLop(dslop &DanhSachLop, string maMon = "", string tenMon = "")
                 displaySinhVien(DanhSachLop, DanhSachLop.arrLop[viTri].dsSinhVien, DanhSachLop.arrLop[viTri].MALOP);
                 if (btnQuaylai.click)
                 {
-                    MenuThemLop = true;
-                    drawThemLop();
                     btnQuaylai.click = false;
                     break;
                 }
@@ -540,6 +816,7 @@ void ClickItemLop(dslop &DanhSachLop, string maMon = "", string tenMon = "")
             drawDsDiem(maMon, DanhSachLop.arrLop[listviewDS.idItem[LuaChon]]);
             curMenu = DISPLAY_DSDIEMGV;
             luaChonLop = listviewDS.idItem[LuaChon];
+            Edit = nullptr;
             Sleep(100);
         }
     }
@@ -698,31 +975,7 @@ void ClickItemSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
             setcolor(WHITE);
             setfillstyle(1, BLACK);
             setbkcolor(BLACK);
-            node = danhSachSV.First;
-            for (int i = 0; i < listviewDS.idItem[PreLuaChon]; i++)
-            {
-                if (node == nullptr)
-                {
-                    break;
-                }
-                node = node->pNext;
-            }
-
-            if (node != nullptr)
-            {
-                bar(xDsSV[0] + 5, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[4] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
-                outtextxy(xDsSV[0] + 40, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.mssv[0]);
-                outtextxy(xDsSV[1] + 45, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.Ho[0]);
-                outtextxy(xDsSV[2] + 45, yDsSV[0] + 20 + +PreLuaChon * 50, &node->info.Ten[0]);
-                if (node->info.gioiTinh == 0)
-                {
-                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NAM");
-                }
-                else
-                {
-                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NU");
-                }
-            }
+            bar(0, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[0] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
         }
 
         PreLuaChon = LuaChon;
@@ -732,30 +985,7 @@ void ClickItemSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
             setcolor(LIGHTGREEN);
             setfillstyle(1, RED);
             setbkcolor(RED);
-            bar(xDsSV[0] + 5, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[4] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
-            node = danhSachSV.First;
-            for (int i = 0; i < listviewDS.idItem[LuaChon]; i++)
-            {
-                if (node == nullptr)
-                {
-                    break;
-                }
-                node = node->pNext;
-            }
-            if (node != nullptr)
-            {
-                outtextxy(xDsSV[0] + 40, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.mssv[0]);
-                outtextxy(xDsSV[1] + 45, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.Ho[0]);
-                outtextxy(xDsSV[2] + 45, yDsSV[0] + 20 + +PreLuaChon * 50, &node->info.Ten[0]);
-                if (node->info.gioiTinh == 0)
-                {
-                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NAM");
-                }
-                else
-                {
-                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NU");
-                }
-            }
+            readimagefile(troNgonTay, 0, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[0] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
         }
         setlinestyle(0, 0, 2);
         setcolor(WHITE);
@@ -768,6 +998,16 @@ void ClickItemSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
         if (GetAsyncKeyState(VK_RBUTTON) && LuaChon < listviewDS.size)
         {
             Sleep(20);
+            node = danhSachSV.First;
+            for (int i = 0; i < listviewDS.idItem[LuaChon]; i++)
+            {
+                if (node == nullptr)
+                {
+                    break;
+                }
+                node = node->pNext;
+            }
+
             edMSSV.content = node->info.mssv;
             edHoSV.content = node->info.Ho;
             edTenSV.content = node->info.Ten;
@@ -921,41 +1161,15 @@ void ClickItemSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop)
             setcolor(WHITE);
             setfillstyle(1, BLACK);
             setbkcolor(BLACK);
-            node = danhSachSV.First;
-            for (int i = 0; i < listviewDS.idItem[PreLuaChon]; i++)
-            {
-                if (node == nullptr)
-                {
-                    break;
-                }
-                node = node->pNext;
-            }
-            if (node != nullptr)
-            {
-                bar(xDsSV[0] + 5, yDsSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[4] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
-                outtextxy(xDsSV[0] + 40, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.mssv[0]);
-                outtextxy(xDsSV[1] + 45, yDsSV[0] + 20 + PreLuaChon * 50, &node->info.Ho[0]);
-                outtextxy(xDsSV[2] + 45, yDsSV[0] + 20 + +PreLuaChon * 50, &node->info.Ten[0]);
-                if (node->info.gioiTinh == 0)
-                {
-                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NAM");
-                }
-                else
-                {
-                    outtextxy(xDsSV[3] + 40, yDsSV[0] + 20 + PreLuaChon * 50, "NU");
-                }
-            }
+            setcolor(WHITE);
+            setfillstyle(1, BLACK);
+            setbkcolor(BLACK);
+            bar(0, yDsDiemSV[0] + 20 + PreLuaChon * 50 - 10, xDsSV[0] - 5, yDsSV[0] + 20 + PreLuaChon * 50 + 30);
         }
         LuaChon = -1;
         PreLuaChon = -1;
         setlinestyle(0, 0, 2);
         setcolor(WHITE);
-        // Ve MSSV
-        line(250, 200, 250, 760);
-        // Ve HO SV
-        line(600, 200, 600, 760);
-        // Ve TEN SV
-        line(800, 200, 800, 760);
     }
 }
 
@@ -1160,6 +1374,7 @@ void displayLuaChonMon(ListMonHoc listMH)
             outtextTenMon = "";
             drawGV();
             soTrangMon = 1;
+            timKiemMon.content = "";
         }
         else if (btnTien.isMouseHover())
         {
@@ -1178,7 +1393,7 @@ void displayLuaChonMon(ListMonHoc listMH)
     }
 }
 
-void displayLuaChonLop(dslop &DanhSachLop, string maMon, string tenMon)
+void displayLuaChonLop1(dslop &DanhSachLop, string maMon, string tenMon)
 {
     // Tim kiem theo nhap tu ban phim, xuat ra man hinh luon
     static int checkTimKiem = 0;
@@ -1205,10 +1420,8 @@ void displayLuaChonLop(dslop &DanhSachLop, string maMon, string tenMon)
         checkTimKiem -= 2;
         drawList = true;
     }
-
     // Bat su kien khi click ITEAM trong cai listView
     ClickItemLop(DanhSachLop, maMon, tenMon);
-
     setfillstyle(1, LIGHTGRAY);
     btnQuaylai.ButtonEffect();
     btnLui.ButtonEffect();
@@ -1222,6 +1435,70 @@ void displayLuaChonLop(dslop &DanhSachLop, string maMon, string tenMon)
             drawMonHoc();
             Edit = nullptr;
 
+            timKiemLop.content = "";
+            soTrangLop = 1;
+            drawList = true;
+            Sleep(200);
+        }
+        else if (timKiemLop.isMouseHover())
+        {
+            Edit = &timKiemLop;
+        }
+        else if (btnTien.isMouseHover())
+        {
+            drawList = true;
+            btnTien.click = true;
+            btnLui.click = false;
+        }
+        else if (btnLui.isMouseHover())
+        {
+            drawList = true;
+            btnLui.click = true;
+            btnTien.click = false;
+        }
+    }
+}
+
+void displayLuaChonLop2(dslop &DanhSachLop, ListMonHoc listMH)
+{
+    // Tim kiem theo nhap tu ban phim, xuat ra man hinh luon
+    static int checkTimKiem = 0;
+    if (drawList == true)
+    {
+        drawDSLop(DanhSachLop);
+        drawList = false;
+        if (checkTimKiem < 0)
+        {
+            checkTimKiem = 0;
+        }
+    }
+    if (timKiemLop.content.size() > checkTimKiem)
+    {
+        checkTimKiem++;
+        drawList = true;
+    }
+    else if (timKiemLop.content.size() == checkTimKiem)
+    {
+        drawList = false;
+    }
+    else if (timKiemLop.content.size() < checkTimKiem)
+    {
+        checkTimKiem -= 2;
+        drawList = true;
+    }
+    // Bat su kien khi click ITEAM trong cai listView
+    ClickItemChonLop(DanhSachLop, listMH);
+    setfillstyle(1, LIGHTGRAY);
+    btnQuaylai.ButtonEffect();
+    btnLui.ButtonEffect();
+    btnTien.ButtonEffect();
+    if (GetAsyncKeyState(VK_LBUTTON))
+    {
+        if (btnQuaylai.isMouseHover())
+        {
+            curMenu = DISPLAY_GIAOVIEN;
+            drawGV();
+            Edit = nullptr;
             timKiemLop.content = "";
             soTrangLop = 1;
             drawList = true;
@@ -1282,7 +1559,7 @@ void ClickItemDsDiemGV(listSV dsSinhVien, string maMon, string tenLop)
         if (GetAsyncKeyState(VK_LBUTTON) && LuaChon < listviewDS.size)
         {
             nodeSV *nodesv = dsSinhVien.First;
-            Node_Diem_Thi *nodeDiem = nullptr;
+            Node_Diem_Thi *nodeDiem = nodesv->info.listDT.first;
             for (int i = 0; i < listviewDS.idItem[LuaChon]; i++)
             {
                 if (nodesv == nullptr)
@@ -1337,6 +1614,8 @@ void ClickItemDsDiemGV(listSV dsSinhVien, string maMon, string tenLop)
                     }
                     else if (btnQuaylai.isMouseHover())
                     {
+                        btnQuaylai.click = true;
+                        Sleep(100);
                         break;
                     }
                 }
@@ -1391,6 +1670,12 @@ void diplayDsDiem(string maMon, lop lh)
     }
 
     ClickItemDsDiemGV(lh.dsSinhVien, maMon, lh.MALOP);
+    if ( btnQuaylai.click) {
+        btnQuaylai.click = false;
+        drawBangDiem(maMon, lh.TENLOP);
+        drawDsDiem(maMon, lh);
+    }
+
     if (GetAsyncKeyState(VK_LBUTTON))
     {
         if (btnQuaylai.isMouseHover())
@@ -1906,9 +2191,10 @@ void displayChucNangCauHoi(NodeCauHoi *&rootCauHoi, IDRandom *&listID, ListMonHo
                 drawThemCauHoi();
                 drawList = true;
             }
-            else if ( id == 0 ) {
+            else if (id == 0)
+            {
                 AllocConsole();
-                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong the them cau hoi, ID da day!", "Thong bao",MB_ICONASTERISK | MB_OK);
+                MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "Khong the them cau hoi, ID da day!", "Thong bao", MB_ICONASTERISK | MB_OK);
             }
         }
     }

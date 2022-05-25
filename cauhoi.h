@@ -4,7 +4,7 @@ bool KiemTra_TrungNoiDung(NodeCauHoi *root, int key, string NoiDung);
 int Max(int a, int b);
 int ChiSo_ChieuSau(NodeCauHoi *ptr);
 int ChiSo_CanBang(NodeCauHoi *ptr);
-NodeCauHoi *Tao_Node_Cau_Hoi(int key, CauHoi cauHoiMoi);
+NodeCauHoi *Tao_Node_Cau_Hoi(int key, CauHoi cauHoiMoi, int height = 1);
 NodeCauHoi *Xoay_Trai(NodeCauHoi *&root);
 NodeCauHoi *Xoay_Phai(NodeCauHoi *&root);
 NodeCauHoi *Node_Cuc_Trai(NodeCauHoi *root);
@@ -12,11 +12,9 @@ NodeCauHoi *Them_Cau_Hoi_Moi(NodeCauHoi *&root, int key, CauHoi cauHoiMoi);
 NodeCauHoi *Xoa_Cau_Hoi(NodeCauHoi *&root, int key);
 bool Hieu_Chinh_Cau_Hoi(NodeCauHoi *&root, int key, CauHoi cauHoiHieuChinh);
 void Them_Cau_Hoi_File(NodeCauHoi *&root, NodeCauHoi *cauHoiFile);
-NodeCauHoi *Tao_Node_Cau_Hoi_Tu_File(int h, CauHoi cauHoiMoi);
 void Doc_File_Cau_Hoi(NodeCauHoi *&root, IDRandom *&first);
 void Duyet_Luu_Cau_Hoi(NodeCauHoi *p, ofstream &fileout);
 void Luu_File_Cau_Hoi(NodeCauHoi *root);
-void In_Danh_Sach_Cau_Hoi(NodeCauHoi *ptr);
 int countNodeCauHoi(NodeCauHoi *root);
 void demSoCauTheoMaMon(NodeCauHoi *rootCauHoi, string maMon, int &dem);
 void taoMangCauHoi(NodeCauHoi *rootCauHoi, mangCauHoi &dsCauHoi, string maMon);
@@ -51,13 +49,13 @@ bool KiemTra_TrungNoiDung(NodeCauHoi *root, int key, string NoiDung)
 	return false;
 }
 
-NodeCauHoi *Tao_Node_Cau_Hoi(int key, CauHoi cauHoiMoi)
+NodeCauHoi *Tao_Node_Cau_Hoi(int key, CauHoi cauHoiMoi, int height)
 {
 	NodeCauHoi *ptr = new NodeCauHoi;
 	ptr->key = key;
 	ptr->left = nullptr;
 	ptr->right = nullptr;
-	ptr->height = 1;
+	ptr->height = height;
 	ptr->info = cauHoiMoi;
 	return ptr;
 }
@@ -284,23 +282,10 @@ void Them_Cau_Hoi_File(NodeCauHoi *&ptr, NodeCauHoi *cauHoiFile)
 	}
 }
 
-NodeCauHoi *Tao_Node_Cau_Hoi_Tu_File(int h, CauHoi cauHoiMoi)
-{
-	NodeCauHoi *ptr = new NodeCauHoi;
-	ptr->key = cauHoiMoi.id;
-	ptr->left = nullptr;
-	ptr->right = nullptr;
-	ptr->height = h;
-	ptr->info = cauHoiMoi;
-	return ptr;
-}
-
 void Doc_File_Cau_Hoi(NodeCauHoi *&root, IDRandom *&first)
 {
 	ifstream filein;
 	filein.open("DATA\\FileDSCauHoi.txt", ios_base::in);
-	Tao_MIN_MAX(first, MIN_ID);
-	Tao_MIN_MAX(first, MAX_ID);
 	if (!filein.is_open())
 		return;
 	string id, height, used;
@@ -320,7 +305,7 @@ void Doc_File_Cau_Hoi(NodeCauHoi *&root, IDRandom *&first)
 		getline(filein, cauHoiFile.D);
 		filein >> cauHoiFile.DapAn;
 		filein.ignore();
-		Them_Cau_Hoi_File(root, Tao_Node_Cau_Hoi_Tu_File(stoi(height), cauHoiFile));
+		Them_Cau_Hoi_File(root, Tao_Node_Cau_Hoi(cauHoiFile.id ,cauHoiFile, stoi(height)));
 	}
 }
 

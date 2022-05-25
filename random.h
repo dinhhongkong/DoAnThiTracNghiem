@@ -1,6 +1,6 @@
 //--------------------------------- NGUYEN MAU HAM ---------------------------------
 IDRandom* Tao_IDNode(int ID);
-void Tao_MIN_MAX(IDRandom*& first, int ID); //Call this function when the program starts
+IDRandom* Tao_MIN_MAX(IDRandom*& first, int MIN, int MAX); //Call this function when the program starts
 void Them_ID(IDRandom*& first, int ID); //Call this function when read FileDSCauHoi.txt
 void Xoa_ID(IDRandom*& first, int ID); //Call this function when delete a question
 int Random(int Min, int Max); //Get a random number between Min and Max
@@ -14,14 +14,10 @@ IDRandom* Tao_IDNode(int ID) {
 	return Node;
 }
 
-void Tao_MIN_MAX(IDRandom*& first, int ID) {
-	IDRandom* ptr = Tao_IDNode(ID);
-	if (first == nullptr) {
-		first = ptr;
-	}
-	else {
-		first->next = ptr;
-	}
+IDRandom* Tao_MIN_MAX(IDRandom*& first, int MIN, int MAX) {
+	first = Tao_IDNode(MIN - 1);
+	first->next = Tao_IDNode(MAX + 1);
+	return first;
 }
 
 void Them_ID(IDRandom*& first, int ID) {

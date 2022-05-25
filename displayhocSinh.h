@@ -315,6 +315,9 @@ void displayLuaChonMonThi(ListMonHoc listMH, sinhVien &sv, string tenLOP, NodeCa
                     delete nodeDiemSV;
                 }
             }
+            else {
+                giaiPhongArrCauHoi(arrCauHoi);
+            }
         }
     }
 }
@@ -363,7 +366,7 @@ void ClickItemXemBai(sinhVien SV, ListMonHoc listMH, string Lop)
                 nodeDiem = nodeDiem->DTnext;
             }
             cauHoiSo = 1;
-            outtextTenMon = Truy_Xuat_Ten_Mon(listMH, nodeDiem->info.MAMH);
+            outtextTenMon = "Mon: " + Truy_Xuat_Ten_Mon(listMH, nodeDiem->info.MAMH);
             drawXemBaiThi(SV, nodeDiem->info, Lop);
             drawXemLaiBaiLam(nodeDiem->info.baithi.arrCauHoi, nodeDiem->info.baithi.slcht);
 
@@ -386,8 +389,10 @@ void ClickItemXemBai(sinhVien SV, ListMonHoc listMH, string Lop)
                     }
                     else if (btnQuaylai.isMouseHover())
                     {
+                        btnQuaylai.click = true;
                         outtextTenMon = "";
                         cauHoiSo = 1;
+                        Sleep(100);
                         break;
                     }
                 }
@@ -421,18 +426,30 @@ void displayDiemSV(sinhVien SV, ListMonHoc listMH, string Lop)
         drawDsDiemSV(SV.listDT, listMH);
     }
     ClickItemXemBai(SV, listMH, Lop);
+    if ( btnQuaylai.click) {
+        btnQuaylai.click = false;
+        drawDiemSV();
+        drawDsDiemSV(SV.listDT, listMH);
+
+    }
+
     if (GetAsyncKeyState(VK_LBUTTON))
     {
-        if (btnQuaylai.isMouseHover())
+        if (btnQuaylai.isMouseHover() && curMenu == DISPLAY_DIEMSV )
         {
             curMenu = DISPLAY_HOCSINH;
             btnQuaylai.click = true;
 
             drawList = true;
-            soTrangSV = 1;
+            trangDiemSV = 1;
             edtimKiemSV_R.content = "";
             luaChonLop = -1;
             Edit = nullptr;
+        }
+        
+        if (btnQuaylai.isMouseHover() && curMenu == DISLPAY_DIEM_THEO_SV )
+        {
+            btnQuaylai.click = true;
         }
 
         else if (btnTien_L1.isMouseHover())

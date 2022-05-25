@@ -24,7 +24,7 @@ bool taoBaiThi(Bai_Thi &baiThi, mangCauHoi &arr, int soCau)
     {
         giaiPhongArrCauHoi(arr);
         AllocConsole();
-        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "So luong cau hoi khong du", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "So luong cau hoi khong du!", "Thong bao", MB_ICONINFORMATION | MB_OK);
         return false;
     }
     baiThi.slcht = soCau;
@@ -50,7 +50,7 @@ bool taoBaiThiThu(Diem_Thi &gvThiThu, mangCauHoi &arr, int soCau)
     {
         giaiPhongArrCauHoi(arr);
         AllocConsole();
-        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "So luong cau hoi khong du", "Thong bao", MB_ICONEXCLAMATION | MB_OK);
+        MessageBox(FindWindowA(nullptr, "THI TRAC NGHIEM"), "So luong cau hoi khong du!", "Thong bao", MB_ICONINFORMATION | MB_OK);
         return false;
     }
     if (gvThiThu.MAMH.size()) {

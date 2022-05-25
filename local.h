@@ -3,6 +3,8 @@ int preMenu = -1;
 bool drawList = true;
 int luaChonLop = -1;
 int luaChonMon = -1;
+int mainWindow;
+int window1;
 const char *troNgonTay = "DATA\\icon_finger.jpg";
 const char *iconChuotTrai = "DATA\\icon_leftMouse.jpg";
 const char *iconChuotPhai = "DATA\\icon_rightMouse.jpg";
@@ -87,6 +89,8 @@ button btnResetMK(1150, 710, 300, 50, "RESET MAT KHAU MAC DINH");
 //CHUC NANG XEM DIEM TAI GIAO DIEN GIANG VIEN
 int xDsDiem[5] = {350, 550, 900, 1100, 1250};
 int yDsDiem[2] = {250, 750};
+button btnDiemSV(100,250,400,50,"XEM DIEM CUA MOT SINH VIEN");
+button btnDiemLop(100,350,400,50,"XEM DIEM CUA MOT LOP");
 editText edtimKiemSV_R(500, 100, 600, 50, "TIM KIEM: ", "Nhap MA hoac TEN SINH VIEN muon tim", 100);
 button btnLui_L(370, 820, 100, 50, "PRE");
 button btnTien_L1(1120, 820, 100, 50, "NEXT");
@@ -100,7 +104,7 @@ editText edDapAnA(860, 375, 670, 40, "DAP AN A:", "Toi da 40 ki tu", 40);
 editText edDapAnB(860, 425, 670, 40, "DAP AN B:", "Toi da 40 ki tu", 40);
 editText edDapAnC(860, 475, 670, 40, "DAP AN C:", "Toi da 40 ki tu", 40);
 editText edDapAnD(860, 525, 670, 40, "DAP AN D:", "Toi da 40 ki tu", 40);
-editText edChonMaMon(860, 630, 500, 40, "", "Click vao MA MON de chon mon thi", 50);
+editText edChonMaMon(860, 630, 500, 40, "", "Click vao MA MON de chon", 50);
 button btnChonMaMon(860, 630, 140, 40, "MA MON:");
 button btnXoaMaMon(1380, 630, 130, 40, "XOA MA MON");
 button btnDapAnA(1040, 575, 100, 40, "A");
@@ -227,6 +231,12 @@ void KbEvent()
         else if (curMenu == DISPLAY_DSDIEMGV)
         {
             if (Edit == &edtimKiemSV_R)
+            {
+                Scan(Edit, Edit->textSize, TEXT_NUMBER);
+            }
+        }
+        else if ( curMenu == DISPLAY_DIEMMON) {
+            if (Edit == &timKiemMon)
             {
                 Scan(Edit, Edit->textSize, TEXT_NUMBER);
             }

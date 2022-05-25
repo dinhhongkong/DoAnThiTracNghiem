@@ -41,7 +41,7 @@ int main()
     //1600 * 900 la do phan giai man hinh 14 inch (Ti le 16/9)
     HWND hWnd = GetConsoleWindow();
     ShowWindow(hWnd, SW_HIDE);
-    initwindow(1600, 900, "THI TRAC NGHIEM");
+    mainWindow = initwindow(1600, 900, "THI TRAC NGHIEM", GetSystemMetrics(SM_CXSCREEN) /2 - 800);
     mkdir("DATA");
     mkdir("DATA\\FileDSDiem");
     mkdir("DATA\\FileDSSinhVien");
@@ -54,7 +54,7 @@ int main()
     ListMonHoc listMH;
     Doc_File_Mon_Hoc(listMH);
 
-    IDRandom *listID = nullptr;
+    IDRandom *listID = Tao_MIN_MAX(listID, MIN_ID, MAX_ID);
     NodeCauHoi *rootCayCauHoi = nullptr;
     Doc_File_Cau_Hoi(rootCayCauHoi, listID);
 
@@ -90,7 +90,12 @@ int main()
         }
         else if (curMenu == LUACHON_LOP)
         {
-            displayLuaChonLop(DanhSachLop, listMH.monHoc[luaChonMon]->MAMH, listMH.monHoc[luaChonMon]->TENMH);
+            // xem diem theo mon cho ca 1 lop
+            displayLuaChonLop1(DanhSachLop, listMH.monHoc[luaChonMon]->MAMH, listMH.monHoc[luaChonMon]->TENMH);
+        }
+        else if (curMenu == DISLPAY_DIEM_THEO_SV ) {
+            // chon lop roi chon sv, roi xem toan bo DIEM cac mon da thi
+            displayLuaChonLop2(DanhSachLop, listMH);
         }
         else if (curMenu == DISPLAY_DSDIEMGV)
         {
