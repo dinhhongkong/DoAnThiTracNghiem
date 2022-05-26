@@ -1593,6 +1593,26 @@ void drawXemLaiBaiLam(cauHoiThi arrCauHoi[], int soCau)
     rdChonD.drawEffect();
 }
 
+void drawDiemVuaThi(float diem) {
+    HWND hWnd = FindWindowA(NULL,"Diem so");
+    HMENU hMenu = GetSystemMenu(hWnd, false);
+    DeleteMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
+    DeleteMenu(hMenu, SC_MINIMIZE, MF_BYCOMMAND);
+    DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
+    settextstyle(10,0,4);
+    setcolor(YELLOW);
+    setfillstyle(WIDE_DOT_FILL, CYAN);
+    bar(50,120,550,200);
+    rectangle(50,120, 550 ,450);
+    line(50,200,550,200);
+    outtextxy(300 - textwidth("So diem cua ban la:")/ 2, 145,"So diem cua ban la:");
+    settextstyle(10,0,10);
+    setcolor(WHITE);
+    string diemSo = to_string(diem);
+    xoaSoThapPhan(diemSo);
+    outtextxy(300 - textwidth(&diemSo[0])/ 2, 250, &diemSo[0]);
+    btnQuaylai.draw();
+}
 //Ve chuc nang chon THOI GIAN, SO CAU HOI THI
 void drawThietLapThi()
 {

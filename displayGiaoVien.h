@@ -140,6 +140,7 @@ void ClickItemChonLop(dslop &DanhSachLop, ListMonHoc listMH)
             int viTri = listviewDS.idItem[LuaChon];
             drawSinhVien(DanhSachLop.arrLop[listviewDS.idItem[LuaChon]].TENLOP);
             drawList = true;
+            Edit = nullptr;
             while (true)
             {
                 KbEvent();
@@ -232,6 +233,7 @@ void ClickChonSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop, List
             drawDiemSV();
             listviewDS.size = 0;
             drawDsDiemSV(node->info.listDT, listMH);
+            Edit = nullptr;
             while (true)
             {
                 displayDiemSV(node->info ,listMH, maLop);
@@ -314,6 +316,7 @@ void displayChonSinhVien(dslop DanhSachLop, listSV &danhSachSV, string maLop , L
             drawLop();
             Sleep(200);
             drawList = true;
+            edtimKiemSV.content = "";
             Edit = nullptr;
             btnQuaylai.click = true;
             listviewDS.click = false;

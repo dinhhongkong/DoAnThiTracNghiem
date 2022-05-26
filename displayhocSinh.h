@@ -546,3 +546,12 @@ void dipslayHocSinhThi(Bai_Thi &baiThisv)
         }
     }
 }
+
+void displayDiemVuaThi() {
+    btnQuaylai.ButtonEffect();
+    if (GetAsyncKeyState(VK_LBUTTON) && btnQuaylai.isMouseHover()) {
+        btnQuaylai.click = true;
+        closegraph(CURRENT_WINDOW);
+        setcurrentwindow(mainWindow);
+    }
+}

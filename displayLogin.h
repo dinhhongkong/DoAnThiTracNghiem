@@ -1,4 +1,4 @@
-void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, NodeCauHoi *root ,mangCauHoi arrCauHoi)
+void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, NodeCauHoi *root, mangCauHoi arrCauHoi)
 {
     dangnhap.ButtonEffect();
     if (GetAsyncKeyState(VK_LBUTTON))
@@ -11,7 +11,7 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
                 curMenu = DISPLAY_GIAOVIEN;
                 drawGV();
                 Edit = nullptr;
-                //De nguoi dung nha chuot ra
+                // De nguoi dung nha chuot ra
                 Sleep(500);
             }
             else if (taiKhoan.content.size() && matKhau.content.size())
@@ -26,7 +26,7 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
                         if (taiKhoan.ToString() == node->info.mssv && matKhau.content == node->info.Pass)
                         {
                             curMenu = DISPLAY_HOCSINH;
-                            drawHocSinh(node->info.Ho,node->info.Ten, node->info.mssv, node->info.gioiTinh , DanhSachLop.arrLop[i].TENLOP);
+                            drawHocSinh(node->info.Ho, node->info.Ten, node->info.mssv, node->info.gioiTinh, DanhSachLop.arrLop[i].TENLOP);
                             Edit = nullptr;
                             while (true)
                             {
@@ -54,7 +54,7 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
                                 }
                                 else if (curMenu == DISPLAY_DIEMSV)
                                 {
-                                    displayDiemSV(node->info, listMH,DanhSachLop.arrLop[i].MALOP );
+                                    displayDiemSV(node->info, listMH, DanhSachLop.arrLop[i].MALOP);
                                     if (btnQuaylai.click)
                                     {
                                         btnQuaylai.click = false;
@@ -73,6 +73,13 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
                                     chamBai(node->info.listDT.first->info);
                                     luuBaiThi(node->info.mssv, node->info.listDT);
                                     Luu_File_Cau_Hoi(root);
+                                    windowDiemSo = initwindow(600, 500, "Diem so", GetSystemMetrics(SM_CXSCREEN) / 2 - 300, 200);
+                                    drawDiemVuaThi(node->info.listDT.first->info.Diem);
+                                    while (!btnQuaylai.click)
+                                    {
+                                        displayDiemVuaThi();
+                                    }
+                                    btnQuaylai.click = false;
                                     preMenu = -1;
                                 }
                                 Sleep(75);
@@ -85,7 +92,7 @@ void displayLogin(ListMonHoc listMH, dslop &DanhSachLop, IDRandom *&listID, Node
                             checkThoat = false;
                             return;
                         }
-                        //Neu tim thay TAI KHOAN nhung MAT KHAU sai thi THOAT
+                        // Neu tim thay TAI KHOAN nhung MAT KHAU sai thi THOAT
                         if (checkThoat == false)
                         {
                             break;

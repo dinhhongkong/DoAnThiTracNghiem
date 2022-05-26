@@ -5,9 +5,10 @@ int luaChonLop = -1;
 int luaChonMon = -1;
 int mainWindow;
 int window1;
-const char *troNgonTay = "DATA\\icon_finger.jpg";
-const char *iconChuotTrai = "DATA\\icon_leftMouse.jpg";
-const char *iconChuotPhai = "DATA\\icon_rightMouse.jpg";
+int windowDiemSo;
+const char *troNgonTay = "IMAGE\\icon_finger.jpg";
+const char *iconChuotTrai = "IMAGE\\icon_leftMouse.jpg";
+const char *iconChuotPhai = "IMAGE\\icon_rightMouse.jpg";
 thread timer;
 
 editText *Edit = nullptr;
@@ -56,7 +57,6 @@ int xDsMon[3] = {50, 300, 950};
 int yDsMon[2] = {250, 750};
 button btnQuaylai(20, 20, 100, 50, "< BACK");
 editText timKiemMon(100, 100, 600, 50, "TIM KIEM: ", "Nhap MA hoac TEN MON muon tim", 100);
-// button btnMenuThemMon(1175,20,250,50,"MENU THEM MON HOC");
 bool MenuThemMon = true;
 editText themMaMon(1075, 350, 450, 50, "MA MON:", "Toi da 15 ki tu", 15);
 editText themTenMon(1075, 475, 450, 50, "TEN MON:", "Toi da 35 ki tu", 35);
@@ -80,8 +80,8 @@ int xDsSV[6] = {50, 250, 600, 800, 950};
 int yDsSV[2] = {250, 750};
 editText edtimKiemSV(100, 100, 600, 50, "TIM KIEM: ", "Nhap MA hoac TEN SINH VIEN muon tim", 100);
 editText edMSSV(1075, 325, 450, 50, "MSSV:", "Toi da 10 ki tu", 10);
-editText edHoSV(1075, 400, 450, 50, "Ho va ten dem:", "Nhap ho vs ten dem", 40);
-editText edTenSV(1075, 475, 450, 50, "Ten:", "Toi da 7 ki tu", 7);
+editText edHoSV(1075, 400, 450, 50, "Ho va ten dem:", "Toi da 25 ki tu", 25);
+editText edTenSV(1075, 475, 450, 50, "Ten:", "Toi da 10 ki tu", 10);
 button btnNam(1225, 540, 100, 40, "NAM");
 button btnNu(1350, 540, 100, 40, "NU");
 button btnResetMK(1150, 710, 300, 50, "RESET MAT KHAU MAC DINH");
@@ -89,8 +89,8 @@ button btnResetMK(1150, 710, 300, 50, "RESET MAT KHAU MAC DINH");
 //CHUC NANG XEM DIEM TAI GIAO DIEN GIANG VIEN
 int xDsDiem[5] = {350, 550, 900, 1100, 1250};
 int yDsDiem[2] = {250, 750};
-button btnDiemSV(100,250,400,50,"XEM DIEM CUA MOT SINH VIEN");
-button btnDiemLop(100,350,400,50,"XEM DIEM CUA MOT LOP");
+button btnDiemSV(100,250,400,50,"XEM DIEM THEO SINH VIEN");
+button btnDiemLop(100,350,400,50,"XEM DIEM THEO MON HOC");
 editText edtimKiemSV_R(500, 100, 600, 50, "TIM KIEM: ", "Nhap MA hoac TEN SINH VIEN muon tim", 100);
 button btnLui_L(370, 820, 100, 50, "PRE");
 button btnTien_L1(1120, 820, 100, 50, "NEXT");
@@ -231,6 +231,12 @@ void KbEvent()
         else if (curMenu == DISPLAY_DSDIEMGV)
         {
             if (Edit == &edtimKiemSV_R)
+            {
+                Scan(Edit, Edit->textSize, TEXT_NUMBER);
+            }
+        }
+        else if ( curMenu == DISLPAY_DIEM_THEO_SV) {
+            if (Edit == &timKiemLop || Edit == &edtimKiemSV)
             {
                 Scan(Edit, Edit->textSize, TEXT_NUMBER);
             }
