@@ -11,29 +11,29 @@ using namespace std;
 #include <cmath>
 #include <thread>
 
-#include "define.h"
-#include "struct.h"
-#include "random.h"
+#include "MODULE/define.h"
+#include "MODULE/struct.h"
+#include "MODULE/random.h"
 
-#include "Button.h"
-#include "EditText.h"
-#include "RadioButon.h"
-#include "Scan.h"
-#include "local.h"
+#include "CONTROL/Button.h"
+#include "CONTROL/EditText.h"
+#include "CONTROL/RadioButon.h"
+#include "CONTROL/Scan.h"
+#include "CONTROL/local.h"
 
-#include "cauhoi.h"
-#include "diem.h"
-#include "baithi.h"
-#include "sinhvien.h"
-#include "monhoc.h"
-#include "lop.h"
+#include "MODULE/cauhoi.h"
+#include "MODULE/diem.h"
+#include "MODULE/baithi.h"
+#include "MODULE/sinhvien.h"
+#include "MODULE/monhoc.h"
+#include "MODULE/lop.h"
 
-#include "drawUI.h"
-#include "displayHocSinh.h"
-#include "displayGiaoVien.h"
-#include "displayLogin.h"
+#include "GRAPHIC/drawUI.h"
+#include "GRAPHIC/displayHocSinh.h"
+#include "GRAPHIC/displayGiaoVien.h"
+#include "GRAPHIC/displayLogin.h"
 // Bien dich thu cong bang tay qua lenh CMD
-// g++ -std=c++17 main.cpp -o main -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32
+// g++ -std=c++17 main.cpp -o main -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32 -lwinmm
 
 int main()
 {
@@ -71,7 +71,7 @@ int main()
     while (true)
     {
         GetAsyncKeyState(VK_RBUTTON);
-        KbEvent();
+        KeyboardEvent();
         if (curMenu == DISPLAY_LOGIN)
         {
             displayLogin(listMH, DanhSachLop, listID, rootCayCauHoi, arrCauHoi);
@@ -95,12 +95,12 @@ int main()
         }
         else if (curMenu == LUACHON_LOP)
         {
-            // xem diem theo mon cho ca 1 lop
+            // Xem diem theo mon cho ca 1 lop
             displayLuaChonLop1(DanhSachLop, listMH.monHoc[luaChonMon]->MAMH, listMH.monHoc[luaChonMon]->TENMH);
         }
         else if (curMenu == DISLPAY_DIEM_THEO_SV)
         {
-            // chon lop roi chon sv, roi xem toan bo DIEM cac mon da thi
+            // Chon lop roi chon sv, roi xem toan bo DIEM cac mon da thi
             displayLuaChonLop2(DanhSachLop, listMH);
         }
         else if (curMenu == DISPLAY_DSDIEMGV)
@@ -128,14 +128,17 @@ int main()
         {
             timer.join();
             chamBai(gvThiThu);
-            windowDiemSo = initwindow(600, 500, "Diem so",GetSystemMetrics(SM_CXSCREEN) /2 - 300,200);
+            drawGV();
+            windowDiemSo = initwindow(600, 500, "DIEM SO", GetSystemMetrics(SM_CXSCREEN) / 2 - 300, 200);
+            Sleep(100);
             drawDiemVuaThi(gvThiThu.Diem);
-            while ( !btnQuaylai.click) {
+            while (!btnQuaylai.click)
+            {
                 displayDiemVuaThi();
             }
             btnQuaylai.click = false;
             preMenu = -1;
         }
-        Sleep(75);
+        Sleep(100);
     }
 }
